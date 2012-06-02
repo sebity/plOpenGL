@@ -1,0 +1,25 @@
+# depslib dependency file v1.0
+1338672902 source:c:\devel\prolog\libraries\plopengl\plopengl.c
+	<SWI-Prolog.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<windows.h>
+	<GL/gl.h>
+	<GL/glu.h>
+	<GL/glut.h>
+	<GL/gl.h>
+	<GL/glu.h>
+	<GL/glut.h>
+	<unistd.h>
+	<OpenGL/gl.h>
+	<OpenGL/glu.h>
+	<GLUT/glut.h>
+	<unistd.h>
+
+1330870548 c:\program files (x86)\pl\include\swi-prolog.h
+	<stdarg.h>
+	<stdlib.h>
+	<stddef.h>
+	<inttypes.h>
+
