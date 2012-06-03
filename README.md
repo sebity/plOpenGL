@@ -20,17 +20,19 @@ Coming Soon...
 
 Setup
 -----
-plOpenGL does require setting up, but luckily it is easy.  All that is required is to open the plOpenGL.pl file and comment/uncomment the libraries that is associated with the OS that plOpenGL is running on.
+plOpenGL does require setting up, but luckily it is easy.  All that is required is to open the <code>plOpenGL.pl</code> file and comment/uncomment the libraries that is associated with the OS that plOpenGL is running on.
 
-For example, is you are using a Windows System, update the load_foreign_library line to look like:
+For example, is you are using a Windows System, update the <code>load_foreign_library</code> line to look like:
 
-% Windows Library 
+<pre>
+% Windows Library
 :-load_foreign_library('plOpenGL.dll').
 
 % Mac/Linux Library
 %:-load_foreign_library('plOpenGL.so').
+</pre>
 
-If you are using plOpenGL on Mac OSX, then reverse the comments on the load_foreign_library line.
+If you are using plOpenGL on Mac OSX, then reverse the comments on the <code>load_foreign_library</code> line.
 
 
 Command Line Usage
@@ -42,7 +44,7 @@ plOpenGL can be run from the command line, e.g.
 
 Example Applications
 --------------------
-See the examples/ folder
+See the <code>examples/</code> folder
 
 
 Author
