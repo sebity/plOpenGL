@@ -49,7 +49,7 @@
 #endif
 #endif
 /* storage for one texture  */
-unsigned int texture[3];
+unsigned int texture[32];
 
 /* Image type - contains height, width, and data */
 struct Image {
@@ -71,8 +71,7 @@ int c_imageLoad(char *filename, Image *image);
 
 // standard functions
 foreign_t c_sleep(term_t S);
-foreign_t c_loadGLTexture(term_t Filename);
-foreign_t c_loadGLTextures(term_t Filename, term_t Texture, term_t Width, term_t Height, term_t Data);
+foreign_t c_loadGLTextures(term_t Filename, term_t Width, term_t Height, term_t Data);
 
 // gl functions
 foreign_t c_glAccum(term_t Operation, term_t Value);
@@ -86,6 +85,7 @@ foreign_t c_glBitmap(term_t Width, term_t Height, term_t X1, term_t Y1, term_t X
 foreign_t c_glBlendFunc(term_t sFactor, term_t dFactor);
 foreign_t c_glCallList(term_t List);
 foreign_t c_glClear(term_t Mask);
+foreign_t c_glClearAccum(term_t Red, term_t Green, term_t Blue, term_t Alpha);
 foreign_t c_glClearColor(term_t Red, term_t Green, term_t Blue, term_t Alpha);
 foreign_t c_glClearDepth(term_t Depth);
 foreign_t c_glClearIndex(term_t Index);
@@ -101,6 +101,7 @@ foreign_t c_glCopyTexImage2D(term_t Target, term_t Level, term_t Internal, term_
 foreign_t c_glCullFace(term_t Mode);
 foreign_t c_glDepthFunc(term_t Mode);
 foreign_t c_glDisable(term_t Mode);
+foreign_t c_glDrawBuffer(term_t Mode);
 foreign_t c_glEnable(term_t Mode);
 foreign_t c_glEnd(void);
 foreign_t c_glEndList(void);
@@ -109,7 +110,7 @@ foreign_t c_glFlush(void);
 foreign_t c_glFogf(term_t PName, term_t Param);
 foreign_t c_glFogi(term_t PName, term_t Param);
 foreign_t c_glFrustum(term_t Left, term_t Right, term_t Bottom, term_t Top, term_t Near, term_t Far);
-foreign_t c_glGenTextures(term_t N, term_t TextureNames, term_t Num);
+foreign_t c_glGenTextures(term_t N, term_t TextureNames);
 foreign_t c_glHint(term_t Target, term_t Hint);
 foreign_t c_glIndexi(term_t Index);
 foreign_t c_glLightfv(term_t Face, term_t PName, term_t Params, term_t Num);
@@ -117,12 +118,15 @@ foreign_t c_glLightModelfv(term_t PName, term_t Params, term_t Num);
 foreign_t c_glLineStipple(term_t Factor, term_t Pattern);
 foreign_t c_glLineWidth(term_t Width);
 foreign_t c_glLoadIdentity(void);
+foreign_t c_glLoadName(term_t Name);
 foreign_t c_glMaterialfv(term_t Face, term_t PName, term_t Params, term_t Num);
 foreign_t c_glMatrixMode(term_t Mode);
 foreign_t c_glNewList(term_t List, term_t Mode);
+foreign_t c_glNormal3f(term_t X, term_t Y, term_t Z);
 foreign_t c_glOrtho(term_t Left, term_t Right, term_t Bottom, term_t Top, term_t Near, term_t Far);
 foreign_t c_glPixelStorei(term_t Mode, term_t Param);
 foreign_t c_glPointSize(term_t Size);
+foreign_t c_glPolygonMode(term_t Face, term_t Mode);
 foreign_t c_glPopAttrib(void);
 foreign_t c_glPopClientAttrib(void);
 foreign_t c_glPopMatrix(void);
@@ -132,6 +136,7 @@ foreign_t c_glPushClientAttrib(term_t Mask);
 foreign_t c_glPushMatrix(void);
 foreign_t c_glPushName(term_t Name);
 foreign_t c_glRasterPos2i(term_t X, term_t Y);
+foreign_t c_glReadBuffer(term_t Mode);
 foreign_t c_glRectf(term_t X1, term_t Y1, term_t X2, term_t Y2);
 foreign_t c_glRotatef(term_t Angle, term_t X, term_t Y, term_t Z);
 foreign_t c_glScalef(term_t X, term_t Y, term_t Z);
@@ -152,6 +157,8 @@ foreign_t c_glVertex3i(term_t X, term_t Y, term_t Z);
 foreign_t c_glViewport(term_t X, term_t Y, term_t Width, term_t Height);
 
 // glu functions
+foreign_t c_gluBuild2DMipmaps(term_t Target, term_t Internal, term_t Width, term_t Height,
+                         term_t Format, term_t Type, term_t Data);
 foreign_t c_gluLookAt(term_t EyeX, term_t EyeY, term_t EyeZ,
                       term_t CenterX, term_t CenterY, term_t CenterZ,
                       term_t UpX, term_t UpY, term_t UpZ);
@@ -190,8 +197,7 @@ foreign_t c_glutWireTorus(term_t InnerRadius, term_t OuterRadius, term_t NSides,
 
 install_t install() {
   PL_register_foreign("c_sleep",1,c_sleep,PL_FA_NOTRACE);
-  PL_register_foreign("c_loadGLTexture",1,c_loadGLTexture,PL_FA_NOTRACE);
-  PL_register_foreign("c_loadGLTextures",5,c_loadGLTextures,PL_FA_NOTRACE);
+  PL_register_foreign("c_loadGLTextures",4,c_loadGLTextures,PL_FA_NOTRACE);
 
   PL_register_foreign("c_glAccum",2,c_glAccum,PL_FA_NOTRACE);
   PL_register_foreign("c_glActiveTextureARB",1,c_glActiveTextureARB,PL_FA_NOTRACE);
@@ -203,6 +209,7 @@ install_t install() {
   PL_register_foreign("c_glBlendFunc",2,c_glBlendFunc,PL_FA_NOTRACE);
   PL_register_foreign("c_glCallList",1,c_glCallList,PL_FA_NOTRACE);
   PL_register_foreign("c_glClear",1,c_glClear,PL_FA_NOTRACE);
+  PL_register_foreign("c_glClearAccum",4,c_glClearAccum,PL_FA_NOTRACE);
   PL_register_foreign("c_glClearColor",4,c_glClearColor,PL_FA_NOTRACE);
   PL_register_foreign("c_glClearDepth",1,c_glClearDepth,PL_FA_NOTRACE);
   PL_register_foreign("c_glClearIndex",1,c_glClearIndex,PL_FA_NOTRACE);
@@ -216,6 +223,7 @@ install_t install() {
   PL_register_foreign("c_glCullFace",1,c_glCullFace,PL_FA_NOTRACE);
   PL_register_foreign("c_glDepthFunc",1,c_glDepthFunc,PL_FA_NOTRACE);
   PL_register_foreign("c_glDisable",1,c_glDisable,PL_FA_NOTRACE);
+  PL_register_foreign("c_gDrawBuffer",4,c_glDrawBuffer,PL_FA_NOTRACE);
   PL_register_foreign("c_glEnable",1,c_glEnable,PL_FA_NOTRACE);
   PL_register_foreign("c_glEnd",0,c_glEnd,PL_FA_NOTRACE);
   PL_register_foreign("c_glEndList",0,c_glEndList,PL_FA_NOTRACE);
@@ -224,7 +232,7 @@ install_t install() {
   PL_register_foreign("c_glFogf",2,c_glFogf,PL_FA_NOTRACE);
   PL_register_foreign("c_glFogi",2,c_glFogi,PL_FA_NOTRACE);
   PL_register_foreign("c_glFrustum",6,c_glFrustum,PL_FA_NOTRACE);
-  PL_register_foreign("c_glGenTextures",3,c_glGenTextures,PL_FA_NOTRACE);
+  PL_register_foreign("c_glGenTextures",2,c_glGenTextures,PL_FA_NOTRACE);
   PL_register_foreign("c_glHint",2,c_glHint,PL_FA_NOTRACE);
   PL_register_foreign("c_glIndexi",1,c_glIndexi,PL_FA_NOTRACE);
   PL_register_foreign("c_glLightfv",4,c_glLightfv,PL_FA_NOTRACE);
@@ -232,12 +240,15 @@ install_t install() {
   PL_register_foreign("c_glLineStipple",2,c_glLineStipple,PL_FA_NOTRACE);
   PL_register_foreign("c_glLineWidth",1,c_glLineWidth,PL_FA_NOTRACE);
   PL_register_foreign("c_glLoadIdentity",0,c_glLoadIdentity,PL_FA_NOTRACE);
+  PL_register_foreign("c_glLoadName",1,c_glLoadName,PL_FA_NOTRACE);
   PL_register_foreign("c_glMaterialfv",4,c_glMaterialfv,PL_FA_NOTRACE);
   PL_register_foreign("c_glMatrixMode",1,c_glMatrixMode,PL_FA_NOTRACE);
   PL_register_foreign("c_glNewList",2,c_glNewList,PL_FA_NOTRACE);
+  PL_register_foreign("c_glNormal3f",3,c_glNormal3f,PL_FA_NOTRACE);
   PL_register_foreign("c_glOrtho",6,c_glOrtho,PL_FA_NOTRACE);
   PL_register_foreign("c_glPixelStorei",2,c_glPixelStorei,PL_FA_NOTRACE);
   PL_register_foreign("c_glPointSize",1,c_glPointSize,PL_FA_NOTRACE);
+  PL_register_foreign("c_glPolygonMode",2,c_glPolygonMode,PL_FA_NOTRACE);
   PL_register_foreign("c_glPopAttrib",0,c_glPushAttrib,PL_FA_NOTRACE);
   PL_register_foreign("c_glPopClientAttrib",0,c_glPushClientAttrib,PL_FA_NOTRACE);
   PL_register_foreign("c_glPopMatrix",0,c_glPopMatrix,PL_FA_NOTRACE);
@@ -247,6 +258,7 @@ install_t install() {
   PL_register_foreign("c_glPushMatrix",0,c_glPushMatrix,PL_FA_NOTRACE);
   PL_register_foreign("c_glPushName",1,c_glPushName,PL_FA_NOTRACE);
   PL_register_foreign("c_glRasterPos2i",2,c_glRasterPos2i,PL_FA_NOTRACE);
+  PL_register_foreign("c_glReadBuffer",4,c_glReadBuffer,PL_FA_NOTRACE);
   PL_register_foreign("c_glRectf",4,c_glRectf,PL_FA_NOTRACE);
   PL_register_foreign("c_glRotatef",4,c_glRotatef,PL_FA_NOTRACE);
   PL_register_foreign("c_glScalef",3,c_glScalef,PL_FA_NOTRACE);
@@ -265,6 +277,7 @@ install_t install() {
   PL_register_foreign("c_glVertex3i",3,c_glVertex3i,PL_FA_NOTRACE);
   PL_register_foreign("c_glViewport",4,c_glViewport,PL_FA_NOTRACE);
 
+  PL_register_foreign("c_gluBuild2DMipmaps",7,c_gluBuild2DMipmaps,PL_FA_NOTRACE);
   PL_register_foreign("c_gluLookAt",9,c_gluLookAt,PL_FA_NOTRACE);
   PL_register_foreign("c_gluOrtho2D",4,c_gluOrtho2D,PL_FA_NOTRACE);
   PL_register_foreign("c_gluPerspective",4,c_gluPerspective,PL_FA_NOTRACE);
@@ -508,143 +521,95 @@ foreign_t c_sleep(term_t PL_S) {
 
 
 int c_imageLoad(char *filename, Image *image) {
-    FILE *file;
-    unsigned long size;                 // size of the image in bytes.
-    unsigned long i;                    // standard counter.
-    unsigned short int planes;          // number of planes in image (must be 1)
-    unsigned short int bpp;             // number of bits per pixel (must be 24)
-    char temp;                          // temporary color storage for bgr-rgb conversion.
-
-    // make sure the file is there.
-    if ((file = fopen(filename, "rb"))==NULL)
-    {
-	printf("File Not Found : %s\n",filename);
-	return 0;
-    }
-
-    // seek through the bmp header, up to the width/height:
-    fseek(file, 18, SEEK_CUR);
-
-    // read the width
-    if ((i = fread(&image->sizeX, 4, 1, file)) != 1) {
+  FILE *file;
+  unsigned long size;                 // size of the image in bytes.
+  unsigned long i;                    // standard counter.
+  unsigned short int planes;          // number of planes in image (must be 1)
+  unsigned short int bpp;             // number of bits per pixel (must be 24)
+  char temp;                          // temporary color storage for bgr-rgb conversion.
+  
+  // make sure the file is there.
+  if ((file = fopen(filename, "rb"))==NULL) {
+    printf("File Not Found : %s\n",filename);
+    return 0;
+  }
+  
+  // seek through the bmp header, up to the width/height:
+  fseek(file, 18, SEEK_CUR);
+  
+  // read the width
+  if ((i = fread(&image->sizeX, 4, 1, file)) != 1) {
 	printf("Error reading width from %s.\n", filename);
 	return 0;
-    }
-    printf("Width of %s: %lu\n", filename, image->sizeX);
-
-    // read the height
-    if ((i = fread(&image->sizeY, 4, 1, file)) != 1) {
-	printf("Error reading height from %s.\n", filename);
-	return 0;
-    }
-    printf("Height of %s: %lu\n", filename, image->sizeY);
-
-    // calculate the size (assuming 24 bits or 3 bytes per pixel).
-    size = image->sizeX * image->sizeY * 3;
-
-    // read the planes
-    if ((fread(&planes, 2, 1, file)) != 1) {
-	printf("Error reading planes from %s.\n", filename);
-	return 0;
-    }
-    if (planes != 1) {
-	printf("Planes from %s is not 1: %u\n", filename, planes);
-	return 0;
-    }
-
-    // read the bpp
-    if ((i = fread(&bpp, 2, 1, file)) != 1) {
-	printf("Error reading bpp from %s.\n", filename);
-	return 0;
-    }
-    if (bpp != 24) {
-	printf("Bpp from %s is not 24: %u\n", filename, bpp);
-	return 0;
-    }
-
-    // seek past the rest of the bitmap header.
-    fseek(file, 24, SEEK_CUR);
-
-    // read the data.
-    image->data = (char *) malloc(size);
-    if (image->data == NULL) {
-	printf("Error allocating memory for color-corrected image data");
-	return 0;
-    }
-
-    if ((i = fread(image->data, size, 1, file)) != 1) {
-	printf("Error reading image data from %s.\n", filename);
-	return 0;
-    }
-
-    for (i=0;i<size;i+=3) { // reverse all of the colors. (bgr -> rgb)
-	temp = image->data[i];
-	image->data[i] = image->data[i+2];
-	image->data[i+2] = temp;
-    }
-
-    // we're done.
-    return 1;
+  }
+  //printf("Width of %s: %lu\n", filename, image->sizeX);
+  
+  // read the height
+  if ((i = fread(&image->sizeY, 4, 1, file)) != 1) {
+    printf("Error reading height from %s.\n", filename);
+    return 0;
+  }
+  //printf("Height of %s: %lu\n", filename, image->sizeY);
+  
+  // calculate the size (assuming 24 bits or 3 bytes per pixel).
+  size = image->sizeX * image->sizeY * 3;
+  
+  // read the planes
+  if ((fread(&planes, 2, 1, file)) != 1) {
+    printf("Error reading planes from %s.\n", filename);
+    return 0;
+  }
+  if (planes != 1) {
+    printf("Planes from %s is not 1: %u\n", filename, planes);
+    return 0;
+  }
+  
+  // read the bpp
+  if ((i = fread(&bpp, 2, 1, file)) != 1) {
+    printf("Error reading bpp from %s.\n", filename);
+    return 0;
+  }
+  if (bpp != 24) {
+    printf("Bpp from %s is not 24: %u\n", filename, bpp);
+    return 0;
+  }
+  
+  // seek past the rest of the bitmap header.
+  fseek(file, 24, SEEK_CUR);
+  
+  // read the data.
+  image->data = (char *) malloc(size);
+  if (image->data == NULL) {
+    printf("Error allocating memory for color-corrected image data");
+    return 0;
+  }
+  
+  if ((i = fread(image->data, size, 1, file)) != 1) {
+    printf("Error reading image data from %s.\n", filename);
+    return 0;
+  }
+  
+  for (i=0;i<size;i+=3) { // reverse all of the colors. (bgr -> rgb)
+    temp = image->data[i];
+    image->data[i] = image->data[i+2];
+    image->data[i+2] = temp;
+  }
+  
+  // we're done.
+  return 1;
 }
 
 
 
 /* ====================== Image Functions ==================== */
-
-/* Name: c_loadGLTexture
- * Params:
- * Returns:
- */
-foreign_t c_loadGLTexture(term_t PL_Filename) {
-  char *filename;
-  Image *image1;
-
-  if(!PL_get_atom_chars(PL_Filename,&filename))
-    return FALSE;
-
-  // allocate space for texture
-  image1 = (Image *) malloc(sizeof(Image));
-  if (image1 == NULL) {
-    printf("Error allocating space for image");
-    exit(0);
-  }
-
-  if (!c_imageLoad(filename, image1)) {
-    exit(1);
-  }
-
-  // Create Texture
-  glGenTextures(1, &texture[0]);
-  glBindTexture(GL_TEXTURE_2D, texture[0]);   // 2d texture (x and y size)
-
-  glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR); // scale linearly when image bigger than texture
-  glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR); // scale linearly when image smalled than texture
-
-  // 2d texture, level of detail 0 (normal), 3 components (red, green, blue), x size from image, y size from image,
-  // border 0 (normal), rgb color data, unsigned byte data, and finally the data itself.
-
-  printf("texture[0]:%u\n",texture[0]);
-  printf("&texture[0]:%p\n",&texture[0]);
-
-  printf("image1->sizeX:%u\n",(unsigned int)image1->sizeX);
-  printf("image1->sizeY:%u\n",(unsigned int)image1->sizeY);
-
-  printf("image1->data:%p\n",image1->data);
-
-  glTexImage2D(GL_TEXTURE_2D, 0, 3, image1->sizeX, image1->sizeY, 0, GL_RGB, GL_UNSIGNED_BYTE, image1->data);
-
-  PL_succeed;
-}
-
 /* Name: c_loadGLTextures
  * Params:
  * Returns:
  */
-foreign_t c_loadGLTextures(term_t PL_Filename, term_t PL_Texture, term_t PL_Width, term_t PL_Height, term_t PL_Data) {
+foreign_t c_loadGLTextures(term_t PL_Filename, term_t PL_Width, term_t PL_Height, term_t PL_Data) {
   char *filename;
   Image *image1;
   int rval;
-  void *ptr_texture;
   void *ptr_data;
 
   if(!PL_get_atom_chars(PL_Filename,&filename))
@@ -661,39 +626,15 @@ foreign_t c_loadGLTextures(term_t PL_Filename, term_t PL_Texture, term_t PL_Widt
     exit(1);
   }
 
-  ptr_texture = &texture[0];
   ptr_data = image1->data;
 
-  //printf("ptr:%s\n",itoa(ptr_texture));
-
-  rval = PL_unify_pointer(PL_Texture, ptr_texture);
   rval = PL_unify_integer(PL_Width, (unsigned int)image1->sizeX);
   rval = PL_unify_integer(PL_Height, (unsigned int)image1->sizeY);
   rval = PL_unify_pointer(PL_Data, ptr_data);
 
-  printf("texture:%d\n",texture[0]);
-  printf("&texture:%p\n",&texture[0]);
-
-  //printf("width:%u\n",(unsigned int)image1->sizeX);
-  //printf("height:%u\n",(unsigned int)image1->sizeY);
-
-  //printf("data:%p\n\n",image1->data);
-
-
-  // Create Texture
-  glGenTextures(1, &texture[0]);
-  glBindTexture(GL_TEXTURE_2D, texture[0]);   // 2d texture (x and y size)
-
-  //glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR); // scale linearly when image bigger than texture
-  //glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR); // scale linearly when image smalled than texture
-
-  // 2d texture, level of detail 0 (normal), 3 components (red, green, blue), x size from image, y size from image,
-  // border 0 (normal), rgb color data, unsigned byte data, and finally the data itself.
-  glTexImage2D(GL_TEXTURE_2D, 0, 3, image1->sizeX, image1->sizeY, 0, GL_RGB, GL_UNSIGNED_BYTE, image1->data);
-
   return rval;
 
-  //PL_succeed;
+  PL_succeed;
 }
 
 
@@ -898,6 +839,23 @@ foreign_t c_glClear(term_t PL_Mask) {
     return FALSE;
   mask = (GLbitfield)temp;
   glClear(mask);
+
+  PL_succeed;
+}
+
+/* Name: c_glClearAccum
+ * Params:
+ * Returns:
+ */
+foreign_t c_glClearAccum(term_t PL_Red, term_t PL_Green, term_t PL_Blue, term_t PL_Alpha) {
+  double red,green,blue,alpha;
+  if(!PL_get_float(PL_Red,&red) ||
+     !PL_get_float(PL_Green,&green) ||
+     !PL_get_float(PL_Blue,&blue) ||
+     !PL_get_float(PL_Alpha,&alpha) )
+    return FALSE;
+
+  glClearAccum((GLfloat)red, (GLfloat)green, (GLfloat)blue, (GLfloat)alpha);
 
   PL_succeed;
 }
@@ -1160,6 +1118,20 @@ foreign_t c_glDisable(term_t PL_Mode) {
   PL_succeed;
 }
 
+/* Name: c_glDrawBuffer
+ * Params:
+ * Returns:
+ */
+foreign_t c_glDrawBuffer(term_t PL_Mode) {
+  int mode;
+
+  if(!PL_get_integer(PL_Mode,&mode))
+    return FALSE;
+
+  glDrawBuffer((GLenum)mode);
+  PL_succeed;
+}
+
 /* Name: c_glEnable
  * Params:
  * Returns:
@@ -1267,39 +1239,25 @@ foreign_t c_glFrustum(term_t PL_L, term_t PL_R, term_t PL_T, term_t PL_B, term_t
  * Params:
  * Returns:
  */
-foreign_t c_glGenTextures(term_t PL_N, term_t PL_TextureNames, term_t PL_Num) {
-  term_t head = PL_new_term_ref();      /* variable for the elements */
-  term_t list = PL_copy_term_ref(PL_TextureNames);    /* copy as we need to write */
-
+foreign_t c_glGenTextures(term_t PL_N, term_t PL_TextureNames) {
+  term_t list = PL_copy_term_ref(PL_TextureNames); 
+  term_t head = PL_new_term_ref();
   int n;
-  int num;
-  int count;
-  unsigned int *parameters;
-  if(!PL_get_integer(PL_Num,&num))
-	  return FALSE;
-
-  parameters = malloc(num * sizeof(int));
+  int i;
 
   if(!PL_get_integer(PL_N,&n))
     return FALSE;
 
-  count = 0;
-  while( PL_get_list(list, head, list) ) {
-    char *s;
+  glGenTextures((GLsizei)n, &texture[0]);
 
-    if ( PL_get_chars(head, &s, CVT_INTEGER) ){
-      parameters[count] = (atoi(s));
-    }
-    else
-      PL_fail;
-
-    count++;
+  printf("\n");
+  for(i = 0; i < n; i++) {
+    if(!PL_unify_list(list,head,list) ||
+       !PL_unify_integer(head, texture[i]))
+      return FALSE;
   }
 
-  glGenTextures((GLsizei)n, parameters);
-
-  free(parameters);
-  return PL_get_nil(list);
+  return PL_unify_nil(list);
 
   PL_succeed;
 }
@@ -1422,6 +1380,7 @@ foreign_t c_glLightModelfv(term_t PL_PName, term_t PL_Params, term_t PL_Num) {
   PL_succeed;
 }
 
+
 /* Name: c_glLineStipple
  * Params:
  * Returns:
@@ -1459,6 +1418,21 @@ foreign_t c_glLineWidth(term_t PL_Width) {
  */
 foreign_t c_glLoadIdentity(void) {
   glLoadIdentity();
+  PL_succeed;
+}
+
+/* Name: c_glLoadName
+ * Params:
+ * Returns:
+ */
+foreign_t c_glLoadName(term_t PL_Name) {
+  int name;
+
+  if(!PL_get_integer(PL_Name,&name))
+    return FALSE;
+
+  glLoadName((GLuint)name);
+
   PL_succeed;
 }
 
@@ -1545,6 +1519,22 @@ foreign_t c_glNewList(term_t PL_List, term_t PL_Mode) {
   PL_succeed;
 }
 
+/* Name: c_glNormal3f
+ * Params:
+ * Returns:
+ */
+foreign_t c_glNormal3f(term_t PL_X, term_t PL_Y, term_t PL_Z) {
+  GLdouble x,y,z;
+
+  if(!PL_get_float(PL_X,&x) ||
+     !PL_get_float(PL_Y,&y) ||
+     !PL_get_float(PL_Z,&z))
+    return FALSE;
+  glNormal3f((float)x,(float)y,(float)z);
+
+  PL_succeed;
+}
+
 /* Name: c_glOrtho
  * Params:
  * Returns:
@@ -1592,6 +1582,21 @@ foreign_t c_glPointSize(term_t PL_Size) {
 
   glPointSize((GLfloat)size);
 
+  PL_succeed;
+}
+
+/* Name: c_glPolygonMode
+ * Params:
+ * Returns:
+ */
+foreign_t c_glPolygonMode(term_t PL_Face, term_t PL_Mode) {
+  int face, mode;
+
+  if(!PL_get_integer(PL_Face,&face) ||
+     !PL_get_integer(PL_Mode,&mode))
+    return FALSE;
+
+  glPolygonMode((GLenum)face, (GLenum)mode);
   PL_succeed;
 }
 
@@ -1695,6 +1700,20 @@ foreign_t c_glRasterPos2i(term_t PL_X, term_t PL_Y) {
 
   glRasterPos2i(x,y);
 
+  PL_succeed;
+}
+
+/* Name: c_glReadBuffer
+ * Params:
+ * Returns:
+ */
+foreign_t c_glReadBuffer(term_t PL_Mode) {
+  int mode;
+
+  if(!PL_get_integer(PL_Mode,&mode))
+    return FALSE;
+
+  glReadBuffer((GLenum)mode);
   PL_succeed;
 }
 
@@ -1843,7 +1862,8 @@ foreign_t c_glTexCoord2f(term_t PL_S, term_t PL_T) {
 foreign_t c_glTexImage2D(term_t PL_Target, term_t PL_Level, term_t PL_Internal, term_t PL_Width, term_t PL_Height,
                          term_t PL_Border, term_t PL_Format, term_t PL_Type, term_t PL_Texels) {
   int target, level, internal, width, height, border, format, type;
-  void *texels;
+  void *temp;
+  int *texels;
   //int texels;
   //void *ptr;
 
@@ -1855,17 +1875,13 @@ foreign_t c_glTexImage2D(term_t PL_Target, term_t PL_Level, term_t PL_Internal, 
      !PL_get_integer(PL_Border,&border) ||
      !PL_get_integer(PL_Format,&format) ||
      !PL_get_integer(PL_Type,&type) ||
-     !PL_get_pointer(PL_Texels,&texels))
+     !PL_get_pointer(PL_Texels,&temp))
     return FALSE;
 
-  printf("Texels:%p\n", &texels);
-
-  //ptr = texels;
-
-  //printf("ptr:%p\n",ptr);
+  texels = temp;
 
   glTexImage2D((GLenum)target, (GLint)level, (GLint)internal, (GLsizei)width, (GLsizei)height,
-               (GLint)border, (GLenum)format, (GLenum)type, &texels);
+               (GLint)border, (GLenum)format, (GLenum)type, texels);
 
   PL_succeed;
 }
@@ -2003,6 +2019,33 @@ foreign_t c_glViewport(term_t PL_X, term_t PL_Y, term_t PL_Width, term_t PL_Heig
 
 
 /* ====================== glu Functions ==================== */
+
+/* Name: c_gluBuild2DMipmaps
+ * Params:
+ * Returns:
+ */
+foreign_t c_gluBuild2DMipmaps(term_t PL_Target, term_t PL_Internal, term_t PL_Width, term_t PL_Height,
+                         term_t PL_Format, term_t PL_Type, term_t PL_Data) {
+  int target, internal, width, height, format, type;
+  void *temp;
+  int *data;
+
+  if(!PL_get_integer(PL_Target,&target) ||
+     !PL_get_integer(PL_Internal,&internal) ||
+     !PL_get_integer(PL_Width,&width) ||
+     !PL_get_integer(PL_Height,&height) ||
+     !PL_get_integer(PL_Format,&format) ||
+     !PL_get_integer(PL_Type,&type) ||
+     !PL_get_pointer(PL_Data,&temp))
+    return FALSE;
+
+  data = temp;
+
+  gluBuild2DMipmaps((GLenum)target, (GLint)internal, (GLsizei)width, (GLsizei)height,
+               (GLenum)format, (GLenum)type, data);
+
+  PL_succeed;
+}
 
 /* Name: c_gluLookAt
  * Params:

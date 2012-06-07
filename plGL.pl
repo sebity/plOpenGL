@@ -48,6 +48,13 @@ glClear(OptionList):-
 	Applied_options is OptionList,
 	c_glClear(Applied_options).
 
+glClearAccum(R,G,B,A) :-
+	float(R),
+	float(G),
+	float(B),
+	float(A),
+	c_glClearAccum(R,G,B,A).
+
 glClearColor(R,G,B,A) :-
 	float(R),
 	float(G),
@@ -104,6 +111,10 @@ glDisable(Mode):-
 	Mode_Eval is Mode,
 	c_glDisable(Mode_Eval).
 
+% Specify which color buffers are to be drawn into
+glDrawBuffer(Mode):-
+    c_glDrawBuffer(Mode).
+
 glEnable(Mode):-
 	Mode_Eval is Mode,
 	c_glEnable(Mode_Eval).
@@ -137,9 +148,8 @@ glFrustum(Left,Right,Top,Bottom,Near,Far):-
 	float(Far),
 	c_glFrustum(Left,Right,Top,Bottom,Near,Far).
 
-glGenTextures(N,Texture):-
-    size(Texture,Num),
-    c_glGenTextures(N,Texture, Num).
+glGenTextures(N,TextureNames):-
+    c_glGenTextures(N,TextureNames).
 
 glHint(Target,Hint):-
 	T is Target,
@@ -169,6 +179,10 @@ glLineWidth(Width) :-
 glLoadIdentity:-
 	c_glLoadIdentity.
 
+% Load a name onto the name stack
+glLoadName(Name):-
+    c_glLoadName(Name).
+
 glMaterialfv(Face, PName, Params):-
 	size(Params,N),
 	c_glMaterialfv(Face, PName, Params, N).
@@ -178,6 +192,12 @@ glMatrixMode(Mode):-
 
 glNewList(List,Mode) :-
 	c_glNewList(List,Mode).
+
+glNormal3f(X,Y,Z):-
+	float(X),
+	float(Y),
+	float(Z),
+	c_glNormal3f(X,Y,Z).
 
 glOrtho(Left,Right,Top,Bottom,Near,Far):-
 	float(Left),
@@ -194,6 +214,9 @@ glPixelStorei(Mode,Param) :-
 glPointSize(Size):-
 	float(Size),
 	c_glPointSize(Size).
+
+glPolygonMode(Face, Mode):-
+    c_glPolygonMode(Face, Mode).
 
 glPopAttrib:-
 	c_glPopAttrib.
@@ -221,6 +244,10 @@ glPushName(Name):-
 
 glRasterPos2i(X,Y):-
     c_glRasterPos2i(X,Y).
+
+% Select a color buffer source for pixels
+glReadBuffer(Mode):-
+    c_glReadBuffer(Mode).
 
 glRectf(X1,Y1,X2,Y2) :-
 	float(X1),
