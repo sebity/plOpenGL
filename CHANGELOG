@@ -1,7 +1,7 @@
 plOpenGL change log - version 0.1.2
 =================================================
 
-0.1.2
+0.2.0
 =====
     * Added Examples of NeHe's Lessons 1-5.
     * Added OpenGL functions: glClearAccum, glDrawBuffer, glLoadName, glNormal3f, glPolygonMode, glReadBuffer
