@@ -1,5 +1,8 @@
 % glu Predicates
 
+gluBuild2DMipmaps(Target,Internal,Width,Height,Format,Type,Texels):-
+	c_gluBuild2DMipmaps(Target,Internal,Width,Height,Format,Type,Texels).
+
 gluLookAt(EyeX, EyeY, EyeZ, CenterX, CenterY, CenterZ, UpX, UpY, UpZ):-
     float(EyeX),
     float(EyeY),

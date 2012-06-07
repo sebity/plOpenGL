@@ -39,11 +39,8 @@
 :-['general_defs.pl'].
 
 % Functions
-loadGLTexture(Filename):-
-    c_loadGLTexture(Filename).
-
-loadGLTextures(Filename,Texture,Width,Height,Data):-
-    c_loadGLTextures(Filename,Texture,Width,Height,Data).
+loadGLTextures(Filename,Width,Height,Data):-
+    c_loadGLTextures(Filename,Width,Height,Data).
 
 sleep(X):-
 	X1 = X,
