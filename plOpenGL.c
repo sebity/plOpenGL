@@ -27,25 +27,25 @@
 #include <stdlib.h>
 #include <string.h>
 
-#ifdef WIN32
+#ifdef WIN32    /* Windows Version */
 #include <windows.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <GL/glut.h>
-#define SLEEP(x) Sleep(x)   /* Windows version */
+#define SLEEP(x) Sleep(x)
 #else
-#ifdef __linux__
+#ifdef __linux__    /* Linux Version */
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <GL/glut.h>
 #include <unistd.h>
-#define SLEEP(x) usleep(x*1000)   /* Linux version */
-#else
+#define SLEEP(x) usleep(x*1000)
+#else    /* Mac Version */
 #include <OpenGL/gl.h>
 #include <OpenGL/glu.h>
 #include <GLUT/glut.h>
 #include <unistd.h>
-#define SLEEP(x) usleep(x*1000)   /* Linux version */
+#define SLEEP(x) usleep(x*1000)
 #endif
 #endif
 /* storage for one texture  */
@@ -93,6 +93,7 @@ foreign_t c_glClearStencil(term_t S);
 foreign_t c_glClipPlane(term_t Plane, term_t Equation, term_t Num);
 foreign_t c_glColor3f(term_t Red, term_t Green, term_t Blue);
 foreign_t c_glColor4f(term_t Red, term_t Green, term_t Blue, term_t Alpha);
+foreign_t c_glColorMaterial(term_t Face, term_t Mode);
 foreign_t c_glCopyPixels(term_t X, term_t Y, term_t Width, term_t Height, term_t Type);
 foreign_t c_glCopyTexImage1D(term_t Target, term_t Level, term_t Internal, term_t X, term_t Y,
                              term_t Width, term_t Border);
@@ -127,6 +128,7 @@ foreign_t c_glOrtho(term_t Left, term_t Right, term_t Bottom, term_t Top, term_t
 foreign_t c_glPixelStorei(term_t Mode, term_t Param);
 foreign_t c_glPointSize(term_t Size);
 foreign_t c_glPolygonMode(term_t Face, term_t Mode);
+foreign_t c_glPolygonOffset(term_t Factor, term_t Units);
 foreign_t c_glPopAttrib(void);
 foreign_t c_glPopClientAttrib(void);
 foreign_t c_glPopMatrix(void);
@@ -217,6 +219,7 @@ install_t install() {
   PL_register_foreign("c_glClipPlane",3,c_glClipPlane,PL_FA_NOTRACE);
   PL_register_foreign("c_glColor3f",3,c_glColor3f,PL_FA_NOTRACE);
   PL_register_foreign("c_glColor4f",4,c_glColor4f,PL_FA_NOTRACE);
+  PL_register_foreign("c_glColorMaterial",2,c_glColorMaterial,PL_FA_NOTRACE);
   PL_register_foreign("c_glCopyPixels",5,c_glCopyPixels,PL_FA_NOTRACE);
   PL_register_foreign("c_glCopyTexImage1D",7,c_glCopyTexImage1D,PL_FA_NOTRACE);
   PL_register_foreign("c_glCopyTexImage2D",8,c_glCopyTexImage2D,PL_FA_NOTRACE);
@@ -249,6 +252,7 @@ install_t install() {
   PL_register_foreign("c_glPixelStorei",2,c_glPixelStorei,PL_FA_NOTRACE);
   PL_register_foreign("c_glPointSize",1,c_glPointSize,PL_FA_NOTRACE);
   PL_register_foreign("c_glPolygonMode",2,c_glPolygonMode,PL_FA_NOTRACE);
+  PL_register_foreign("c_glPolygonOffset",2,c_glPolygonOffset,PL_FA_NOTRACE);
   PL_register_foreign("c_glPopAttrib",0,c_glPushAttrib,PL_FA_NOTRACE);
   PL_register_foreign("c_glPopClientAttrib",0,c_glPushClientAttrib,PL_FA_NOTRACE);
   PL_register_foreign("c_glPopMatrix",0,c_glPopMatrix,PL_FA_NOTRACE);
@@ -519,7 +523,10 @@ foreign_t c_sleep(term_t PL_S) {
   PL_succeed;
 }
 
-
+/* Name: c_imageLoad
+ * Params:
+ * Returns:
+ */
 int c_imageLoad(char *filename, Image *image) {
   FILE *file;
   unsigned long size;                 // size of the image in bytes.
@@ -642,9 +649,10 @@ foreign_t c_loadGLTextures(term_t PL_Filename, term_t PL_Width, term_t PL_Height
 
 /* ====================== gl Functions ==================== */
 
-/* Name: c_glAccum
- * Params:
- * Returns:
+/* Name:    c_glAccum
+ * Desc:    Operate on the accumulation buffer
+ * Params:  -
+ * Returns: -
  */
 foreign_t c_glAccum(term_t PL_Operation, term_t PL_Value) {
   int operation;
@@ -659,9 +667,10 @@ foreign_t c_glAccum(term_t PL_Operation, term_t PL_Value) {
   PL_succeed;
 }
 
-/* Name: c_glActiveTextureARB
- * Params:
- * Returns:
+/* Name:    c_glActiveTextureARB
+ * Desc:    Select active texture unit
+ * Params:  -
+ * Returns: -
  */
 foreign_t c_glActiveTextureARB(term_t PL_Texture) {
   int texture;
@@ -674,9 +683,10 @@ foreign_t c_glActiveTextureARB(term_t PL_Texture) {
   PL_succeed;
 }
 
-/* Name: c_glAlphaFunc
- * Params:
- * Returns:
+/* Name:    c_glAlphaFunc
+ * Desc:    Specify the alpha test function
+ * Params:  -
+ * Returns: -
  */
 foreign_t c_glAlphaFunc(term_t PL_Func, term_t PL_Ref) {
   int func;
@@ -691,9 +701,10 @@ foreign_t c_glAlphaFunc(term_t PL_Func, term_t PL_Ref) {
   PL_succeed;
 }
 
-/* Name: c_glArrayElement
- * Params:
- * Returns:
+/* Name:    c_glArrayElement
+ * Desc:    Render a vertex using the specified vertex array element
+ * Params:  -
+ * Returns: -
  */
 foreign_t c_glArrayElement(term_t PL_Index) {
   int index;
@@ -706,9 +717,10 @@ foreign_t c_glArrayElement(term_t PL_Index) {
   PL_succeed;
 }
 
-/* Name: c_glBegin
- * Params:
- * Returns:
+/* Name:    c_glBegin
+ * Desc:    Delimit the vertices of a primitive or a group of like primitives
+ * Params:  -
+ * Returns: -
  */
 foreign_t c_glBegin(term_t PL_Mode) {
   GLenum mode;
@@ -723,9 +735,10 @@ foreign_t c_glBegin(term_t PL_Mode) {
   PL_succeed;
 }
 
-/* Name: c_glBindTexture
- * Params:
- * Returns:
+/* Name:    c_glBindTexture
+ * Desc:    Bind a named texture to a texturing target
+ * Params:  -
+ * Returns: -
  */
 foreign_t c_glBindTexture(term_t PL_Target, term_t PL_Texture) {
   GLenum target;
@@ -744,9 +757,10 @@ foreign_t c_glBindTexture(term_t PL_Target, term_t PL_Texture) {
   PL_succeed;
 }
 
-/* Name: c_glBitmap
- * Params:
- * Returns:
+/* Name:    c_glBitmap
+ * Desc:    Draw a bitmap
+ * Params:  -
+ * Returns: -
  */
 foreign_t c_glBitmap(term_t PL_Width, term_t PL_Height, term_t PL_X1, term_t PL_Y1, term_t PL_X2, term_t PL_Y2, term_t PL_Bitmap, term_t PL_Num) {
   term_t head = PL_new_term_ref();      /* variable for the elements */
@@ -972,9 +986,10 @@ foreign_t c_glClipPlane(term_t PL_Plane, term_t PL_Equation, term_t PL_Num) {
 }
 
 
-/* Name: c_glColor3f
- * Params:
- * Returns:
+/* Name:    c_glColor3f
+ * Desc:    Set the current color
+ * Params:  -
+ * Returns: -
  */
 foreign_t c_glColor3f(term_t PL_Red, term_t PL_Green, term_t PL_Blue) {
   GLdouble red, green, blue;
@@ -988,9 +1003,10 @@ foreign_t c_glColor3f(term_t PL_Red, term_t PL_Green, term_t PL_Blue) {
   PL_succeed;
 }
 
-/* Name: c_glColor4f
- * Params:
- * Returns:
+/* Name:    c_glColor4f
+ * Desc:    Set the current color
+ * Params:  -
+ * Returns: -
  */
 foreign_t c_glColor4f(term_t PL_Red, term_t PL_Green, term_t PL_Blue, term_t PL_Alpha) {
   GLdouble red, green, blue, alpha;
@@ -1002,6 +1018,22 @@ foreign_t c_glColor4f(term_t PL_Red, term_t PL_Green, term_t PL_Blue, term_t PL_
     return FALSE;
   glColor4f((float)red,(float)green,(float)blue,(float)alpha);
 
+  PL_succeed;
+}
+
+/* Name:    c_glColorMaterial
+ * Desc:    Cause a material color to track the current color
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glColorMaterial(term_t PL_Face, term_t PL_Mode) {
+  int face, mode;
+
+  if(!PL_get_integer(PL_Face,&face) ||
+     !PL_get_integer(PL_Mode,&mode))
+    return FALSE;
+
+  glColorMaterial((GLenum)face, (GLenum)mode);
   PL_succeed;
 }
 
@@ -1600,6 +1632,22 @@ foreign_t c_glPolygonMode(term_t PL_Face, term_t PL_Mode) {
   PL_succeed;
 }
 
+/* Name:    c_glPolygonOffset
+ * Desc:    Set the scale and units used to calculate depth values
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glPolygonOffset(term_t PL_Factor, term_t PL_Units) {
+  double factor, units;
+
+  if(!PL_get_float(PL_Factor,&factor) ||
+     !PL_get_float(PL_Units,&units))
+    return FALSE;
+
+  glPolygonOffset((GLfloat)factor, (GLfloat)units);
+  PL_succeed;
+}
+
 /* Name: c_glPopAttrib
  * Params:
  * Returns:
@@ -1862,10 +1910,9 @@ foreign_t c_glTexCoord2f(term_t PL_S, term_t PL_T) {
 foreign_t c_glTexImage2D(term_t PL_Target, term_t PL_Level, term_t PL_Internal, term_t PL_Width, term_t PL_Height,
                          term_t PL_Border, term_t PL_Format, term_t PL_Type, term_t PL_Texels) {
   int target, level, internal, width, height, border, format, type;
-  void *temp;
-  int *texels;
-  //int texels;
-  //void *ptr;
+  void *texels;
+  //void *temp;
+  //int *texels;
 
   if(!PL_get_integer(PL_Target,&target) ||
      !PL_get_integer(PL_Level,&level) ||
@@ -1875,10 +1922,10 @@ foreign_t c_glTexImage2D(term_t PL_Target, term_t PL_Level, term_t PL_Internal, 
      !PL_get_integer(PL_Border,&border) ||
      !PL_get_integer(PL_Format,&format) ||
      !PL_get_integer(PL_Type,&type) ||
-     !PL_get_pointer(PL_Texels,&temp))
+     !PL_get_pointer(PL_Texels,&texels))
     return FALSE;
 
-  texels = temp;
+  //texels = temp;
 
   glTexImage2D((GLenum)target, (GLint)level, (GLint)internal, (GLsizei)width, (GLsizei)height,
                (GLint)border, (GLenum)format, (GLenum)type, texels);

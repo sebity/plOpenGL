@@ -41,13 +41,16 @@ glBitmap(W,H,X1,Y1,X2,Y2,Bitmap):-
 glBlendFunc(SFactor,DFactor):-
 	c_glBlendFunc(SFactor,DFactor).
 
+% Execute a display list
 glCallList(OptionList) :-
 	c_glCallList(OptionList).
 
+% Clear buffers to preset values
 glClear(OptionList):-
 	Applied_options is OptionList,
 	c_glClear(Applied_options).
 
+% Specify clear values for the accumulation buffer
 glClearAccum(R,G,B,A) :-
 	float(R),
 	float(G),
@@ -55,6 +58,7 @@ glClearAccum(R,G,B,A) :-
 	float(A),
 	c_glClearAccum(R,G,B,A).
 
+% Specify clear values for the color buffers
 glClearColor(R,G,B,A) :-
 	float(R),
 	float(G),
@@ -62,27 +66,33 @@ glClearColor(R,G,B,A) :-
 	float(A),
 	c_glClearColor(R,G,B,A).
 
+% Specify the clear value for the depth buffer
 glClearDepth(Depth) :-
 	float(Depth),
 	c_glClearDepth(Depth).
 
+% Specify the clear value for the color index buffers
 glClearIndex(Index) :-
 	float(Index),
 	c_glClearIndex(Index).
 
+% Specify the clear value for the stencil buffer
 glClearStencil(S):-
 	c_glClearStencil(S).
 
+% Specify a plane against which all geometry is clipped
 glClipPlane(Plane,Equation) :-
 	size(Equation,N),
 	c_glClipPlane(Plane,Equation,N).
 
+% Sets the current color.
 glColor3f(Red,Green,Blue):-
 	float(Red),
 	float(Green),
 	float(Blue),
 	c_glColor3f(Red,Green,Blue).
 
+% Sets the current color.
 glColor4f(Red,Green,Blue,Alpha):-
 	float(Red),
 	float(Green),
@@ -90,12 +100,19 @@ glColor4f(Red,Green,Blue,Alpha):-
 	float(Alpha),
 	c_glColor4f(Red,Green,Blue,Alpha).
 
+% Cause a material color to track the current color
+glColorMaterial(Face, Mode):-
+	c_glColorMaterial(Face,Mode).
+
+% Copy pixels in the frame buffer
 glCopyPixels(X, Y, Width, Height, Type):-
     c_glCopyPixels(X, Y, Width, Height, Type).
 
+% Copy pixels into a 1D texture image
 glCopyTexImage1D(Target, Level, Internal, X, Y, Width, Border):-
     c_glCopyTexImage1D(Target, Level, Internal, X, Y, Width, Border).
 
+% Copy pixels into a 2D texture image
 glCopyTexImage2D(Target, Level, Internal, X, Y, Width, Height, Border):-
     c_glCopyTexImage2D(Target, Level, Internal, X, Y, Width, Height, Border).
 
@@ -217,6 +234,12 @@ glPointSize(Size):-
 
 glPolygonMode(Face, Mode):-
     c_glPolygonMode(Face, Mode).
+
+% Set the scale and units used to calculate depth values
+glPolygonOffset(Factor, Units):-
+	float(Factor),
+	float(Units),
+	c_glPolygonOffset(Factor, Units).
 
 glPopAttrib:-
 	c_glPopAttrib.
