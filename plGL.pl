@@ -319,9 +319,10 @@ glTexImage1D(Target,Level,Internal,Width,Border,Format,Type,Texels):-
 glTexImage2D(Target,Level,Internal,Width,Height,Border,Format,Type,Texels):-
 	c_glTexImage2D(Target,Level,Internal,Width,Height,Border,Format,Type,Texels).
 
+/*
 glTexImage3D(Target,Level,Internal,Width,Height,Depth,Border,Format,Type,Texels):-
 	c_glTexImage3D(Target,Level,Internal,Width,Height,Depth,Border,Format,Type,Texels).
-
+*/
 
 glTexParameteri(Target,PName,Param):-
 	c_glTexParameteri(Target,PName,Param).
