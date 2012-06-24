@@ -39,8 +39,9 @@ Command Line Usage
 ------------------
 plOpenGL can be run from the command line, e.g.
 
+<pre>
 > swipl -g main -s examples/helloworld.pl
-
+</pre>
 
 Example Applications
 --------------------
@@ -50,3 +51,9 @@ See the <code>examples/</code> folder
 Author
 ------
 Jan Tatham
+
+
+License
+-------
+plOpenGL is currently available under the GNU Lesser General Public License (LGPL) version 2.1.
+
