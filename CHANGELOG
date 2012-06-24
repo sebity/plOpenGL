@@ -1,5 +1,10 @@
-plOpenGL change log - version 0.1.2
+plOpenGL CHANGELOG
 =================================================
+
+0.2.1
+=====
+    * Added OpenGL functions: glColorMaterial, glFrontFace, glPolygonOffset, glTexImage1D, glTexImage3D, glTexSubImage1D, glTexSubImage2D, glTexSubImage3D
+    * Updated OpenGL function: glTexImage2D
 
 0.2.0
 =====

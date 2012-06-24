@@ -110,6 +110,7 @@ foreign_t c_glFinish(void);
 foreign_t c_glFlush(void);
 foreign_t c_glFogf(term_t PName, term_t Param);
 foreign_t c_glFogi(term_t PName, term_t Param);
+foreign_t c_glFrontFace(term_t Mode);
 foreign_t c_glFrustum(term_t Left, term_t Right, term_t Bottom, term_t Top, term_t Near, term_t Far);
 foreign_t c_glGenTextures(term_t N, term_t TextureNames);
 foreign_t c_glHint(term_t Target, term_t Hint);
@@ -147,9 +148,20 @@ foreign_t c_glStencilFunc(term_t Func, term_t Ref, term_t Mask);
 foreign_t c_glStencilMask(term_t Mask);
 foreign_t c_glStencilOp(term_t Fail, term_t zFail, term_t zPass);
 foreign_t c_glTexCoord2f(term_t S, term_t T);
+foreign_t c_glTexImage1D(term_t Target, term_t Level, term_t Internal, term_t Width,
+                         term_t Border, term_t Format, term_t Type, term_t Texels);
 foreign_t c_glTexImage2D(term_t Target, term_t Level, term_t Internal, term_t Width, term_t Height,
                          term_t Border, term_t Format, term_t Type, term_t Texels);
+foreign_t c_glTexImage3D(term_t Target, term_t Level, term_t Internal, 
+                         term_t Width, term_t Height, term_t Depth,
+                         term_t Border, term_t Format, term_t Type, term_t Texels);
 foreign_t c_glTexParameteri(term_t Target, term_t PName, term_t Param);
+foreign_t c_glTexSubImage1D(term_t Target, term_t Level, term_t XOffset,
+                            term_t Width, term_t Format, term_t Type, term_t Texels);
+foreign_t c_glTexSubImage2D(term_t Target, term_t Level, term_t XOffset, term_t YOffset, 
+                            term_t Width, term_t Height, term_t Format, term_t Type, term_t Texels);
+foreign_t c_glTexSubImage3D(term_t Target, term_t Level, term_t XOffset, term_t YOffset, term_t ZOffset,
+                            term_t Width, term_t Height, term_t Depth, term_t Format, term_t Type, term_t Texels);
 foreign_t c_glTranslatef(term_t X, term_t Y, term_t Z);
 foreign_t c_glVertex2f(term_t X, term_t Y);
 foreign_t c_glVertex2i(term_t X, term_t Y);
@@ -234,6 +246,7 @@ install_t install() {
   PL_register_foreign("c_glFlush",0,c_glFlush,PL_FA_NOTRACE);
   PL_register_foreign("c_glFogf",2,c_glFogf,PL_FA_NOTRACE);
   PL_register_foreign("c_glFogi",2,c_glFogi,PL_FA_NOTRACE);
+  PL_register_foreign("c_glFrontFace",1,c_glFrontFace,PL_FA_NOTRACE);
   PL_register_foreign("c_glFrustum",6,c_glFrustum,PL_FA_NOTRACE);
   PL_register_foreign("c_glGenTextures",2,c_glGenTextures,PL_FA_NOTRACE);
   PL_register_foreign("c_glHint",2,c_glHint,PL_FA_NOTRACE);
@@ -271,8 +284,13 @@ install_t install() {
   PL_register_foreign("c_glStencilFunc",3,c_glStencilFunc,PL_FA_NOTRACE);
   PL_register_foreign("c_glStencilOp",3,c_glStencilOp,PL_FA_NOTRACE);
   PL_register_foreign("c_glTexCoord2f",2,c_glTexCoord2f,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexImage1D",8,c_glTexImage1D,PL_FA_NOTRACE);
   PL_register_foreign("c_glTexImage2D",9,c_glTexImage2D,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexImage3D",10,c_glTexImage3D,PL_FA_NOTRACE);
   PL_register_foreign("c_glTexParameteri",3,c_glTexParameteri,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexSubImage1D",7,c_glTexSubImage1D,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexSubImage2D",9,c_glTexSubImage2D,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexSubImage3D",11,c_glTexSubImage3D,PL_FA_NOTRACE);
   PL_register_foreign("c_glTranslatef",3,c_glTranslatef,PL_FA_NOTRACE);
   PL_register_foreign("c_glVertex2f",2,c_glVertex2f,PL_FA_NOTRACE);
   PL_register_foreign("c_glVertex2i",2,c_glVertex2i,PL_FA_NOTRACE);
@@ -1246,6 +1264,21 @@ foreign_t c_glFogi(term_t PL_PName, term_t PL_Param) {
   PL_succeed;
 }
 
+/* Name:    c_glFrontFace
+ * Desc:    Define front- and back-facing polygons
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glFrontFace(term_t PL_Mode) {
+  int mode;
+
+  if(!PL_get_integer(PL_Mode,&mode))
+    return FALSE;
+
+  glFrontFace((GLenum)mode);
+  PL_succeed;
+}
+
 
 /* Name: c_glFrustum
  * Params:
@@ -1903,9 +1936,36 @@ foreign_t c_glTexCoord2f(term_t PL_S, term_t PL_T) {
   PL_succeed;
 }
 
-/* Name: c_glTexImage2D
- * Params:
- * Returns:
+/* Name:    c_glTexImage1D
+ * Desc:    Specify a one-dimensional texture image
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glTexImage1D(term_t PL_Target, term_t PL_Level, term_t PL_Internal, term_t PL_Width,
+                         term_t PL_Border, term_t PL_Format, term_t PL_Type, term_t PL_Texels) {
+  int target, level, internal, width, border, format, type;
+  void *texels;
+
+  if(!PL_get_integer(PL_Target,&target) ||
+     !PL_get_integer(PL_Level,&level) ||
+     !PL_get_integer(PL_Internal,&internal) ||
+     !PL_get_integer(PL_Width,&width) ||
+     !PL_get_integer(PL_Border,&border) ||
+     !PL_get_integer(PL_Format,&format) ||
+     !PL_get_integer(PL_Type,&type) ||
+     !PL_get_pointer(PL_Texels,&texels))
+    return FALSE;
+
+  glTexImage1D((GLenum)target, (GLint)level, (GLint)internal, (GLsizei)width,
+               (GLint)border, (GLenum)format, (GLenum)type, texels);
+
+  PL_succeed;
+}
+
+/* Name:    c_glTexImage2D
+ * Desc:    Specify a two-dimensional texture image
+ * Params:  -
+ * Returns: -
  */
 foreign_t c_glTexImage2D(term_t PL_Target, term_t PL_Level, term_t PL_Internal, term_t PL_Width, term_t PL_Height,
                          term_t PL_Border, term_t PL_Format, term_t PL_Type, term_t PL_Texels) {
@@ -1933,6 +1993,36 @@ foreign_t c_glTexImage2D(term_t PL_Target, term_t PL_Level, term_t PL_Internal, 
   PL_succeed;
 }
 
+/* Name:    c_glTexImage3D
+ * Desc:    Specify a three-dimensional texture image
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glTexImage3D(term_t PL_Target, term_t PL_Level, term_t PL_Internal, 
+                         term_t PL_Width, term_t PL_Height, term_t PL_Depth,
+                         term_t PL_Border, term_t PL_Format, term_t PL_Type, term_t PL_Texels) {
+  int target, level, internal, width, height, depth, border, format, type;
+  void *texels;
+
+  if(!PL_get_integer(PL_Target,&target) ||
+     !PL_get_integer(PL_Level,&level) ||
+     !PL_get_integer(PL_Internal,&internal) ||
+     !PL_get_integer(PL_Width,&width) ||
+     !PL_get_integer(PL_Height,&height) ||
+     !PL_get_integer(PL_Depth,&depth) ||
+     !PL_get_integer(PL_Border,&border) ||
+     !PL_get_integer(PL_Format,&format) ||
+     !PL_get_integer(PL_Type,&type) ||
+     !PL_get_pointer(PL_Texels,&texels))
+    return FALSE;
+
+  glTexImage3D((GLenum)target, (GLint)level, (GLint)internal, 
+               (GLsizei)width, (GLsizei)height, (GLsizei)depth,
+               (GLint)border, (GLenum)format, (GLenum)type, texels);
+
+  PL_succeed;
+}
+
 /* Name: c_glTexParameteri
  * Params:
  * Returns:
@@ -1949,6 +2039,91 @@ foreign_t c_glTexParameteri(term_t PL_Target, term_t PL_PName, term_t PL_Param) 
 
   PL_succeed;
 
+}
+
+/* Name:    c_glTexSubImage1D
+ * Desc:    Specify a one-dimensional texture subimage
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glTexSubImage1D(term_t PL_Target, term_t PL_Level, term_t PL_XOffset, term_t PL_Width,
+                            term_t PL_Format, term_t PL_Type, term_t PL_Texels) {
+  int target, level, xoffset, width, format, type;
+  void *texels;
+
+  if(!PL_get_integer(PL_Target,&target) ||
+     !PL_get_integer(PL_Level,&level) ||
+     !PL_get_integer(PL_XOffset,&xoffset) ||
+     !PL_get_integer(PL_Width,&width) ||
+     !PL_get_integer(PL_Format,&format) ||
+     !PL_get_integer(PL_Type,&type) ||
+     !PL_get_pointer(PL_Texels,&texels))
+    return FALSE;
+
+  glTexSubImage1D((GLenum)target, (GLint)level, (GLint)xoffset,
+                  (GLsizei)width, (GLenum)format, (GLenum)type, texels);
+
+  PL_succeed;
+}
+
+/* Name:    c_glTexSubImage2D
+ * Desc:    Specify a two-dimensional texture subimage
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glTexSubImage2D(term_t PL_Target, term_t PL_Level, term_t PL_XOffset, term_t PL_YOffset,
+                            term_t PL_Width, term_t PL_Height,
+                            term_t PL_Format, term_t PL_Type, term_t PL_Texels) {
+  int target, level, xoffset, yoffset, width, height, format, type;
+  void *texels;
+
+  if(!PL_get_integer(PL_Target,&target) ||
+     !PL_get_integer(PL_Level,&level) ||
+     !PL_get_integer(PL_XOffset,&xoffset) ||
+     !PL_get_integer(PL_YOffset,&yoffset) ||
+     !PL_get_integer(PL_Width,&width) ||
+     !PL_get_integer(PL_Height,&height) ||
+     !PL_get_integer(PL_Format,&format) ||
+     !PL_get_integer(PL_Type,&type) ||
+     !PL_get_pointer(PL_Texels,&texels))
+    return FALSE;
+
+  glTexSubImage2D((GLenum)target, (GLint)level, (GLint)xoffset, (GLint)yoffset,
+                  (GLsizei)width, (GLsizei)height,
+                  (GLenum)format, (GLenum)type, texels);
+
+  PL_succeed;
+}
+
+/* Name:    c_glTexSubImage3D
+ * Desc:    Specify a two-dimensional texture subimage
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glTexSubImage3D(term_t PL_Target, term_t PL_Level, term_t PL_XOffset, term_t PL_YOffset, term_t PL_ZOffset,
+                            term_t PL_Width, term_t PL_Height, term_t PL_Depth,
+                            term_t PL_Format, term_t PL_Type, term_t PL_Texels) {
+  int target, level, xoffset, yoffset, zoffset, width, height, depth, format, type;
+  void *texels;
+
+  if(!PL_get_integer(PL_Target,&target) ||
+     !PL_get_integer(PL_Level,&level) ||
+     !PL_get_integer(PL_XOffset,&xoffset) ||
+     !PL_get_integer(PL_YOffset,&yoffset) ||
+     !PL_get_integer(PL_ZOffset,&zoffset) ||
+     !PL_get_integer(PL_Width,&width) ||
+     !PL_get_integer(PL_Height,&height) ||
+     !PL_get_integer(PL_Depth,&depth) ||
+     !PL_get_integer(PL_Format,&format) ||
+     !PL_get_integer(PL_Type,&type) ||
+     !PL_get_pointer(PL_Texels,&texels))
+    return FALSE;
+
+  glTexSubImage3D((GLenum)target, (GLint)level, (GLint)xoffset, (GLint)yoffset, (GLint)zoffset,
+                  (GLsizei)width, (GLsizei)height, (GLsizei)depth, 
+                  (GLenum)format, (GLenum)type, texels);
+
+  PL_succeed;
 }
 
 /* Name: c_glTranslatef

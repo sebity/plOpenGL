@@ -156,6 +156,10 @@ glFogf(PName, Param):-
 glFogi(PName, Param):-
 	c_glFogi(PName, Param).
 
+% define front- and back-facing polygons
+glFrontFace(Mode):-
+	c_glFrontFace(Mode).
+
 glFrustum(Left,Right,Top,Bottom,Near,Far):-
 	float(Left),
 	float(Right),
@@ -309,11 +313,28 @@ glTexCoord2f(S,T):-
 	float(T),
 	c_glTexCoord2f(S,T).
 
+glTexImage1D(Target,Level,Internal,Width,Border,Format,Type,Texels):-
+	c_glTexImage1D(Target,Level,Internal,Width,Border,Format,Type,Texels).
+
 glTexImage2D(Target,Level,Internal,Width,Height,Border,Format,Type,Texels):-
 	c_glTexImage2D(Target,Level,Internal,Width,Height,Border,Format,Type,Texels).
 
+glTexImage3D(Target,Level,Internal,Width,Height,Depth,Border,Format,Type,Texels):-
+	c_glTexImage3D(Target,Level,Internal,Width,Height,Depth,Border,Format,Type,Texels).
+
+
 glTexParameteri(Target,PName,Param):-
 	c_glTexParameteri(Target,PName,Param).
+
+glTexSubImage1D(Target,Level,XOffset,Width,Format,Type,Texels):-
+	c_glTexSubImage1D(Target,Level,XOffset,Width,Format,Type,Texels).
+
+glTexSubImage2D(Target,Level,XOffset,YOffset,Width,Height,Format,Type,Texels):-
+	c_glTexSubImage2D(Target,Level,XOffset,YOffset,Width,Height,Format,Type,Texels).
+
+glTexSubImage3D(Target,Level,XOffset,YOffset,ZOffset,Width,Height,Depth,Format,Type,Texels):-
+	c_glTexSubImage3D(Target,Level,XOffset,YOffset,ZOffset,Width,Height,Depth,Format,Type,Texels).
+
 
 glTranslatef(X,Y,Z):-
 	float(X),
