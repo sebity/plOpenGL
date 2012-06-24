@@ -1,12 +1,19 @@
-plOpenGL change log - version 0.1.2
+plOpenGL CHANGELOG
 =================================================
+
+0.2.1
+=====
+    * Add: glColorMaterial, glFrontFace, glPolygonOffset, glTexImage1D, 
+           glTexImage3D, glTexSubImage1D, glTexSubImage2D
+    * Update: glTexImage2D
 
 0.2.0
 =====
-    * Added Examples of NeHe's Lessons 1-5.
-    * Added OpenGL functions: glClearAccum, glDrawBuffer, glLoadName, glNormal3f, glPolygonMode, glReadBuffer
-    * Added GLU functions: gluBuild2DMipmaps
-    * Added Extra functions: loadGLTextures
+    * Add: Examples of NeHe's Lessons 1-5.
+    * Add: glClearAccum, glDrawBuffer, glLoadName, glNormal3f, glPolygonMode, 
+           glReadBuffer
+    * Add: gluBuild2DMipmaps
+    * Add: loadGLTextures
 
 0.1.1
 =====
