@@ -700,8 +700,9 @@ foreign_t c_glActiveTextureARB(term_t PL_Texture) {
   if(!PL_get_integer(PL_Texture,&texture))
     return FALSE;
 
+  #ifdef WIN32
   PFNGLACTIVETEXTUREARBPROC glActiveTextureARB = (PFNGLACTIVETEXTUREARBPROC)wglGetProcAddress("glActiveTextureARB");
-
+  #endif
   glActiveTextureARB((GLenum)texture);
 
   PL_succeed;
@@ -2023,7 +2024,9 @@ foreign_t c_glTexImage3D(term_t PL_Target, term_t PL_Level, term_t PL_Internal,
     return FALSE;
 
 
+  #ifdef WIN32
   PFNGLTEXIMAGE3DPROC glTexImage3D = (PFNGLTEXIMAGE3DPROC)wglGetProcAddress("glTexImage3D");
+  #endif
   glTexImage3D((GLenum)target, (GLint)level, (GLint)internal,
                (GLsizei)width, (GLsizei)height, (GLsizei)depth,
                (GLint)border, (GLenum)format, (GLenum)type, (const GLvoid*)texels);
