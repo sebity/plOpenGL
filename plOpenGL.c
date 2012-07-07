@@ -29,9 +29,11 @@
 
 #ifdef WIN32    /* Windows Version */
 #include <windows.h>
+#define GL_GLEXT_PROTOTYPES
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <GL/glut.h>
+#include <GL/glext.h>
 #define SLEEP(x) Sleep(x)
 #else
 #ifdef __linux__    /* Linux Version */
@@ -152,15 +154,15 @@ foreign_t c_glTexImage1D(term_t Target, term_t Level, term_t Internal, term_t Wi
                          term_t Border, term_t Format, term_t Type, term_t Texels);
 foreign_t c_glTexImage2D(term_t Target, term_t Level, term_t Internal, term_t Width, term_t Height,
                          term_t Border, term_t Format, term_t Type, term_t Texels);
-foreign_t c_glTexImage3D(term_t Target, term_t Level, term_t Internal, 
+foreign_t c_glTexImage3D(term_t Target, term_t Level, term_t Internal,
                          term_t Width, term_t Height, term_t Depth,
                          term_t Border, term_t Format, term_t Type, term_t Texels);
 foreign_t c_glTexParameteri(term_t Target, term_t PName, term_t Param);
 foreign_t c_glTexSubImage1D(term_t Target, term_t Level, term_t XOffset,
                             term_t Width, term_t Format, term_t Type, term_t Texels);
-foreign_t c_glTexSubImage2D(term_t Target, term_t Level, term_t XOffset, term_t YOffset, 
+foreign_t c_glTexSubImage2D(term_t Target, term_t Level, term_t XOffset, term_t YOffset,
                             term_t Width, term_t Height, term_t Format, term_t Type, term_t Texels);
-/* Temporarily commented out as swi-prolog's foreign interface cannot pass more 
+/* Temporarily commented out as swi-prolog's foreign interface cannot pass more
    than 10 arguments */
 /*foreign_t c_glTexSubImage3D(term_t Target, term_t Level, term_t XOffset, term_t YOffset, term_t ZOffset,
   term_t Width, term_t Height, term_t Depth, term_t Format, term_t Type, term_t Texels); */
@@ -554,33 +556,33 @@ int c_imageLoad(char *filename, Image *image) {
   unsigned short int planes;          // number of planes in image (must be 1)
   unsigned short int bpp;             // number of bits per pixel (must be 24)
   char temp;                          // temporary color storage for bgr-rgb conversion.
-  
+
   // make sure the file is there.
   if ((file = fopen(filename, "rb"))==NULL) {
     printf("File Not Found : %s\n",filename);
     return 0;
   }
-  
+
   // seek through the bmp header, up to the width/height:
   fseek(file, 18, SEEK_CUR);
-  
+
   // read the width
   if ((i = fread(&image->sizeX, 4, 1, file)) != 1) {
 	printf("Error reading width from %s.\n", filename);
 	return 0;
   }
   //printf("Width of %s: %lu\n", filename, image->sizeX);
-  
+
   // read the height
   if ((i = fread(&image->sizeY, 4, 1, file)) != 1) {
     printf("Error reading height from %s.\n", filename);
     return 0;
   }
   //printf("Height of %s: %lu\n", filename, image->sizeY);
-  
+
   // calculate the size (assuming 24 bits or 3 bytes per pixel).
   size = image->sizeX * image->sizeY * 3;
-  
+
   // read the planes
   if ((fread(&planes, 2, 1, file)) != 1) {
     printf("Error reading planes from %s.\n", filename);
@@ -590,7 +592,7 @@ int c_imageLoad(char *filename, Image *image) {
     printf("Planes from %s is not 1: %u\n", filename, planes);
     return 0;
   }
-  
+
   // read the bpp
   if ((i = fread(&bpp, 2, 1, file)) != 1) {
     printf("Error reading bpp from %s.\n", filename);
@@ -600,28 +602,28 @@ int c_imageLoad(char *filename, Image *image) {
     printf("Bpp from %s is not 24: %u\n", filename, bpp);
     return 0;
   }
-  
+
   // seek past the rest of the bitmap header.
   fseek(file, 24, SEEK_CUR);
-  
+
   // read the data.
   image->data = (char *) malloc(size);
   if (image->data == NULL) {
     printf("Error allocating memory for color-corrected image data");
     return 0;
   }
-  
+
   if ((i = fread(image->data, size, 1, file)) != 1) {
     printf("Error reading image data from %s.\n", filename);
     return 0;
   }
-  
+
   for (i=0;i<size;i+=3) { // reverse all of the colors. (bgr -> rgb)
     temp = image->data[i];
     image->data[i] = image->data[i+2];
     image->data[i+2] = temp;
   }
-  
+
   // we're done.
   return 1;
 }
@@ -698,7 +700,9 @@ foreign_t c_glActiveTextureARB(term_t PL_Texture) {
   if(!PL_get_integer(PL_Texture,&texture))
     return FALSE;
 
-  //glActiveTextureARB((GLenum)texture);
+  PFNGLACTIVETEXTUREARBPROC glActiveTextureARB = (PFNGLACTIVETEXTUREARBPROC)wglGetProcAddress("glActiveTextureARB");
+
+  glActiveTextureARB((GLenum)texture);
 
   PL_succeed;
 }
@@ -1307,7 +1311,7 @@ foreign_t c_glFrustum(term_t PL_L, term_t PL_R, term_t PL_T, term_t PL_B, term_t
  * Returns:
  */
 foreign_t c_glGenTextures(term_t PL_N, term_t PL_TextureNames) {
-  term_t list = PL_copy_term_ref(PL_TextureNames); 
+  term_t list = PL_copy_term_ref(PL_TextureNames);
   term_t head = PL_new_term_ref();
   int n;
   int i;
@@ -2000,7 +2004,7 @@ foreign_t c_glTexImage2D(term_t PL_Target, term_t PL_Level, term_t PL_Internal, 
  * Params:  -
  * Returns: -
  */
-foreign_t c_glTexImage3D(term_t PL_Target, term_t PL_Level, term_t PL_Internal, 
+foreign_t c_glTexImage3D(term_t PL_Target, term_t PL_Level, term_t PL_Internal,
                          term_t PL_Width, term_t PL_Height, term_t PL_Depth,
                          term_t PL_Border, term_t PL_Format, term_t PL_Type, term_t PL_Texels) {
   int target, level, internal, width, height, depth, border, format, type;
@@ -2018,9 +2022,11 @@ foreign_t c_glTexImage3D(term_t PL_Target, term_t PL_Level, term_t PL_Internal,
      !PL_get_pointer(PL_Texels,&texels))
     return FALSE;
 
-  glTexImage3D((GLenum)target, (GLint)level, (GLint)internal, 
+
+  PFNGLTEXIMAGE3DPROC glTexImage3D = (PFNGLTEXIMAGE3DPROC)wglGetProcAddress("glTexImage3D");
+  glTexImage3D((GLenum)target, (GLint)level, (GLint)internal,
                (GLsizei)width, (GLsizei)height, (GLsizei)depth,
-               (GLint)border, (GLenum)format, (GLenum)type, texels);
+               (GLint)border, (GLenum)format, (GLenum)type, (const GLvoid*)texels);
 
   PL_succeed;
 }
@@ -2123,7 +2129,7 @@ foreign_t c_glTexSubImage3D(term_t PL_Target, term_t PL_Level, term_t PL_XOffset
     return FALSE;
 
   glTexSubImage3D((GLenum)target, (GLint)level, (GLint)xoffset, (GLint)yoffset, (GLint)zoffset,
-                  (GLsizei)width, (GLsizei)height, (GLsizei)depth, 
+                  (GLsizei)width, (GLsizei)height, (GLsizei)depth,
                   (GLenum)format, (GLenum)type, texels);
 
   PL_succeed;
