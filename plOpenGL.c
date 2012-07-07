@@ -50,6 +50,7 @@
 #define SLEEP(x) usleep(x*1000)
 #endif
 #endif
+
 /* storage for one texture  */
 unsigned int texture[32];
 
@@ -61,7 +62,9 @@ struct Image {
 };
 typedef struct Image Image;
 
-// extended functions
+/**********************
+ * extended functions *
+ **********************/
 void c_display(void);
 void c_idle(void);
 void c_keyboard(unsigned char Key, int X, int Y);
@@ -71,11 +74,15 @@ void c_reshape(int W, int H);
 
 int c_imageLoad(char *filename, Image *image);
 
-// standard functions
+/**********************
+ * standard functions *
+ **********************/
 foreign_t c_sleep(term_t S);
 foreign_t c_loadGLTextures(term_t Filename, term_t Width, term_t Height, term_t Data);
 
-// gl functions
+/****************
+ * gl functions *
+ ****************/
 foreign_t c_glAccum(term_t Operation, term_t Value);
 foreign_t c_glActiveTextureARB(term_t Texture);
 foreign_t c_glAlphaFunc(term_t Func, term_t Ref);
@@ -174,7 +181,9 @@ foreign_t c_glVertex3f(term_t X, term_t Y, term_t Z);
 foreign_t c_glVertex3i(term_t X, term_t Y, term_t Z);
 foreign_t c_glViewport(term_t X, term_t Y, term_t Width, term_t Height);
 
-// glu functions
+/***************** 
+ * glu functions *
+ *****************/
 foreign_t c_gluBuild2DMipmaps(term_t Target, term_t Internal, term_t Width, term_t Height,
                          term_t Format, term_t Type, term_t Data);
 foreign_t c_gluLookAt(term_t EyeX, term_t EyeY, term_t EyeZ,
@@ -184,7 +193,9 @@ foreign_t c_gluOrtho2D(term_t Left, term_t Right, term_t Bottom, term_t Top);
 foreign_t c_gluPerspective(term_t Fovy, term_t Aspect, term_t Near, term_t Far);
 
 
-// glut functions
+/******************
+ * glut functions *
+ ******************/
 foreign_t c_glutCreateWindow(term_t String);
 foreign_t c_glutDestroyWindow(void);
 foreign_t c_glutDisplayFunc(void);
@@ -294,7 +305,9 @@ install_t install() {
   PL_register_foreign("c_glTexParameteri",3,c_glTexParameteri,PL_FA_NOTRACE);
   PL_register_foreign("c_glTexSubImage1D",7,c_glTexSubImage1D,PL_FA_NOTRACE);
   PL_register_foreign("c_glTexSubImage2D",9,c_glTexSubImage2D,PL_FA_NOTRACE);
-  //  PL_register_foreign("c_glTexSubImage3D",11,c_glTexSubImage3D,PL_FA_NOTRACE);
+/* 
+ * PL_register_foreign("c_glTexSubImage3D",11,c_glTexSubImage3D,PL_FA_NOTRACE); 
+ */
   PL_register_foreign("c_glTranslatef",3,c_glTranslatef,PL_FA_NOTRACE);
   PL_register_foreign("c_glVertex2f",2,c_glVertex2f,PL_FA_NOTRACE);
   PL_register_foreign("c_glVertex2i",2,c_glVertex2i,PL_FA_NOTRACE);
@@ -344,7 +357,7 @@ install_t install() {
  * Returns:
  */
 void c_display(void) {
-  //fid_t fid = PL_open_foreign_frame();
+  /* fid_t fid = PL_open_foreign_frame(); */
   qid_t query_handle;
   static predicate_t p;
   static term_t display_predicate;
@@ -371,13 +384,16 @@ void c_idle(void) {
   static predicate_t p;
   static term_t idle_predicate;
   int rc;
-  //char *string;
+  
+/* 
+  char *string;
 
-  //if(!PL_get_atom_chars(PL_String,&temp_string))
-  //  return FALSE;
-  //string = glut_idle;
+  if(!PL_get_atom_chars(PL_String,&temp_string))
+    return FALSE;
+  string = glut_idle;
 
-  //printf("idle_2:%s\n",string);
+  printf("idle_2:%s\n",string);
+*/
 
   if(!p)
     p = PL_predicate("idle",0,"user");
@@ -390,7 +406,8 @@ void c_idle(void) {
   PL_cut_query(query_handle);
 }
 
-/* Name: c_keyboard
+/***************************************
+ * Name: c_keyboard
  * Params:
  * Returns:
  */
@@ -402,11 +419,11 @@ void c_keyboard(unsigned char PL_Key, int PL_X, int PL_Y) {
   int a,b,c;
   int rc;
 
-  /*
+/*
   printf("K=%d\n",PL_Key);
   printf("X=%d\n",PL_X);
   printf("Y=%d\n",PL_Y);
-  */
+*/
 
   if(!p)
     p = PL_predicate("keyboard",3,"user");
@@ -420,12 +437,7 @@ void c_keyboard(unsigned char PL_Key, int PL_X, int PL_Y) {
 
   query_handle = PL_open_query(NULL,PL_Q_NORMAL,p,keyboard_predicate);
   rc = PL_next_solution(query_handle);
-  //if (!rc) {
-    PL_cut_query(query_handle);
-    //PL_close_foreign_frame(fid);
-    //}
-    //PL_close_query(query_handle);
-    //PL_discard_foreign_frame(fid);
+  PL_cut_query(query_handle);
 }
 
 /* Name: c_motion
@@ -433,7 +445,6 @@ void c_keyboard(unsigned char PL_Key, int PL_X, int PL_Y) {
  * Returns:
  */
 void c_motion(int PL_X, int PL_Y) {
-  //fid_t fid = PL_open_foreign_frame();
   qid_t query_handle;
   static predicate_t p;
   static term_t motion_predicate;
@@ -464,7 +475,7 @@ void c_motion(int PL_X, int PL_Y) {
  * Returns:
  */
 void c_mouse(int PL_Button, int PL_State, int PL_X, int PL_Y) {
-  //fid_t fid = PL_open_foreign_frame();
+  /* fid_t fid = PL_open_foreign_frame(); */
   qid_t query_handle;
   static predicate_t p;
   static term_t mouse_predicate;
@@ -491,12 +502,7 @@ void c_mouse(int PL_Button, int PL_State, int PL_X, int PL_Y) {
 
   query_handle = PL_open_query(NULL,PL_Q_NORMAL,p,mouse_predicate);
   rc = PL_next_solution(query_handle);
-  //if (!rc) {
-    PL_cut_query(query_handle);
-    //PL_close_foreign_frame(fid);
-    //}
-    //PL_close_query(query_handle);
-    //PL_discard_foreign_frame(fid);
+  PL_cut_query(query_handle);
 }
 
 /* Name: c_reshape
@@ -504,14 +510,16 @@ void c_mouse(int PL_Button, int PL_State, int PL_X, int PL_Y) {
  * Returns:
  */
 void c_reshape(int PL_W, int PL_H) {
-  //fid_t fid = PL_open_foreign_frame();
+  /* fid_t fid = PL_open_foreign_frame(); */
   qid_t query_handle;
   static predicate_t p;
   static term_t reshape_predicate;
   int rc;
 
-  //printf("w=%d\n",PL_W);
-  //printf("h=%d\n",PL_H);
+  /*
+    printf("w=%d\n",PL_W);
+    printf("h=%d\n",PL_H);
+  */
 
   if(!reshape_predicate)
     reshape_predicate= PL_new_term_refs(1);
@@ -521,12 +529,7 @@ void c_reshape(int PL_W, int PL_H) {
 
   query_handle = PL_open_query(NULL,PL_Q_NORMAL,p,reshape_predicate);
   rc = PL_next_solution(query_handle);
-  //if (!rc) {
-    PL_cut_query(query_handle);
-    //PL_close_foreign_frame(fid);
-    //}
-    //PL_close_query(query_handle);
-    //PL_discard_foreign_frame(fid);
+  PL_cut_query(query_handle);
 }
 
 
@@ -551,39 +554,37 @@ foreign_t c_sleep(term_t PL_S) {
  */
 int c_imageLoad(char *filename, Image *image) {
   FILE *file;
-  unsigned long size;                 // size of the image in bytes.
-  unsigned long i;                    // standard counter.
-  unsigned short int planes;          // number of planes in image (must be 1)
-  unsigned short int bpp;             // number of bits per pixel (must be 24)
-  char temp;                          // temporary color storage for bgr-rgb conversion.
+  unsigned long size;                 /* size of the image in bytes. */
+  unsigned long i;                    /* standard counter. */
+  unsigned short int planes;          /* number of planes in image (must be 1) */
+  unsigned short int bpp;             /* number of bits per pixel (must be 24) */
+  char temp;                          /* temporary color storage for bgr-rgb conversion. */
 
-  // make sure the file is there.
+  /* make sure the file is there. */
   if ((file = fopen(filename, "rb"))==NULL) {
     printf("File Not Found : %s\n",filename);
     return 0;
   }
 
-  // seek through the bmp header, up to the width/height:
+  /* seek through the bmp header, up to the width/height: */
   fseek(file, 18, SEEK_CUR);
 
-  // read the width
+  /* read the width */
   if ((i = fread(&image->sizeX, 4, 1, file)) != 1) {
 	printf("Error reading width from %s.\n", filename);
 	return 0;
   }
-  //printf("Width of %s: %lu\n", filename, image->sizeX);
 
-  // read the height
+  /* read the height */
   if ((i = fread(&image->sizeY, 4, 1, file)) != 1) {
     printf("Error reading height from %s.\n", filename);
     return 0;
   }
-  //printf("Height of %s: %lu\n", filename, image->sizeY);
 
-  // calculate the size (assuming 24 bits or 3 bytes per pixel).
+  /* calculate the size (assuming 24 bits or 3 bytes per pixel). */
   size = image->sizeX * image->sizeY * 3;
 
-  // read the planes
+  /* read the planes */
   if ((fread(&planes, 2, 1, file)) != 1) {
     printf("Error reading planes from %s.\n", filename);
     return 0;
@@ -593,7 +594,7 @@ int c_imageLoad(char *filename, Image *image) {
     return 0;
   }
 
-  // read the bpp
+  /* read the bpp */
   if ((i = fread(&bpp, 2, 1, file)) != 1) {
     printf("Error reading bpp from %s.\n", filename);
     return 0;
@@ -603,10 +604,10 @@ int c_imageLoad(char *filename, Image *image) {
     return 0;
   }
 
-  // seek past the rest of the bitmap header.
+  /* seek past the rest of the bitmap header. */
   fseek(file, 24, SEEK_CUR);
 
-  // read the data.
+  /* read the data. */
   image->data = (char *) malloc(size);
   if (image->data == NULL) {
     printf("Error allocating memory for color-corrected image data");
@@ -618,13 +619,12 @@ int c_imageLoad(char *filename, Image *image) {
     return 0;
   }
 
-  for (i=0;i<size;i+=3) { // reverse all of the colors. (bgr -> rgb)
+  for (i=0;i<size;i+=3) { /* reverse all of the colors. (bgr -> rgb) */
     temp = image->data[i];
     image->data[i] = image->data[i+2];
     image->data[i+2] = temp;
   }
 
-  // we're done.
   return 1;
 }
 
@@ -644,7 +644,7 @@ foreign_t c_loadGLTextures(term_t PL_Filename, term_t PL_Width, term_t PL_Height
   if(!PL_get_atom_chars(PL_Filename,&filename))
     return FALSE;
 
-  // allocate space for texture
+  /* allocate space for texture */
   image1 = (Image *) malloc(sizeof(Image));
   if (image1 == NULL) {
     printf("Error allocating space for image");
@@ -1535,7 +1535,7 @@ foreign_t c_glMaterialfv(term_t PL_Face, term_t PL_PName, term_t PL_Params, term
 
     if ( PL_get_chars(head, &s, CVT_FLOAT) ) {
       parameters[count] = (atof(s));
-      //printf("parameters[%d]: %f\n",count,atof(s));
+      /* printf("parameters[%d]: %f\n",count,atof(s)); */
     }
     else
       PL_fail;
@@ -1978,8 +1978,8 @@ foreign_t c_glTexImage2D(term_t PL_Target, term_t PL_Level, term_t PL_Internal, 
                          term_t PL_Border, term_t PL_Format, term_t PL_Type, term_t PL_Texels) {
   int target, level, internal, width, height, border, format, type;
   void *texels;
-  //void *temp;
-  //int *texels;
+  /* void *temp; */
+  /* int *texels; */
 
   if(!PL_get_integer(PL_Target,&target) ||
      !PL_get_integer(PL_Level,&level) ||
@@ -1992,7 +1992,7 @@ foreign_t c_glTexImage2D(term_t PL_Target, term_t PL_Level, term_t PL_Internal, 
      !PL_get_pointer(PL_Texels,&texels))
     return FALSE;
 
-  //texels = temp;
+  /* texels = temp; */
 
   glTexImage2D((GLenum)target, (GLint)level, (GLint)internal, (GLsizei)width, (GLsizei)height,
                (GLint)border, (GLenum)format, (GLenum)type, texels);
@@ -2398,17 +2398,17 @@ foreign_t c_glutDisplayFunc(void) {
 foreign_t c_glutIdleFunc(term_t PL_String) {
   char *string;
   void (*fp)(void);
-  //char *ptr = "spinDisplay";
+  /* char *ptr = "spinDisplay"; */
 
   if(!PL_get_atom_chars(PL_String,&string))
     return FALSE;
 
-  //glut_idle = string;
+  /* glut_idle = string; */
 
 
   fp = c_idle;
 
-  //printf("idle:%s\n",string);
+  /* printf("idle:%s\n",string); */
   if(strcmp(string,"null") == 0) {
     glutIdleFunc(NULL);
   }
