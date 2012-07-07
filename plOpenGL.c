@@ -121,6 +121,7 @@ foreign_t c_glFogf(term_t PName, term_t Param);
 foreign_t c_glFogi(term_t PName, term_t Param);
 foreign_t c_glFrontFace(term_t Mode);
 foreign_t c_glFrustum(term_t Left, term_t Right, term_t Bottom, term_t Top, term_t Near, term_t Far);
+foreign_t c_glGenLists(term_t Range);
 foreign_t c_glGenTextures(term_t N, term_t TextureNames);
 foreign_t c_glHint(term_t Target, term_t Hint);
 foreign_t c_glIndexi(term_t Index);
@@ -150,7 +151,9 @@ foreign_t c_glPushName(term_t Name);
 foreign_t c_glRasterPos2i(term_t X, term_t Y);
 foreign_t c_glReadBuffer(term_t Mode);
 foreign_t c_glRectf(term_t X1, term_t Y1, term_t X2, term_t Y2);
+foreign_t c_glRotated(term_t Angle, term_t X, term_t Y, term_t Z);
 foreign_t c_glRotatef(term_t Angle, term_t X, term_t Y, term_t Z);
+foreign_t c_glScaled(term_t X, term_t Y, term_t Z);
 foreign_t c_glScalef(term_t X, term_t Y, term_t Z);
 foreign_t c_glShadeModel(term_t Mode);
 foreign_t c_glStencilFunc(term_t Func, term_t Ref, term_t Mask);
@@ -263,6 +266,7 @@ install_t install() {
   PL_register_foreign("c_glFogi",2,c_glFogi,PL_FA_NOTRACE);
   PL_register_foreign("c_glFrontFace",1,c_glFrontFace,PL_FA_NOTRACE);
   PL_register_foreign("c_glFrustum",6,c_glFrustum,PL_FA_NOTRACE);
+  PL_register_foreign("c_glGenLists",1,c_glGenLists,PL_FA_NOTRACE);
   PL_register_foreign("c_glGenTextures",2,c_glGenTextures,PL_FA_NOTRACE);
   PL_register_foreign("c_glHint",2,c_glHint,PL_FA_NOTRACE);
   PL_register_foreign("c_glIndexi",1,c_glIndexi,PL_FA_NOTRACE);
@@ -292,7 +296,9 @@ install_t install() {
   PL_register_foreign("c_glRasterPos2i",2,c_glRasterPos2i,PL_FA_NOTRACE);
   PL_register_foreign("c_glReadBuffer",4,c_glReadBuffer,PL_FA_NOTRACE);
   PL_register_foreign("c_glRectf",4,c_glRectf,PL_FA_NOTRACE);
+  PL_register_foreign("c_glRotated",4,c_glRotated,PL_FA_NOTRACE);
   PL_register_foreign("c_glRotatef",4,c_glRotatef,PL_FA_NOTRACE);
+  PL_register_foreign("c_glScaled",3,c_glScaled,PL_FA_NOTRACE);
   PL_register_foreign("c_glScalef",3,c_glScalef,PL_FA_NOTRACE);
   PL_register_foreign("c_glShadeModel",1,c_glShadeModel,PL_FA_NOTRACE);
   PL_register_foreign("c_glStencilMask",1,c_glStencilMask,PL_FA_NOTRACE);
@@ -509,7 +515,8 @@ void c_mouse(int PL_Button, int PL_State, int PL_X, int PL_Y) {
   PL_cut_query(query_handle);
 }
 
-/* Name: c_reshape
+/***************************************
+ * Name: c_reshape
  * Params:
  * Returns:
  */
@@ -537,7 +544,8 @@ void c_reshape(int PL_W, int PL_H) {
 }
 
 
-/* Name: c_sleep
+/***************************************
+ * Name: c_sleep
  * Params:
  * Returns:
  */
@@ -552,7 +560,8 @@ foreign_t c_sleep(term_t PL_S) {
   PL_succeed;
 }
 
-/* Name: c_imageLoad
+/***************************************
+ * Name: c_imageLoad
  * Params:
  * Returns:
  */
@@ -635,7 +644,9 @@ int c_imageLoad(char *filename, Image *image) {
 
 
 /* ====================== Image Functions ==================== */
-/* Name: c_loadGLTextures
+
+/***************************************
+ * Name: c_loadGLTextures
  * Params:
  * Returns:
  */
@@ -1348,6 +1359,22 @@ foreign_t c_glFrustum(term_t PL_L, term_t PL_R, term_t PL_T, term_t PL_B, term_t
 }
 
 /***************************************
+ * Name:    c_glGenLists
+ * Desc:    Generate a contiguous set of empty display lists
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glGenLists(term_t PL_Range) {
+  int range;
+
+  if(!PL_get_integer(PL_Range,&range))
+    return FALSE;
+
+  glGenLists((GLsizei)range);
+  PL_succeed;
+}
+
+/***************************************
  * Name: c_glGenTextures
  * Params:
  * Returns:
@@ -1891,6 +1918,23 @@ foreign_t c_glRectf(term_t PL_X1, term_t PL_Y1, term_t PL_X2, term_t PL_Y2) {
   PL_succeed;
 }
 
+/***************************************
+ * Name: c_glRotated
+ * Params:
+ * Returns:
+ */
+foreign_t c_glRotated(term_t PL_Angle, term_t PL_X, term_t PL_Y, term_t PL_Z) {
+  GLdouble angle,x,y,z;
+
+  if(!PL_get_float(PL_Angle,&angle) ||
+     !PL_get_float(PL_X,&x) ||
+     !PL_get_float(PL_Y,&y) ||
+     !PL_get_float(PL_Z,&z))
+    return FALSE;
+  glRotated((GLdouble)angle,(GLdouble)x,(GLdouble)y,(GLdouble)z);
+
+  PL_succeed;
+}
 
 /***************************************
  * Name: c_glRotatef
@@ -1911,6 +1955,24 @@ foreign_t c_glRotatef(term_t PL_Angle, term_t PL_X, term_t PL_Y, term_t PL_Z) {
 }
 
 /***************************************
+ * Name: c_glScaled
+ * Params:
+ * Returns:
+ */
+foreign_t c_glScaled(term_t PL_X, term_t PL_Y, term_t PL_Z) {
+  GLdouble x,y,z;
+
+  if(!PL_get_float(PL_X,&x) ||
+     !PL_get_float(PL_Y,&y) ||
+     !PL_get_float(PL_Z,&z))
+    return FALSE;
+  glScalef((GLdouble)x,(GLdouble)y,(GLdouble)z);
+
+  PL_succeed;
+}
+
+
+/***************************************
  * Name: c_glScalef
  * Params:
  * Returns:
@@ -1923,8 +1985,6 @@ foreign_t c_glScalef(term_t PL_X, term_t PL_Y, term_t PL_Z) {
      !PL_get_float(PL_Z,&z))
     return FALSE;
   glScalef((float)x,(float)y,(float)z);
-
-  printf("glScalef(%f, %f, %f)\n",(float)x,(float)y,(float)z);
 
   PL_succeed;
 }
