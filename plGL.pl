@@ -116,10 +116,12 @@ glCopyTexImage1D(Target, Level, Internal, X, Y, Width, Border):-
 glCopyTexImage2D(Target, Level, Internal, X, Y, Width, Height, Border):-
     c_glCopyTexImage2D(Target, Level, Internal, X, Y, Width, Height, Border).
 
+% Specify whether front- or back-facing facets can be culled
 glCullFace(Mode):-
 	Mode_Eval is Mode,
 	c_glCullFace(Mode_Eval).
 
+% Specify the value used for depth buffer comparisons
 glDepthFunc(Mode):-
 	Mode_Eval is Mode,
 	c_glDepthFunc(Mode_Eval).
@@ -140,19 +142,24 @@ glEnable(Mode):-
 glEnd:-
 	c_glEnd.
 
+% Create or replace a display list
 glEndList :-
 	c_glEndList.
 
+% block until all GL execution is complete
 glFinish:-
 	c_glFinish.
 
+% Force execution of GL commands in finite time
 glFlush:-
 	c_glFlush.
 
+% Specify fog parameters
 glFogf(PName, Param):-
 	float(Param),
 	c_glFogf(PName, Param).
 
+% Specify fog parameters
 glFogi(PName, Param):-
 	c_glFogi(PName, Param).
 
@@ -168,6 +175,9 @@ glFrustum(Left,Right,Top,Bottom,Near,Far):-
 	float(Near),
 	float(Far),
 	c_glFrustum(Left,Right,Top,Bottom,Near,Far).
+
+glGenLists(Range):-
+    c_glGenLists(Range).
 
 glGenTextures(N,TextureNames):-
     c_glGenTextures(N,TextureNames).
@@ -276,6 +286,7 @@ glRasterPos2i(X,Y):-
 glReadBuffer(Mode):-
     c_glReadBuffer(Mode).
 
+% Draw a rectangle
 glRectf(X1,Y1,X2,Y2) :-
 	float(X1),
 	float(Y1),
@@ -283,6 +294,15 @@ glRectf(X1,Y1,X2,Y2) :-
 	float(Y2),
 	c_glRectf(X1,Y1,X2,Y2).
 
+% Multiply the current matrix by a rotation matrix
+glRotated(Angle,X,Y,Z) :-
+	float(Angle),
+	float(X),
+	float(Y),
+	float(Z),
+	c_glRotated(Angle,X,Y,Z).
+
+% Multiply the current matrix by a rotation matrix
 glRotatef(Angle,X,Y,Z) :-
 	float(Angle),
 	float(X),
@@ -290,6 +310,14 @@ glRotatef(Angle,X,Y,Z) :-
 	float(Z),
 	c_glRotatef(Angle,X,Y,Z).
 
+% Multiply the current matrix by a general scaling matrix
+glScaled(X,Y,Z):-
+	float(X),
+	float(Y),
+	float(Z),
+	c_glScaled(X,Y,Z).
+
+% Multiply the current matrix by a general scaling matrix
 glScalef(X,Y,Z):-
 	float(X),
 	float(Y),
@@ -319,10 +347,10 @@ glTexImage1D(Target,Level,Internal,Width,Border,Format,Type,Texels):-
 glTexImage2D(Target,Level,Internal,Width,Height,Border,Format,Type,Texels):-
 	c_glTexImage2D(Target,Level,Internal,Width,Height,Border,Format,Type,Texels).
 
-/*
-glTexImage3D(Target,Level,Internal,Width,Height,Depth,Border,Format,Type,Texels):-
-	c_glTexImage3D(Target,Level,Internal,Width,Height,Depth,Border,Format,Type,Texels).
-*/
+% Temporarily Disabled due to FFI Limitation
+% glTexImage3D(Target,Level,Internal,Width,Height,Depth,Border,Format,Type,Texels):-
+%	c_glTexImage3D(Target,Level,Internal,Width,Height,Depth,Border,Format,Type,Texels).
+%
 
 glTexParameteri(Target,PName,Param):-
 	c_glTexParameteri(Target,PName,Param).
@@ -343,29 +371,35 @@ glTranslatef(X,Y,Z):-
 	float(Z),
 	c_glTranslatef(X,Y,Z).
 
+% Specify a vertex
 glVertex2f(X,Y):-
 	float(X),
 	float(Y),
 	c_glVertex2f(X,Y).
 
+% Specify a vertex
 glVertex2i(X,Y):-
 	c_glVertex2i(X,Y).
 
+% Specify a vertex
 glVertex3d(X,Y,Z):-
 	float(X),
 	float(Y),
 	float(Z),
 	c_glVertex3d(X,Y,Z).
 
+% Specify a vertex
 glVertex3f(X,Y,Z):-
 	float(X),
 	float(Y),
 	float(Z),
 	c_glVertex3f(X,Y,Z).
 
+% Specify a vertex
 glVertex3i(X,Y,Z):-
 	c_glVertex3i(X,Y,Z).
 
+% Set the viewport
 glViewport(X,Y,W,H):-
 	c_glViewport(X,Y,W,H).
 

@@ -1,5 +1,17 @@
 plOpenGL CHANGELOG
 =================================================
+0.2.2
+=====
+    * Add: OS Preprocessor Directive for glTexImage3D and glActiveTextureARB
+    * Add: glext.h header for windows
+    * Add: NeHe OpenGL Lesson 6 -- Texture Mapping
+    * Add: NeHe OpenGL Lesson 7 -- Texture Filters, Lighting & Keyboard Control
+    * Add: NeHe OpenGL Lesson 8 -- Blending
+    * Add: glGenLists, glRotated, glScaled
+    * Update: glActiveTextureARB to use windows extension loading
+    * Update: glTexImage3D to use windows extension loading
+    * Update: Replaced c++ style comments with c style in plOpenGL.c
+    * Update: Minor tidy of code commenting
 
 0.2.1
 =====

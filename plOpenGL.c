@@ -50,6 +50,7 @@
 #define SLEEP(x) usleep(x*1000)
 #endif
 #endif
+
 /* storage for one texture  */
 unsigned int texture[32];
 
@@ -61,7 +62,9 @@ struct Image {
 };
 typedef struct Image Image;
 
-// extended functions
+/**********************
+ * extended functions *
+ **********************/
 void c_display(void);
 void c_idle(void);
 void c_keyboard(unsigned char Key, int X, int Y);
@@ -71,11 +74,15 @@ void c_reshape(int W, int H);
 
 int c_imageLoad(char *filename, Image *image);
 
-// standard functions
+/**********************
+ * standard functions *
+ **********************/
 foreign_t c_sleep(term_t S);
 foreign_t c_loadGLTextures(term_t Filename, term_t Width, term_t Height, term_t Data);
 
-// gl functions
+/****************
+ * gl functions *
+ ****************/
 foreign_t c_glAccum(term_t Operation, term_t Value);
 foreign_t c_glActiveTextureARB(term_t Texture);
 foreign_t c_glAlphaFunc(term_t Func, term_t Ref);
@@ -114,6 +121,7 @@ foreign_t c_glFogf(term_t PName, term_t Param);
 foreign_t c_glFogi(term_t PName, term_t Param);
 foreign_t c_glFrontFace(term_t Mode);
 foreign_t c_glFrustum(term_t Left, term_t Right, term_t Bottom, term_t Top, term_t Near, term_t Far);
+foreign_t c_glGenLists(term_t Range);
 foreign_t c_glGenTextures(term_t N, term_t TextureNames);
 foreign_t c_glHint(term_t Target, term_t Hint);
 foreign_t c_glIndexi(term_t Index);
@@ -143,7 +151,9 @@ foreign_t c_glPushName(term_t Name);
 foreign_t c_glRasterPos2i(term_t X, term_t Y);
 foreign_t c_glReadBuffer(term_t Mode);
 foreign_t c_glRectf(term_t X1, term_t Y1, term_t X2, term_t Y2);
+foreign_t c_glRotated(term_t Angle, term_t X, term_t Y, term_t Z);
 foreign_t c_glRotatef(term_t Angle, term_t X, term_t Y, term_t Z);
+foreign_t c_glScaled(term_t X, term_t Y, term_t Z);
 foreign_t c_glScalef(term_t X, term_t Y, term_t Z);
 foreign_t c_glShadeModel(term_t Mode);
 foreign_t c_glStencilFunc(term_t Func, term_t Ref, term_t Mask);
@@ -174,7 +184,9 @@ foreign_t c_glVertex3f(term_t X, term_t Y, term_t Z);
 foreign_t c_glVertex3i(term_t X, term_t Y, term_t Z);
 foreign_t c_glViewport(term_t X, term_t Y, term_t Width, term_t Height);
 
-// glu functions
+/***************** 
+ * glu functions *
+ *****************/
 foreign_t c_gluBuild2DMipmaps(term_t Target, term_t Internal, term_t Width, term_t Height,
                          term_t Format, term_t Type, term_t Data);
 foreign_t c_gluLookAt(term_t EyeX, term_t EyeY, term_t EyeZ,
@@ -184,7 +196,9 @@ foreign_t c_gluOrtho2D(term_t Left, term_t Right, term_t Bottom, term_t Top);
 foreign_t c_gluPerspective(term_t Fovy, term_t Aspect, term_t Near, term_t Far);
 
 
-// glut functions
+/******************
+ * glut functions *
+ ******************/
 foreign_t c_glutCreateWindow(term_t String);
 foreign_t c_glutDestroyWindow(void);
 foreign_t c_glutDisplayFunc(void);
@@ -252,6 +266,7 @@ install_t install() {
   PL_register_foreign("c_glFogi",2,c_glFogi,PL_FA_NOTRACE);
   PL_register_foreign("c_glFrontFace",1,c_glFrontFace,PL_FA_NOTRACE);
   PL_register_foreign("c_glFrustum",6,c_glFrustum,PL_FA_NOTRACE);
+  PL_register_foreign("c_glGenLists",1,c_glGenLists,PL_FA_NOTRACE);
   PL_register_foreign("c_glGenTextures",2,c_glGenTextures,PL_FA_NOTRACE);
   PL_register_foreign("c_glHint",2,c_glHint,PL_FA_NOTRACE);
   PL_register_foreign("c_glIndexi",1,c_glIndexi,PL_FA_NOTRACE);
@@ -281,7 +296,9 @@ install_t install() {
   PL_register_foreign("c_glRasterPos2i",2,c_glRasterPos2i,PL_FA_NOTRACE);
   PL_register_foreign("c_glReadBuffer",4,c_glReadBuffer,PL_FA_NOTRACE);
   PL_register_foreign("c_glRectf",4,c_glRectf,PL_FA_NOTRACE);
+  PL_register_foreign("c_glRotated",4,c_glRotated,PL_FA_NOTRACE);
   PL_register_foreign("c_glRotatef",4,c_glRotatef,PL_FA_NOTRACE);
+  PL_register_foreign("c_glScaled",3,c_glScaled,PL_FA_NOTRACE);
   PL_register_foreign("c_glScalef",3,c_glScalef,PL_FA_NOTRACE);
   PL_register_foreign("c_glShadeModel",1,c_glShadeModel,PL_FA_NOTRACE);
   PL_register_foreign("c_glStencilMask",1,c_glStencilMask,PL_FA_NOTRACE);
@@ -294,7 +311,9 @@ install_t install() {
   PL_register_foreign("c_glTexParameteri",3,c_glTexParameteri,PL_FA_NOTRACE);
   PL_register_foreign("c_glTexSubImage1D",7,c_glTexSubImage1D,PL_FA_NOTRACE);
   PL_register_foreign("c_glTexSubImage2D",9,c_glTexSubImage2D,PL_FA_NOTRACE);
-  //  PL_register_foreign("c_glTexSubImage3D",11,c_glTexSubImage3D,PL_FA_NOTRACE);
+/* 
+ * PL_register_foreign("c_glTexSubImage3D",11,c_glTexSubImage3D,PL_FA_NOTRACE); 
+ */
   PL_register_foreign("c_glTranslatef",3,c_glTranslatef,PL_FA_NOTRACE);
   PL_register_foreign("c_glVertex2f",2,c_glVertex2f,PL_FA_NOTRACE);
   PL_register_foreign("c_glVertex2i",2,c_glVertex2i,PL_FA_NOTRACE);
@@ -339,12 +358,13 @@ install_t install() {
 
 /* ====================== Other Functions ==================== */
 
-/* Name: c_display
+/***************************************
+ * Name: c_display
  * Params:
  * Returns:
  */
 void c_display(void) {
-  //fid_t fid = PL_open_foreign_frame();
+  /* fid_t fid = PL_open_foreign_frame(); */
   qid_t query_handle;
   static predicate_t p;
   static term_t display_predicate;
@@ -362,7 +382,8 @@ void c_display(void) {
   PL_cut_query(query_handle);
 }
 
-/* Name: c_idle
+/***************************************
+ * Name: c_idle
  * Params:
  * Returns:
  */
@@ -371,13 +392,16 @@ void c_idle(void) {
   static predicate_t p;
   static term_t idle_predicate;
   int rc;
-  //char *string;
+  
+/* 
+  char *string;
 
-  //if(!PL_get_atom_chars(PL_String,&temp_string))
-  //  return FALSE;
-  //string = glut_idle;
+  if(!PL_get_atom_chars(PL_String,&temp_string))
+    return FALSE;
+  string = glut_idle;
 
-  //printf("idle_2:%s\n",string);
+  printf("idle_2:%s\n",string);
+*/
 
   if(!p)
     p = PL_predicate("idle",0,"user");
@@ -390,7 +414,8 @@ void c_idle(void) {
   PL_cut_query(query_handle);
 }
 
-/* Name: c_keyboard
+/***************************************
+ * Name: c_keyboard
  * Params:
  * Returns:
  */
@@ -402,11 +427,11 @@ void c_keyboard(unsigned char PL_Key, int PL_X, int PL_Y) {
   int a,b,c;
   int rc;
 
-  /*
+/*
   printf("K=%d\n",PL_Key);
   printf("X=%d\n",PL_X);
   printf("Y=%d\n",PL_Y);
-  */
+*/
 
   if(!p)
     p = PL_predicate("keyboard",3,"user");
@@ -420,20 +445,15 @@ void c_keyboard(unsigned char PL_Key, int PL_X, int PL_Y) {
 
   query_handle = PL_open_query(NULL,PL_Q_NORMAL,p,keyboard_predicate);
   rc = PL_next_solution(query_handle);
-  //if (!rc) {
-    PL_cut_query(query_handle);
-    //PL_close_foreign_frame(fid);
-    //}
-    //PL_close_query(query_handle);
-    //PL_discard_foreign_frame(fid);
+  PL_cut_query(query_handle);
 }
 
-/* Name: c_motion
+/***************************************
+ * Name: c_motion
  * Params:
  * Returns:
  */
 void c_motion(int PL_X, int PL_Y) {
-  //fid_t fid = PL_open_foreign_frame();
   qid_t query_handle;
   static predicate_t p;
   static term_t motion_predicate;
@@ -459,12 +479,13 @@ void c_motion(int PL_X, int PL_Y) {
   PL_cut_query(query_handle);
 }
 
-/* Name: c_mouse
+/***************************************
+ * Name: c_mouse
  * Params:
  * Returns:
  */
 void c_mouse(int PL_Button, int PL_State, int PL_X, int PL_Y) {
-  //fid_t fid = PL_open_foreign_frame();
+  /* fid_t fid = PL_open_foreign_frame(); */
   qid_t query_handle;
   static predicate_t p;
   static term_t mouse_predicate;
@@ -491,27 +512,25 @@ void c_mouse(int PL_Button, int PL_State, int PL_X, int PL_Y) {
 
   query_handle = PL_open_query(NULL,PL_Q_NORMAL,p,mouse_predicate);
   rc = PL_next_solution(query_handle);
-  //if (!rc) {
-    PL_cut_query(query_handle);
-    //PL_close_foreign_frame(fid);
-    //}
-    //PL_close_query(query_handle);
-    //PL_discard_foreign_frame(fid);
+  PL_cut_query(query_handle);
 }
 
-/* Name: c_reshape
+/***************************************
+ * Name: c_reshape
  * Params:
  * Returns:
  */
 void c_reshape(int PL_W, int PL_H) {
-  //fid_t fid = PL_open_foreign_frame();
+  /* fid_t fid = PL_open_foreign_frame(); */
   qid_t query_handle;
   static predicate_t p;
   static term_t reshape_predicate;
   int rc;
 
-  //printf("w=%d\n",PL_W);
-  //printf("h=%d\n",PL_H);
+  /*
+    printf("w=%d\n",PL_W);
+    printf("h=%d\n",PL_H);
+  */
 
   if(!reshape_predicate)
     reshape_predicate= PL_new_term_refs(1);
@@ -521,16 +540,12 @@ void c_reshape(int PL_W, int PL_H) {
 
   query_handle = PL_open_query(NULL,PL_Q_NORMAL,p,reshape_predicate);
   rc = PL_next_solution(query_handle);
-  //if (!rc) {
-    PL_cut_query(query_handle);
-    //PL_close_foreign_frame(fid);
-    //}
-    //PL_close_query(query_handle);
-    //PL_discard_foreign_frame(fid);
+  PL_cut_query(query_handle);
 }
 
 
-/* Name: c_sleep
+/***************************************
+ * Name: c_sleep
  * Params:
  * Returns:
  */
@@ -545,45 +560,44 @@ foreign_t c_sleep(term_t PL_S) {
   PL_succeed;
 }
 
-/* Name: c_imageLoad
+/***************************************
+ * Name: c_imageLoad
  * Params:
  * Returns:
  */
 int c_imageLoad(char *filename, Image *image) {
   FILE *file;
-  unsigned long size;                 // size of the image in bytes.
-  unsigned long i;                    // standard counter.
-  unsigned short int planes;          // number of planes in image (must be 1)
-  unsigned short int bpp;             // number of bits per pixel (must be 24)
-  char temp;                          // temporary color storage for bgr-rgb conversion.
+  unsigned long size;                 /* size of the image in bytes. */
+  unsigned long i;                    /* standard counter. */
+  unsigned short int planes;          /* number of planes in image (must be 1) */
+  unsigned short int bpp;             /* number of bits per pixel (must be 24) */
+  char temp;                          /* temporary color storage for bgr-rgb conversion. */
 
-  // make sure the file is there.
+  /* make sure the file is there. */
   if ((file = fopen(filename, "rb"))==NULL) {
     printf("File Not Found : %s\n",filename);
     return 0;
   }
 
-  // seek through the bmp header, up to the width/height:
+  /* seek through the bmp header, up to the width/height: */
   fseek(file, 18, SEEK_CUR);
 
-  // read the width
+  /* read the width */
   if ((i = fread(&image->sizeX, 4, 1, file)) != 1) {
 	printf("Error reading width from %s.\n", filename);
 	return 0;
   }
-  //printf("Width of %s: %lu\n", filename, image->sizeX);
 
-  // read the height
+  /* read the height */
   if ((i = fread(&image->sizeY, 4, 1, file)) != 1) {
     printf("Error reading height from %s.\n", filename);
     return 0;
   }
-  //printf("Height of %s: %lu\n", filename, image->sizeY);
 
-  // calculate the size (assuming 24 bits or 3 bytes per pixel).
+  /* calculate the size (assuming 24 bits or 3 bytes per pixel). */
   size = image->sizeX * image->sizeY * 3;
 
-  // read the planes
+  /* read the planes */
   if ((fread(&planes, 2, 1, file)) != 1) {
     printf("Error reading planes from %s.\n", filename);
     return 0;
@@ -593,7 +607,7 @@ int c_imageLoad(char *filename, Image *image) {
     return 0;
   }
 
-  // read the bpp
+  /* read the bpp */
   if ((i = fread(&bpp, 2, 1, file)) != 1) {
     printf("Error reading bpp from %s.\n", filename);
     return 0;
@@ -603,10 +617,10 @@ int c_imageLoad(char *filename, Image *image) {
     return 0;
   }
 
-  // seek past the rest of the bitmap header.
+  /* seek past the rest of the bitmap header. */
   fseek(file, 24, SEEK_CUR);
 
-  // read the data.
+  /* read the data. */
   image->data = (char *) malloc(size);
   if (image->data == NULL) {
     printf("Error allocating memory for color-corrected image data");
@@ -618,20 +632,21 @@ int c_imageLoad(char *filename, Image *image) {
     return 0;
   }
 
-  for (i=0;i<size;i+=3) { // reverse all of the colors. (bgr -> rgb)
+  for (i=0;i<size;i+=3) { /* reverse all of the colors. (bgr -> rgb) */
     temp = image->data[i];
     image->data[i] = image->data[i+2];
     image->data[i+2] = temp;
   }
 
-  // we're done.
   return 1;
 }
 
 
 
 /* ====================== Image Functions ==================== */
-/* Name: c_loadGLTextures
+
+/***************************************
+ * Name: c_loadGLTextures
  * Params:
  * Returns:
  */
@@ -644,7 +659,7 @@ foreign_t c_loadGLTextures(term_t PL_Filename, term_t PL_Width, term_t PL_Height
   if(!PL_get_atom_chars(PL_Filename,&filename))
     return FALSE;
 
-  // allocate space for texture
+  /* allocate space for texture */
   image1 = (Image *) malloc(sizeof(Image));
   if (image1 == NULL) {
     printf("Error allocating space for image");
@@ -671,7 +686,8 @@ foreign_t c_loadGLTextures(term_t PL_Filename, term_t PL_Width, term_t PL_Height
 
 /* ====================== gl Functions ==================== */
 
-/* Name:    c_glAccum
+/***************************************
+ * Name:    c_glAccum
  * Desc:    Operate on the accumulation buffer
  * Params:  -
  * Returns: -
@@ -689,7 +705,8 @@ foreign_t c_glAccum(term_t PL_Operation, term_t PL_Value) {
   PL_succeed;
 }
 
-/* Name:    c_glActiveTextureARB
+/***************************************
+ * Name:    c_glActiveTextureARB
  * Desc:    Select active texture unit
  * Params:  -
  * Returns: -
@@ -700,14 +717,16 @@ foreign_t c_glActiveTextureARB(term_t PL_Texture) {
   if(!PL_get_integer(PL_Texture,&texture))
     return FALSE;
 
+  #ifdef WIN32
   PFNGLACTIVETEXTUREARBPROC glActiveTextureARB = (PFNGLACTIVETEXTUREARBPROC)wglGetProcAddress("glActiveTextureARB");
-
+  #endif
   glActiveTextureARB((GLenum)texture);
 
   PL_succeed;
 }
 
-/* Name:    c_glAlphaFunc
+/***************************************
+ * Name:    c_glAlphaFunc
  * Desc:    Specify the alpha test function
  * Params:  -
  * Returns: -
@@ -725,7 +744,8 @@ foreign_t c_glAlphaFunc(term_t PL_Func, term_t PL_Ref) {
   PL_succeed;
 }
 
-/* Name:    c_glArrayElement
+/***************************************
+ * Name:    c_glArrayElement
  * Desc:    Render a vertex using the specified vertex array element
  * Params:  -
  * Returns: -
@@ -741,7 +761,8 @@ foreign_t c_glArrayElement(term_t PL_Index) {
   PL_succeed;
 }
 
-/* Name:    c_glBegin
+/***************************************
+ * Name:    c_glBegin
  * Desc:    Delimit the vertices of a primitive or a group of like primitives
  * Params:  -
  * Returns: -
@@ -759,7 +780,8 @@ foreign_t c_glBegin(term_t PL_Mode) {
   PL_succeed;
 }
 
-/* Name:    c_glBindTexture
+/***************************************
+ * Name:    c_glBindTexture
  * Desc:    Bind a named texture to a texturing target
  * Params:  -
  * Returns: -
@@ -781,7 +803,8 @@ foreign_t c_glBindTexture(term_t PL_Target, term_t PL_Texture) {
   PL_succeed;
 }
 
-/* Name:    c_glBitmap
+/***************************************
+ * Name:    c_glBitmap
  * Desc:    Draw a bitmap
  * Params:  -
  * Returns: -
@@ -831,9 +854,11 @@ foreign_t c_glBitmap(term_t PL_Width, term_t PL_Height, term_t PL_X1, term_t PL_
   PL_succeed;
 }
 
-/* Name: c_glBlendFunc
- * Params:
- * Returns:
+/***************************************
+ * Name:    c_glBlendFunc
+ * Desc:    Specify pixel arithmetic
+ * Params:  -
+ * Returns: -
  */
 foreign_t c_glBlendFunc(term_t PL_sFactor, term_t PL_dFactor) {
   GLenum sfactor, dfactor;
@@ -850,7 +875,8 @@ foreign_t c_glBlendFunc(term_t PL_sFactor, term_t PL_dFactor) {
   PL_succeed;
 }
 
-/* Name: c_glCallList
+/***************************************
+ * Name: c_glCallList
  * Params:
  * Returns:
  */
@@ -865,7 +891,8 @@ foreign_t c_glCallList(term_t PL_List) {
   PL_succeed;
 }
 
-/* Name: c_glClear
+/***************************************
+ * Name: c_glClear
  * Params:
  * Returns:
  */
@@ -881,7 +908,8 @@ foreign_t c_glClear(term_t PL_Mask) {
   PL_succeed;
 }
 
-/* Name: c_glClearAccum
+/***************************************
+ * Name: c_glClearAccum
  * Params:
  * Returns:
  */
@@ -898,7 +926,8 @@ foreign_t c_glClearAccum(term_t PL_Red, term_t PL_Green, term_t PL_Blue, term_t 
   PL_succeed;
 }
 
-/* Name: c_glClearColor
+/***************************************
+ * Name: c_glClearColor
  * Params:
  * Returns:
  */
@@ -920,7 +949,8 @@ foreign_t c_glClearColor(term_t PL_Red, term_t PL_Green, term_t PL_Blue, term_t 
   PL_succeed;
 }
 
-/* Name: c_glClearDepth
+/***************************************
+ * Name: c_glClearDepth
  * Params:
  * Returns:
  */
@@ -936,7 +966,8 @@ foreign_t c_glClearDepth(term_t PL_Depth) {
   PL_succeed;
 }
 
-/* Name: c_glClearIndex
+/***************************************
+ * Name: c_glClearIndex
  * Params:
  * Returns:
  */
@@ -950,7 +981,8 @@ foreign_t c_glClearIndex(term_t PL_Index) {
   PL_succeed;
 }
 
-/* Name: c_glClearStencil
+/***************************************
+ * Name: c_glClearStencil
  * Params:
  * Returns:
  */
@@ -964,7 +996,8 @@ foreign_t c_glClearStencil(term_t PL_S) {
   PL_succeed;
 }
 
-/* Name: c_glClipPlane
+/***************************************
+ * Name: c_glClipPlane
  * Params:
  * Returns:
  */
@@ -1010,7 +1043,8 @@ foreign_t c_glClipPlane(term_t PL_Plane, term_t PL_Equation, term_t PL_Num) {
 }
 
 
-/* Name:    c_glColor3f
+/***************************************
+ * Name:    c_glColor3f
  * Desc:    Set the current color
  * Params:  -
  * Returns: -
@@ -1027,7 +1061,8 @@ foreign_t c_glColor3f(term_t PL_Red, term_t PL_Green, term_t PL_Blue) {
   PL_succeed;
 }
 
-/* Name:    c_glColor4f
+/***************************************
+ * Name:    c_glColor4f
  * Desc:    Set the current color
  * Params:  -
  * Returns: -
@@ -1045,7 +1080,8 @@ foreign_t c_glColor4f(term_t PL_Red, term_t PL_Green, term_t PL_Blue, term_t PL_
   PL_succeed;
 }
 
-/* Name:    c_glColorMaterial
+/***************************************
+ * Name:    c_glColorMaterial
  * Desc:    Cause a material color to track the current color
  * Params:  -
  * Returns: -
@@ -1061,7 +1097,8 @@ foreign_t c_glColorMaterial(term_t PL_Face, term_t PL_Mode) {
   PL_succeed;
 }
 
-/* Name: c_glCopyPixels
+/***************************************
+ * Name: c_glCopyPixels
  * Params:
  * Returns:
  */
@@ -1080,7 +1117,8 @@ foreign_t c_glCopyPixels(term_t PL_X, term_t PL_Y, term_t PL_Width, term_t PL_He
   PL_succeed;
 }
 
-/* Name: c_glCopyTexImage1D
+/***************************************
+ * Name: c_glCopyTexImage1D
  * Params:
  * Returns:
  */
@@ -1102,7 +1140,8 @@ foreign_t c_glCopyTexImage1D(term_t PL_Target, term_t PL_Level, term_t PL_Intern
   PL_succeed;
 }
 
-/* Name: c_glCopyTexImage2D
+/***************************************
+ * Name: c_glCopyTexImage2D
  * Params:
  * Returns:
  */
@@ -1127,7 +1166,8 @@ foreign_t c_glCopyTexImage2D(term_t PL_Target, term_t PL_Level, term_t PL_Intern
 }
 
 
-/* Name: c_glCullFace
+/***************************************
+ * Name: c_glCullFace
  * Params:
  * Returns:
  */
@@ -1144,7 +1184,8 @@ foreign_t c_glCullFace(term_t PL_Mode) {
   PL_succeed;
 }
 
-/* Name: c_glDepthFunc
+/***************************************
+ * Name: c_glDepthFunc
  * Params:
  * Returns:
  */
@@ -1159,7 +1200,8 @@ foreign_t c_glDepthFunc(term_t PL_Mode) {
   PL_succeed;
 }
 
-/* Name: c_glDisable
+/***************************************
+ * Name: c_glDisable
  * Params:
  * Returns:
  */
@@ -1174,7 +1216,8 @@ foreign_t c_glDisable(term_t PL_Mode) {
   PL_succeed;
 }
 
-/* Name: c_glDrawBuffer
+/***************************************
+ * Name: c_glDrawBuffer
  * Params:
  * Returns:
  */
@@ -1188,7 +1231,8 @@ foreign_t c_glDrawBuffer(term_t PL_Mode) {
   PL_succeed;
 }
 
-/* Name: c_glEnable
+/***************************************
+ * Name: c_glEnable
  * Params:
  * Returns:
  */
@@ -1203,7 +1247,8 @@ foreign_t c_glEnable(term_t PL_Mode) {
   PL_succeed;
 }
 
-/* Name: c_glEnd
+/***************************************
+ * Name: c_glEnd
  * Params:
  * Returns:
  */
@@ -1212,7 +1257,8 @@ foreign_t c_glEnd(void) {
   PL_succeed;
 }
 
-/* Name: c_glEndList
+/***************************************
+ * Name: c_glEndList
  * Params:
  * Returns:
  */
@@ -1221,7 +1267,8 @@ foreign_t c_glEndList(void) {
   PL_succeed;
 }
 
-/* Name: c_glFinish
+/***************************************
+ * Name: c_glFinish
  * Params:
  * Returns:
  */
@@ -1230,7 +1277,8 @@ foreign_t c_glFinish(void) {
   PL_succeed;
 }
 
-/* Name: c_glFlush
+/***************************************
+ * Name: c_glFlush
  * Params:
  * Returns:
  */
@@ -1239,7 +1287,8 @@ foreign_t c_glFlush(void) {
   PL_succeed;
 }
 
-/* Name: c_glFogf
+/***************************************
+ * Name: c_glFogf
  * Params:
  * Returns:
  */
@@ -1255,7 +1304,8 @@ foreign_t c_glFogf(term_t PL_PName, term_t PL_Param) {
   PL_succeed;
 }
 
-/* Name: c_glFogi
+/***************************************
+ * Name: c_glFogi
  * Params:
  * Returns:
  */
@@ -1270,7 +1320,8 @@ foreign_t c_glFogi(term_t PL_PName, term_t PL_Param) {
   PL_succeed;
 }
 
-/* Name:    c_glFrontFace
+/***************************************
+ * Name:    c_glFrontFace
  * Desc:    Define front- and back-facing polygons
  * Params:  -
  * Returns: -
@@ -1286,7 +1337,8 @@ foreign_t c_glFrontFace(term_t PL_Mode) {
 }
 
 
-/* Name: c_glFrustum
+/***************************************
+ * Name: c_glFrustum
  * Params:
  * Returns:
  */
@@ -1306,7 +1358,24 @@ foreign_t c_glFrustum(term_t PL_L, term_t PL_R, term_t PL_T, term_t PL_B, term_t
   PL_succeed;
 }
 
-/* Name: c_glGenTextures
+/***************************************
+ * Name:    c_glGenLists
+ * Desc:    Generate a contiguous set of empty display lists
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glGenLists(term_t PL_Range) {
+  int range;
+
+  if(!PL_get_integer(PL_Range,&range))
+    return FALSE;
+
+  glGenLists((GLsizei)range);
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glGenTextures
  * Params:
  * Returns:
  */
@@ -1334,7 +1403,8 @@ foreign_t c_glGenTextures(term_t PL_N, term_t PL_TextureNames) {
 }
 
 
-/* Name: c_glHint
+/***************************************
+ * Name: c_glHint
  * Params:
  * Returns:
  */
@@ -1353,7 +1423,8 @@ foreign_t c_glHint(term_t PL_Target, term_t PL_Hint) {
   PL_succeed;
 }
 
-/* Name: c_glIndexi
+/***************************************
+ * Name: c_glIndexi
  * Params:
  * Returns:
  */
@@ -1368,7 +1439,8 @@ foreign_t c_glIndexi(term_t PL_Index) {
 }
 
 
-/* Name: c_glLightfv
+/***************************************
+ * Name: c_glLightfv
  * Params:
  * Returns:
  */
@@ -1410,7 +1482,8 @@ foreign_t c_glLightfv(term_t PL_Light, term_t PL_PName, term_t PL_Params, term_t
   PL_succeed;
 }
 
-/* Name: c_glLightModelfv
+/***************************************
+ * Name: c_glLightModelfv
  * Params:
  * Returns:
  */
@@ -1452,7 +1525,8 @@ foreign_t c_glLightModelfv(term_t PL_PName, term_t PL_Params, term_t PL_Num) {
 }
 
 
-/* Name: c_glLineStipple
+/***************************************
+ * Name: c_glLineStipple
  * Params:
  * Returns:
  */
@@ -1469,7 +1543,8 @@ foreign_t c_glLineStipple(term_t PL_Factor, term_t PL_Pattern) {
   PL_succeed;
 }
 
-/* Name: c_glLineWidth
+/***************************************
+ * Name: c_glLineWidth
  * Params:
  * Returns:
  */
@@ -1483,7 +1558,8 @@ foreign_t c_glLineWidth(term_t PL_Width) {
   PL_succeed;
 }
 
-/* Name: c_glLoadIdentity
+/***************************************
+ * Name: c_glLoadIdentity
  * Params:
  * Returns:
  */
@@ -1492,7 +1568,8 @@ foreign_t c_glLoadIdentity(void) {
   PL_succeed;
 }
 
-/* Name: c_glLoadName
+/***************************************
+ * Name: c_glLoadName
  * Params:
  * Returns:
  */
@@ -1507,7 +1584,8 @@ foreign_t c_glLoadName(term_t PL_Name) {
   PL_succeed;
 }
 
-/* Name: c_glMaterialfv
+/***************************************
+ * Name: c_glMaterialfv
  * Params:
  * Returns:
  */
@@ -1534,7 +1612,7 @@ foreign_t c_glMaterialfv(term_t PL_Face, term_t PL_PName, term_t PL_Params, term
 
     if ( PL_get_chars(head, &s, CVT_FLOAT) ) {
       parameters[count] = (atof(s));
-      //printf("parameters[%d]: %f\n",count,atof(s));
+      /* printf("parameters[%d]: %f\n",count,atof(s)); */
     }
     else
       PL_fail;
@@ -1550,7 +1628,8 @@ foreign_t c_glMaterialfv(term_t PL_Face, term_t PL_PName, term_t PL_Params, term
   PL_succeed;
 }
 
-/* Name: c_glMatrixMode
+/***************************************
+ * Name: c_glMatrixMode
  * Params:
  * Returns:
  */
@@ -1568,7 +1647,8 @@ foreign_t c_glMatrixMode(term_t PL_Mode) {
   PL_succeed;
 }
 
-/* Name: c_glNewList
+/***************************************
+ * Name: c_glNewList
  * Params:
  * Returns:
  */
@@ -1590,7 +1670,8 @@ foreign_t c_glNewList(term_t PL_List, term_t PL_Mode) {
   PL_succeed;
 }
 
-/* Name: c_glNormal3f
+/***************************************
+ * Name: c_glNormal3f
  * Params:
  * Returns:
  */
@@ -1606,7 +1687,8 @@ foreign_t c_glNormal3f(term_t PL_X, term_t PL_Y, term_t PL_Z) {
   PL_succeed;
 }
 
-/* Name: c_glOrtho
+/***************************************
+ * Name: c_glOrtho
  * Params:
  * Returns:
  */
@@ -1626,7 +1708,8 @@ foreign_t c_glOrtho(term_t PL_L, term_t PL_R, term_t PL_T, term_t PL_B, term_t P
   PL_succeed;
 }
 
-/* Name: c_glPixelStorei
+/***************************************
+ * Name: c_glPixelStorei
  * Params:
  * Returns:
  */
@@ -1641,7 +1724,8 @@ foreign_t c_glPixelStorei(term_t PL_Mode, term_t PL_Param) {
   PL_succeed;
 }
 
-/* Name: c_glPointSize
+/***************************************
+ * Name: c_glPointSize
  * Params:
  * Returns:
  */
@@ -1656,7 +1740,8 @@ foreign_t c_glPointSize(term_t PL_Size) {
   PL_succeed;
 }
 
-/* Name: c_glPolygonMode
+/***************************************
+ * Name: c_glPolygonMode
  * Params:
  * Returns:
  */
@@ -1671,7 +1756,8 @@ foreign_t c_glPolygonMode(term_t PL_Face, term_t PL_Mode) {
   PL_succeed;
 }
 
-/* Name:    c_glPolygonOffset
+/***************************************
+ * Name:    c_glPolygonOffset
  * Desc:    Set the scale and units used to calculate depth values
  * Params:  -
  * Returns: -
@@ -1687,7 +1773,8 @@ foreign_t c_glPolygonOffset(term_t PL_Factor, term_t PL_Units) {
   PL_succeed;
 }
 
-/* Name: c_glPopAttrib
+/***************************************
+ * Name: c_glPopAttrib
  * Params:
  * Returns:
  */
@@ -1696,7 +1783,8 @@ foreign_t c_glPopAttrib(void) {
   PL_succeed;
 }
 
-/* Name: c_glPopClientAttrib
+/***************************************
+ * Name: c_glPopClientAttrib
  * Params:
  * Returns:
  */
@@ -1705,7 +1793,8 @@ foreign_t c_glPopClientAttrib(void) {
   PL_succeed;
 }
 
-/* Name: c_glPopMatrix
+/***************************************
+ * Name: c_glPopMatrix
  * Params:
  * Returns:
  */
@@ -1714,7 +1803,8 @@ foreign_t c_glPopMatrix(void) {
   PL_succeed;
 }
 
-/* Name: c_glPopName
+/***************************************
+ * Name: c_glPopName
  * Params:
  * Returns:
  */
@@ -1723,7 +1813,8 @@ foreign_t c_glPopName(void) {
   PL_succeed;
 }
 
-/* Name: c_glPushAttrib
+/***************************************
+ * Name: c_glPushAttrib
  * Params:
  * Returns:
  */
@@ -1737,7 +1828,8 @@ foreign_t c_glPushAttrib(term_t PL_Mask) {
   PL_succeed;
 }
 
-/* Name: c_glPushClientAttrib
+/***************************************
+ * Name: c_glPushClientAttrib
  * Params:
  * Returns:
  */
@@ -1751,7 +1843,8 @@ foreign_t c_glPushClientAttrib(term_t PL_Mask) {
   PL_succeed;
 }
 
-/* Name: c_glPushMatrix
+/***************************************
+ * Name: c_glPushMatrix
  * Params:
  * Returns:
  */
@@ -1760,7 +1853,8 @@ foreign_t c_glPushMatrix(void) {
   PL_succeed;
 }
 
-/* Name: c_glPushName
+/***************************************
+ * Name: c_glPushName
  * Params:
  * Returns:
  */
@@ -1774,7 +1868,8 @@ foreign_t c_glPushName(term_t PL_Name) {
   PL_succeed;
 }
 
-/* Name: c_glRasterPos2i
+/***************************************
+ * Name: c_glRasterPos2i
  * Params:
  * Returns:
  */
@@ -1790,7 +1885,8 @@ foreign_t c_glRasterPos2i(term_t PL_X, term_t PL_Y) {
   PL_succeed;
 }
 
-/* Name: c_glReadBuffer
+/***************************************
+ * Name: c_glReadBuffer
  * Params:
  * Returns:
  */
@@ -1804,7 +1900,8 @@ foreign_t c_glReadBuffer(term_t PL_Mode) {
   PL_succeed;
 }
 
-/* Name: c_glRectf
+/***************************************
+ * Name: c_glRectf
  * Params:
  * Returns:
  */
@@ -1821,8 +1918,26 @@ foreign_t c_glRectf(term_t PL_X1, term_t PL_Y1, term_t PL_X2, term_t PL_Y2) {
   PL_succeed;
 }
 
+/***************************************
+ * Name: c_glRotated
+ * Params:
+ * Returns:
+ */
+foreign_t c_glRotated(term_t PL_Angle, term_t PL_X, term_t PL_Y, term_t PL_Z) {
+  GLdouble angle,x,y,z;
 
-/* Name: c_glRotatef
+  if(!PL_get_float(PL_Angle,&angle) ||
+     !PL_get_float(PL_X,&x) ||
+     !PL_get_float(PL_Y,&y) ||
+     !PL_get_float(PL_Z,&z))
+    return FALSE;
+  glRotated((GLdouble)angle,(GLdouble)x,(GLdouble)y,(GLdouble)z);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glRotatef
  * Params:
  * Returns:
  */
@@ -1839,7 +1954,26 @@ foreign_t c_glRotatef(term_t PL_Angle, term_t PL_X, term_t PL_Y, term_t PL_Z) {
   PL_succeed;
 }
 
-/* Name: c_glScalef
+/***************************************
+ * Name: c_glScaled
+ * Params:
+ * Returns:
+ */
+foreign_t c_glScaled(term_t PL_X, term_t PL_Y, term_t PL_Z) {
+  GLdouble x,y,z;
+
+  if(!PL_get_float(PL_X,&x) ||
+     !PL_get_float(PL_Y,&y) ||
+     !PL_get_float(PL_Z,&z))
+    return FALSE;
+  glScalef((GLdouble)x,(GLdouble)y,(GLdouble)z);
+
+  PL_succeed;
+}
+
+
+/***************************************
+ * Name: c_glScalef
  * Params:
  * Returns:
  */
@@ -1852,12 +1986,11 @@ foreign_t c_glScalef(term_t PL_X, term_t PL_Y, term_t PL_Z) {
     return FALSE;
   glScalef((float)x,(float)y,(float)z);
 
-  printf("glScalef(%f, %f, %f)\n",(float)x,(float)y,(float)z);
-
   PL_succeed;
 }
 
-/* Name: c_glShadeModel
+/***************************************
+ * Name: c_glShadeModel
  * Params:
  * Returns:
  */
@@ -1876,7 +2009,8 @@ foreign_t c_glShadeModel(term_t PL_Mode) {
   PL_succeed;
 }
 
-/* Name: c_glStencilFunc
+/***************************************
+ * Name: c_glStencilFunc
  * Params:
  * Returns:
  */
@@ -1894,7 +2028,8 @@ foreign_t c_glStencilFunc(term_t PL_Func, term_t PL_Ref, term_t PL_Mask) {
   PL_succeed;
 }
 
-/* Name: c_glStencilMask
+/************************************** 
+ * Name: c_glStencilMask
  * Params:
  * Returns:
  */
@@ -1909,7 +2044,8 @@ foreign_t c_glStencilMask(term_t PL_Mask) {
   PL_succeed;
 }
 
-/* Name: c_glStencilOp
+/***************************************
+ * Name: c_glStencilOp
  * Params:
  * Returns:
  */
@@ -1926,7 +2062,8 @@ foreign_t c_glStencilOp(term_t PL_Fail, term_t PL_zFail, term_t PL_zPass) {
   PL_succeed;
 }
 
-/* Name: c_glTexCoord2f
+/***************************************
+ * Name: c_glTexCoord2f
  * Params:
  * Returns:
  */
@@ -1942,7 +2079,8 @@ foreign_t c_glTexCoord2f(term_t PL_S, term_t PL_T) {
   PL_succeed;
 }
 
-/* Name:    c_glTexImage1D
+/***************************************
+ * Name:    c_glTexImage1D
  * Desc:    Specify a one-dimensional texture image
  * Params:  -
  * Returns: -
@@ -1968,7 +2106,8 @@ foreign_t c_glTexImage1D(term_t PL_Target, term_t PL_Level, term_t PL_Internal, 
   PL_succeed;
 }
 
-/* Name:    c_glTexImage2D
+/***************************************
+ * Name:    c_glTexImage2D
  * Desc:    Specify a two-dimensional texture image
  * Params:  -
  * Returns: -
@@ -1977,8 +2116,8 @@ foreign_t c_glTexImage2D(term_t PL_Target, term_t PL_Level, term_t PL_Internal, 
                          term_t PL_Border, term_t PL_Format, term_t PL_Type, term_t PL_Texels) {
   int target, level, internal, width, height, border, format, type;
   void *texels;
-  //void *temp;
-  //int *texels;
+  /* void *temp; */
+  /* int *texels; */
 
   if(!PL_get_integer(PL_Target,&target) ||
      !PL_get_integer(PL_Level,&level) ||
@@ -1991,7 +2130,7 @@ foreign_t c_glTexImage2D(term_t PL_Target, term_t PL_Level, term_t PL_Internal, 
      !PL_get_pointer(PL_Texels,&texels))
     return FALSE;
 
-  //texels = temp;
+  /* texels = temp; */
 
   glTexImage2D((GLenum)target, (GLint)level, (GLint)internal, (GLsizei)width, (GLsizei)height,
                (GLint)border, (GLenum)format, (GLenum)type, texels);
@@ -1999,7 +2138,8 @@ foreign_t c_glTexImage2D(term_t PL_Target, term_t PL_Level, term_t PL_Internal, 
   PL_succeed;
 }
 
-/* Name:    c_glTexImage3D
+/***************************************
+ * Name:    c_glTexImage3D
  * Desc:    Specify a three-dimensional texture image
  * Params:  -
  * Returns: -
@@ -2023,7 +2163,9 @@ foreign_t c_glTexImage3D(term_t PL_Target, term_t PL_Level, term_t PL_Internal,
     return FALSE;
 
 
+  #ifdef WIN32
   PFNGLTEXIMAGE3DPROC glTexImage3D = (PFNGLTEXIMAGE3DPROC)wglGetProcAddress("glTexImage3D");
+  #endif
   glTexImage3D((GLenum)target, (GLint)level, (GLint)internal,
                (GLsizei)width, (GLsizei)height, (GLsizei)depth,
                (GLint)border, (GLenum)format, (GLenum)type, (const GLvoid*)texels);
@@ -2031,7 +2173,8 @@ foreign_t c_glTexImage3D(term_t PL_Target, term_t PL_Level, term_t PL_Internal,
   PL_succeed;
 }
 
-/* Name: c_glTexParameteri
+/***************************************
+ * Name: c_glTexParameteri
  * Params:
  * Returns:
  */
@@ -2049,7 +2192,8 @@ foreign_t c_glTexParameteri(term_t PL_Target, term_t PL_PName, term_t PL_Param) 
 
 }
 
-/* Name:    c_glTexSubImage1D
+/***************************************
+ * Name:    c_glTexSubImage1D
  * Desc:    Specify a one-dimensional texture subimage
  * Params:  -
  * Returns: -
@@ -2074,7 +2218,8 @@ foreign_t c_glTexSubImage1D(term_t PL_Target, term_t PL_Level, term_t PL_XOffset
   PL_succeed;
 }
 
-/* Name:    c_glTexSubImage2D
+/***************************************
+ * Name:    c_glTexSubImage2D
  * Desc:    Specify a two-dimensional texture subimage
  * Params:  -
  * Returns: -
@@ -2103,7 +2248,8 @@ foreign_t c_glTexSubImage2D(term_t PL_Target, term_t PL_Level, term_t PL_XOffset
   PL_succeed;
 }
 
-/* Name:    c_glTexSubImage3D
+/***************************************
+ * Name:    c_glTexSubImage3D
  * Desc:    Specify a two-dimensional texture subimage
  * Params:  -
  * Returns: -
@@ -2136,7 +2282,8 @@ foreign_t c_glTexSubImage3D(term_t PL_Target, term_t PL_Level, term_t PL_XOffset
 }
 */
 
-/* Name: c_glTranslatef
+/***************************************
+ * Name: c_glTranslatef
  * Params:
  * Returns:
  */
@@ -2152,7 +2299,8 @@ foreign_t c_glTranslatef(term_t PL_X, term_t PL_Y, term_t PL_Z) {
   PL_succeed;
 }
 
-/* Name: c_glVertex2f
+/***************************************
+ * Name: c_glVertex2f
  * Params:
  * Returns:
  */
@@ -2168,7 +2316,8 @@ foreign_t c_glVertex2f(term_t PL_X, term_t PL_Y) {
   PL_succeed;
 }
 
-/* Name: c_glVertex2i
+/***************************************
+ * Name: c_glVertex2i
  * Params:
  * Returns:
  */
@@ -2183,7 +2332,8 @@ foreign_t c_glVertex2i(term_t PL_X, term_t PL_Y) {
   PL_succeed;
 }
 
-/* Name: c_glVertex3d
+/***************************************
+ * Name: c_glVertex3d
  * Params:
  * Returns:
  */
@@ -2199,7 +2349,8 @@ foreign_t c_glVertex3d(term_t PL_X, term_t PL_Y, term_t PL_Z) {
   PL_succeed;
 }
 
-/* Name: c_glVertex3f
+/***************************************
+ * Name: c_glVertex3f
  * Params:
  * Returns:
  */
@@ -2215,7 +2366,8 @@ foreign_t c_glVertex3f(term_t PL_X, term_t PL_Y, term_t PL_Z) {
   PL_succeed;
 }
 
-/* Name: c_glVertex3i
+/***************************************
+ * Name: c_glVertex3i
  * Params:
  * Returns:
  */
@@ -2231,7 +2383,8 @@ foreign_t c_glVertex3i(term_t PL_X, term_t PL_Y, term_t PL_Z) {
   PL_succeed;
 }
 
-/* Name: c_glViewport
+/***************************************
+ * Name: c_glViewport
  * Params:
  * Returns:
  */
@@ -2252,7 +2405,8 @@ foreign_t c_glViewport(term_t PL_X, term_t PL_Y, term_t PL_Width, term_t PL_Heig
 
 /* ====================== glu Functions ==================== */
 
-/* Name: c_gluBuild2DMipmaps
+/***************************************
+ * Name: c_gluBuild2DMipmaps
  * Params:
  * Returns:
  */
@@ -2279,7 +2433,8 @@ foreign_t c_gluBuild2DMipmaps(term_t PL_Target, term_t PL_Internal, term_t PL_Wi
   PL_succeed;
 }
 
-/* Name: c_gluLookAt
+/***************************************
+ * Name: c_gluLookAt
  * Params:
  * Returns:
  */
@@ -2307,7 +2462,8 @@ foreign_t c_gluLookAt(term_t PL_EyeX, term_t PL_EyeY, term_t PL_EyeZ,
   PL_succeed;
 }
 
-/* Name: c_gluOrtho2D
+/***************************************
+ * Name: c_gluOrtho2D
  * Params:
  * Returns:
  */
@@ -2324,7 +2480,8 @@ foreign_t c_gluOrtho2D(term_t PL_Left, term_t PL_Right, term_t PL_Bottom, term_t
   PL_succeed;
 }
 
-/* Name: c_gluPerspective
+/***************************************
+ * Name: c_gluPerspective
  * Params:
  * Returns:
  */
@@ -2345,7 +2502,8 @@ foreign_t c_gluPerspective(term_t PL_Fovy, term_t PL_Aspect, term_t PL_Near, ter
 /* ====================== glut Functions ==================== */
 
 
-/* Name: c_glutCreateWindow
+/***************************************
+ * Name: c_glutCreateWindow
  * Params:
  * Returns:
  */
@@ -2361,7 +2519,8 @@ foreign_t c_glutCreateWindow(term_t PL_String) {
   PL_succeed;
 }
 
-/* Name: c_glutDestroyWindow
+/***************************************
+ * Name: c_glutDestroyWindow
  * Params:
  * Returns:
  */
@@ -2371,7 +2530,8 @@ foreign_t c_glutDestroyWindow(void) {
   PL_succeed;
 }
 
-/* Name: c_glutDisplayFunc
+/***************************************
+ * Name: c_glutDisplayFunc
  * Params:
  * Returns:
  */
@@ -2388,24 +2548,25 @@ foreign_t c_glutDisplayFunc(void) {
   PL_succeed;
 }
 
-/* Name: c_glutIdleFunc
+/***************************************
+ * Name: c_glutIdleFunc
  * Params:
  * Returns:
  */
 foreign_t c_glutIdleFunc(term_t PL_String) {
   char *string;
   void (*fp)(void);
-  //char *ptr = "spinDisplay";
+  /* char *ptr = "spinDisplay"; */
 
   if(!PL_get_atom_chars(PL_String,&string))
     return FALSE;
 
-  //glut_idle = string;
+  /* glut_idle = string; */
 
 
   fp = c_idle;
 
-  //printf("idle:%s\n",string);
+  /* printf("idle:%s\n",string); */
   if(strcmp(string,"null") == 0) {
     glutIdleFunc(NULL);
   }
@@ -2416,7 +2577,8 @@ foreign_t c_glutIdleFunc(term_t PL_String) {
   PL_succeed;
 }
 
-/* Name: c_glutInit
+/***************************************
+ * Name: c_glutInit
  * Params:
  * Returns:
  */
@@ -2430,7 +2592,8 @@ foreign_t c_glutInit(void) {
   PL_succeed;
 }
 
-/* Name: c_glutInitDisplayMode
+/***************************************
+ * Name: c_glutInitDisplayMode
  * Params:
  * Returns:
  */
@@ -2446,7 +2609,8 @@ foreign_t c_glutInitDisplayMode(term_t PL_DisplayMode) {
   PL_succeed;
 }
 
-/* Name: c_glutInitWindowPosition
+/***************************************
+ * Name: c_glutInitWindowPosition
  * Params:
  * Returns:
  */
@@ -2463,7 +2627,8 @@ foreign_t c_glutInitWindowPosition(term_t PL_X, term_t PL_Y) {
   PL_succeed;
 }
 
-/* Name: c_glutInitWindowSize
+/***************************************
+ * Name: c_glutInitWindowSize
  * Params:
  * Returns:
  */
@@ -2482,7 +2647,8 @@ foreign_t c_glutInitWindowSize(term_t PL_Width, term_t PL_Height) {
   PL_succeed;
 }
 
-/* Name: c_glutKeyboardFunc
+/***************************************
+ * Name: c_glutKeyboardFunc
  * Params:
  * Returns:
  */
@@ -2494,7 +2660,8 @@ foreign_t c_glutKeyboardFunc(void) {
   PL_succeed;
 }
 
-/* Name: c_glutMainLoop
+/***************************************
+ * Name: c_glutMainLoop
  * Params:
  * Returns:
  */
@@ -2506,7 +2673,8 @@ foreign_t c_glutMainLoop(void) {
   PL_succeed;
 }
 
-/* Name: c_glutMotionFunc
+/***************************************
+ * Name: c_glutMotionFunc
  * Params:
  * Returns:
  */
@@ -2518,7 +2686,8 @@ foreign_t c_glutMotionFunc(void) {
   PL_succeed;
 }
 
-/* Name: c_glutMouseFunc
+/***************************************
+ * Name: c_glutMouseFunc
  * Params:
  * Returns:
  */
@@ -2530,7 +2699,8 @@ foreign_t c_glutMouseFunc(void) {
   PL_succeed;
 }
 
-/* Name: c_glutPostRedisplay
+/***************************************
+ * Name: c_glutPostRedisplay
  * Params:
  * Returns:
  */
@@ -2539,7 +2709,8 @@ foreign_t c_glutPostRedisplay(void) {
   PL_succeed;
 }
 
-/* Name: c_glutReshapeFunc
+/***************************************
+ * Name: c_glutReshapeFunc
  * Params:
  * Returns:
  */
@@ -2552,7 +2723,8 @@ foreign_t c_glutReshapeFunc(void) {
   PL_succeed;
 }
 
-/* Name: c_glutSetColor
+/***************************************
+ * Name: c_glutSetColor
  * Params:
  * Returns:
  */
@@ -2573,7 +2745,8 @@ foreign_t c_glutSetColor(term_t PL_Index, term_t PL_Red, term_t PL_Green, term_t
   PL_succeed;
 }
 
-/* Name: c_glutSolidCone
+/***************************************
+ * Name: c_glutSolidCone
  * Params:
  * Returns:
  */
@@ -2592,7 +2765,8 @@ foreign_t c_glutSolidCone(term_t PL_Radius, term_t PL_Height, term_t PL_Slices, 
   PL_succeed;
 }
 
-/* Name: c_glutSolidCube
+/***************************************
+ * Name: c_glutSolidCube
  * Params:
  * Returns:
  */
@@ -2607,7 +2781,8 @@ foreign_t c_glutSolidCube(term_t PL_Size) {
   PL_succeed;
 }
 
-/* Name: c_glutSolidSphere
+/***************************************
+ * Name: c_glutSolidSphere
  * Params:
  * Returns:
  */
@@ -2625,7 +2800,8 @@ foreign_t c_glutSolidSphere(term_t PL_Radius, term_t PL_Slices, term_t PL_Stacks
   PL_succeed;
 }
 
-/* Name: c_glutSolidTeapot
+/***************************************
+ * Name: c_glutSolidTeapot
  * Params:
  * Returns:
  */
@@ -2640,7 +2816,8 @@ foreign_t c_glutSolidTeapot(term_t PL_Size) {
   PL_succeed;
 }
 
-/* Name: c_glutSolidTorus
+/***************************************
+ * Name: c_glutSolidTorus
  * Params:
  * Returns:
  */
@@ -2659,7 +2836,8 @@ foreign_t c_glutSolidTorus(term_t PL_InnerRadius, term_t PL_OuterRadius, term_t 
   PL_succeed;
 }
 
-/* Name: c_glutSwapBuffers
+/***************************************
+ * Name: c_glutSwapBuffers
  * Params:
  * Returns:
  */
@@ -2669,7 +2847,8 @@ foreign_t c_glutSwapBuffers(void) {
   PL_succeed;
 }
 
-/* Name: c_glutWireCone
+/***************************************
+ * Name: c_glutWireCone
  * Params:
  * Returns:
  */
@@ -2688,7 +2867,8 @@ foreign_t c_glutWireCone(term_t PL_Radius, term_t PL_Height, term_t PL_Slices, t
   PL_succeed;
 }
 
-/* Name: c_glutWireCube
+/***************************************
+ * Name: c_glutWireCube
  * Params:
  * Returns:
  */
@@ -2703,7 +2883,8 @@ foreign_t c_glutWireCube(term_t PL_Size) {
   PL_succeed;
 }
 
-/* Name: c_glutWireSphere
+/***************************************
+ * Name: c_glutWireSphere
  * Params:
  * Returns:
  */
@@ -2721,7 +2902,8 @@ foreign_t c_glutWireSphere(term_t PL_Radius, term_t PL_Slices, term_t PL_Stacks)
   PL_succeed;
 }
 
-/* Name: c_glutWireTeapot
+/***************************************
+ * Name: c_glutWireTeapot
  * Params:
  * Returns:
  */
@@ -2736,7 +2918,8 @@ foreign_t c_glutWireTeapot(term_t PL_Size) {
   PL_succeed;
 }
 
-/* Name: c_glutWireTorus
+/***************************************
+ * Name: c_glutWireTorus
  * Params:
  * Returns:
  */
