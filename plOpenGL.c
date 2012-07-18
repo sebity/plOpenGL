@@ -128,6 +128,7 @@ foreign_t c_glGenLists(term_t Range);
 foreign_t c_glGenTextures(term_t N, term_t TextureNames);
 foreign_t c_glHint(term_t Target, term_t Hint);
 foreign_t c_glIndexi(term_t Index);
+foreign_t c_glIndexMask(term_t Mask);
 foreign_t c_glLightfv(term_t Face, term_t PName, term_t Params, term_t Num);
 foreign_t c_glLightModelfv(term_t PName, term_t Params, term_t Num);
 foreign_t c_glLineStipple(term_t Factor, term_t Pattern);
@@ -276,6 +277,7 @@ install_t install() {
   PL_register_foreign("c_glGenTextures",2,c_glGenTextures,PL_FA_NOTRACE);
   PL_register_foreign("c_glHint",2,c_glHint,PL_FA_NOTRACE);
   PL_register_foreign("c_glIndexi",1,c_glIndexi,PL_FA_NOTRACE);
+  PL_register_foreign("c_glIndexMask",1,c_glIndexMask,PL_FA_NOTRACE);
   PL_register_foreign("c_glLightfv",4,c_glLightfv,PL_FA_NOTRACE);
   PL_register_foreign("c_glLightModelfv",3,c_glLightModelfv,PL_FA_NOTRACE);
   PL_register_foreign("c_glLineStipple",2,c_glLineStipple,PL_FA_NOTRACE);
@@ -1494,6 +1496,21 @@ foreign_t c_glIndexi(term_t PL_Index) {
     return FALSE;
 
   glIndexi(index);
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glIndexMask
+ * Params:
+ * Returns:
+ */
+foreign_t c_glIndexMask(term_t PL_Mask) {
+  int mask;
+
+  if(!PL_get_integer(PL_Mask,&mask))
+    return FALSE;
+
+  glIndexMask((GLuint)mask);
   PL_succeed;
 }
 

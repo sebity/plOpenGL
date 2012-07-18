@@ -204,6 +204,9 @@ glHint(Target,Hint):-
 glIndexi(Index):-
     c_glIndexi(Index).
 
+glIndexMask(Mask):-
+    c_glIndexMask(Mask).
+
 glLightfv(Light, PName, Params):-
 	size(Params,N),
 	c_glLightfv(Light, PName, Params, N).
