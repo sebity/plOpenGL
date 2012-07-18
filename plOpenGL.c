@@ -102,6 +102,7 @@ foreign_t c_glClearStencil(term_t S);
 foreign_t c_glClipPlane(term_t Plane, term_t Equation, term_t Num);
 foreign_t c_glColor3f(term_t Red, term_t Green, term_t Blue);
 foreign_t c_glColor4f(term_t Red, term_t Green, term_t Blue, term_t Alpha);
+foreign_t c_glColorMask(term_t Red, term_t Green, term_t Blue, term_t Alpha);
 foreign_t c_glColorMaterial(term_t Face, term_t Mode);
 foreign_t c_glCopyPixels(term_t X, term_t Y, term_t Width, term_t Height, term_t Type);
 foreign_t c_glCopyTexImage1D(term_t Target, term_t Level, term_t Internal, term_t X, term_t Y,
@@ -110,8 +111,12 @@ foreign_t c_glCopyTexImage2D(term_t Target, term_t Level, term_t Internal, term_
                              term_t Width, term_t Height, term_t Border);
 foreign_t c_glCullFace(term_t Mode);
 foreign_t c_glDepthFunc(term_t Mode);
+foreign_t c_glDepthMask(term_t Flag);
+foreign_t c_glDepthRange(term_t NearVal, term_t FarVal);
 foreign_t c_glDisable(term_t Mode);
+foreign_t c_glDrawArrays(term_t Mode, term_t First, term_t Count);
 foreign_t c_glDrawBuffer(term_t Mode);
+foreign_t c_glDrawPixels(term_t Width, term_t Height, term_t Format, term_t Type, term_t Data);
 foreign_t c_glEnable(term_t Mode);
 foreign_t c_glEnd(void);
 foreign_t c_glEndList(void);
@@ -125,6 +130,7 @@ foreign_t c_glGenLists(term_t Range);
 foreign_t c_glGenTextures(term_t N, term_t TextureNames);
 foreign_t c_glHint(term_t Target, term_t Hint);
 foreign_t c_glIndexi(term_t Index);
+foreign_t c_glIndexMask(term_t Mask);
 foreign_t c_glLightfv(term_t Face, term_t PName, term_t Params, term_t Num);
 foreign_t c_glLightModelfv(term_t PName, term_t Params, term_t Num);
 foreign_t c_glLineStipple(term_t Factor, term_t Pattern);
@@ -151,6 +157,7 @@ foreign_t c_glPushName(term_t Name);
 foreign_t c_glRasterPos2i(term_t X, term_t Y);
 foreign_t c_glReadBuffer(term_t Mode);
 foreign_t c_glRectf(term_t X1, term_t Y1, term_t X2, term_t Y2);
+foreign_t c_glRenderMode(term_t Mode);
 foreign_t c_glRotated(term_t Angle, term_t X, term_t Y, term_t Z);
 foreign_t c_glRotatef(term_t Angle, term_t X, term_t Y, term_t Z);
 foreign_t c_glScaled(term_t X, term_t Y, term_t Z);
@@ -249,14 +256,19 @@ install_t install() {
   PL_register_foreign("c_glClipPlane",3,c_glClipPlane,PL_FA_NOTRACE);
   PL_register_foreign("c_glColor3f",3,c_glColor3f,PL_FA_NOTRACE);
   PL_register_foreign("c_glColor4f",4,c_glColor4f,PL_FA_NOTRACE);
+  PL_register_foreign("c_glColorMask",4,c_glColorMask,PL_FA_NOTRACE);
   PL_register_foreign("c_glColorMaterial",2,c_glColorMaterial,PL_FA_NOTRACE);
   PL_register_foreign("c_glCopyPixels",5,c_glCopyPixels,PL_FA_NOTRACE);
   PL_register_foreign("c_glCopyTexImage1D",7,c_glCopyTexImage1D,PL_FA_NOTRACE);
   PL_register_foreign("c_glCopyTexImage2D",8,c_glCopyTexImage2D,PL_FA_NOTRACE);
   PL_register_foreign("c_glCullFace",1,c_glCullFace,PL_FA_NOTRACE);
   PL_register_foreign("c_glDepthFunc",1,c_glDepthFunc,PL_FA_NOTRACE);
+  PL_register_foreign("c_glDepthMask",1,c_glDepthMask,PL_FA_NOTRACE);
+  PL_register_foreign("c_glDepthRange",2,c_glDepthRange,PL_FA_NOTRACE);
   PL_register_foreign("c_glDisable",1,c_glDisable,PL_FA_NOTRACE);
+  PL_register_foreign("c_gDrawArrays",3,c_glDrawArrays,PL_FA_NOTRACE);
   PL_register_foreign("c_gDrawBuffer",4,c_glDrawBuffer,PL_FA_NOTRACE);
+  PL_register_foreign("c_gDrawPixels",5,c_glDrawPixels,PL_FA_NOTRACE);
   PL_register_foreign("c_glEnable",1,c_glEnable,PL_FA_NOTRACE);
   PL_register_foreign("c_glEnd",0,c_glEnd,PL_FA_NOTRACE);
   PL_register_foreign("c_glEndList",0,c_glEndList,PL_FA_NOTRACE);
@@ -270,6 +282,7 @@ install_t install() {
   PL_register_foreign("c_glGenTextures",2,c_glGenTextures,PL_FA_NOTRACE);
   PL_register_foreign("c_glHint",2,c_glHint,PL_FA_NOTRACE);
   PL_register_foreign("c_glIndexi",1,c_glIndexi,PL_FA_NOTRACE);
+  PL_register_foreign("c_glIndexMask",1,c_glIndexMask,PL_FA_NOTRACE);
   PL_register_foreign("c_glLightfv",4,c_glLightfv,PL_FA_NOTRACE);
   PL_register_foreign("c_glLightModelfv",3,c_glLightModelfv,PL_FA_NOTRACE);
   PL_register_foreign("c_glLineStipple",2,c_glLineStipple,PL_FA_NOTRACE);
@@ -296,6 +309,7 @@ install_t install() {
   PL_register_foreign("c_glRasterPos2i",2,c_glRasterPos2i,PL_FA_NOTRACE);
   PL_register_foreign("c_glReadBuffer",4,c_glReadBuffer,PL_FA_NOTRACE);
   PL_register_foreign("c_glRectf",4,c_glRectf,PL_FA_NOTRACE);
+  PL_register_foreign("c_glRenderMode",1,c_glRenderMode,PL_FA_NOTRACE);
   PL_register_foreign("c_glRotated",4,c_glRotated,PL_FA_NOTRACE);
   PL_register_foreign("c_glRotatef",4,c_glRotatef,PL_FA_NOTRACE);
   PL_register_foreign("c_glScaled",3,c_glScaled,PL_FA_NOTRACE);
@@ -1081,6 +1095,26 @@ foreign_t c_glColor4f(term_t PL_Red, term_t PL_Green, term_t PL_Blue, term_t PL_
 }
 
 /***************************************
+ * Name:    c_glColorMask
+ * Desc:    Enable and disable writing of frame buffer color components
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glColorMask(term_t PL_Red, term_t PL_Green, term_t PL_Blue, term_t PL_Alpha) {
+  GLint red, green, blue, alpha;
+
+  if(!PL_get_bool(PL_Red,&red) ||
+     !PL_get_bool(PL_Green,&green) ||
+     !PL_get_bool(PL_Blue,&blue) ||
+     !PL_get_bool(PL_Alpha,&alpha))
+    return FALSE;
+  glColorMask((GLboolean)red,(GLboolean)green,(GLboolean)blue,(GLboolean)alpha);
+
+  PL_succeed;
+}
+
+
+/***************************************
  * Name:    c_glColorMaterial
  * Desc:    Cause a material color to track the current color
  * Params:  -
@@ -1201,6 +1235,39 @@ foreign_t c_glDepthFunc(term_t PL_Mode) {
 }
 
 /***************************************
+ * Name:    c_glDepthMask
+ * Desc:    Enable or disable writing into the depth buffer
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glDepthMask(term_t PL_Flag) {
+  int flag;
+
+  if(!PL_get_bool(PL_Flag,&flag))
+    return FALSE;
+
+  glDepthMask((GLboolean)flag);
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glDepthRange
+ * Desc:    Specify mapping of depth values from normalized device coordinates to window coordinates
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glDepthRange(term_t PL_NearVal, term_t PL_FarVal) {
+  double near, far;
+
+  if(!PL_get_float(PL_NearVal,&near) ||
+     !PL_get_float(PL_FarVal,&far))
+    return FALSE;
+
+  glDepthRange((GLclampd)near, (GLclampd)far);
+  PL_succeed;
+}
+
+/***************************************
  * Name: c_glDisable
  * Params:
  * Returns:
@@ -1217,6 +1284,24 @@ foreign_t c_glDisable(term_t PL_Mode) {
 }
 
 /***************************************
+ * Name:    c_glDrawArrays
+ * Desc:    Render primitives from array data
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glDrawArrays(term_t PL_Mode, term_t PL_First, term_t PL_Count) {
+  int mode, first, count;
+
+  if(!PL_get_integer(PL_Mode,&mode) ||
+     !PL_get_integer(PL_First,&first) ||
+     !PL_get_integer(PL_Count,&count))
+    return FALSE;
+
+  glDrawArrays((GLenum)mode, (GLint)first, (GLsizei)count);
+  PL_succeed;
+}
+
+/***************************************
  * Name: c_glDrawBuffer
  * Params:
  * Returns:
@@ -1228,6 +1313,26 @@ foreign_t c_glDrawBuffer(term_t PL_Mode) {
     return FALSE;
 
   glDrawBuffer((GLenum)mode);
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glDrawPixels
+ * Params:
+ * Returns:
+ */
+foreign_t c_glDrawPixels(term_t PL_Width, term_t PL_Height, term_t PL_Format, term_t PL_Type, term_t PL_Data) {
+  int width, height, format, type;
+  void *data;
+
+  if(!PL_get_integer(PL_Width,&width) ||
+     !PL_get_integer(PL_Height,&height) ||
+     !PL_get_integer(PL_Format,&format) ||
+     !PL_get_integer(PL_Type,&type) ||
+     !PL_get_pointer(PL_Data,&data))
+    return FALSE;
+
+  glDrawPixels((GLsizei)width, (GLsizei)height, (GLenum)format, (GLenum)type, data);
   PL_succeed;
 }
 
@@ -1435,6 +1540,21 @@ foreign_t c_glIndexi(term_t PL_Index) {
     return FALSE;
 
   glIndexi(index);
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glIndexMask
+ * Params:
+ * Returns:
+ */
+foreign_t c_glIndexMask(term_t PL_Mask) {
+  int mask;
+
+  if(!PL_get_integer(PL_Mask,&mask))
+    return FALSE;
+
+  glIndexMask((GLuint)mask);
   PL_succeed;
 }
 
@@ -1915,6 +2035,21 @@ foreign_t c_glRectf(term_t PL_X1, term_t PL_Y1, term_t PL_X2, term_t PL_Y2) {
     return FALSE;
   glRectf((GLfloat)x1,(GLfloat)y1,(GLfloat)x2,(GLfloat)y2);
 
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glRenderMode
+ * Params:
+ * Returns:
+ */
+foreign_t c_glRenderMode(term_t PL_Mode) {
+  int mode;
+
+  if(!PL_get_integer(PL_Mode,&mode))
+    return FALSE;
+
+  glRenderMode((GLenum)mode);
   PL_succeed;
 }
 

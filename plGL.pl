@@ -100,6 +100,10 @@ glColor4f(Red,Green,Blue,Alpha):-
 	float(Alpha),
 	c_glColor4f(Red,Green,Blue,Alpha).
 
+% Enable and disable writing of frame buffer color components
+glColorMask(Red,Green,Blue,Alpha):-
+	c_glColorMask(Red,Green,Blue,Alpha).
+
 % Cause a material color to track the current color
 glColorMaterial(Face, Mode):-
 	c_glColorMaterial(Face,Mode).
@@ -126,13 +130,31 @@ glDepthFunc(Mode):-
 	Mode_Eval is Mode,
 	c_glDepthFunc(Mode_Eval).
 
+% Enable or disable writing into the depth buffer
+glDepthMask(Flag):-
+    c_glDepthMask(Flag).
+
+% Specify mapping of depth values from normalized device coordinates to window coordinates
+glDepthRange(Near, Far) :-
+    float(Near),
+    float(Far),
+    c_glDepthRange(Near, Far).
+
 glDisable(Mode):-
 	Mode_Eval is Mode,
 	c_glDisable(Mode_Eval).
 
+% Render primitives from array data
+glDrawArrays(Mode, First, Count):-
+    c_glDrawArrays(Mode, First, Count).
+
 % Specify which color buffers are to be drawn into
 glDrawBuffer(Mode):-
     c_glDrawBuffer(Mode).
+
+% Write a block of pixels to the frame buffer
+glDrawPixels(Width, Height, Format, Type, Data):-
+    c_glDrawPixels(Width, Height, Format, Type, Data).
 
 glEnable(Mode):-
 	Mode_Eval is Mode,
@@ -189,6 +211,9 @@ glHint(Target,Hint):-
 
 glIndexi(Index):-
     c_glIndexi(Index).
+
+glIndexMask(Mask):-
+    c_glIndexMask(Mask).
 
 glLightfv(Light, PName, Params):-
 	size(Params,N),
@@ -293,6 +318,10 @@ glRectf(X1,Y1,X2,Y2) :-
 	float(X2),
 	float(Y2),
 	c_glRectf(X1,Y1,X2,Y2).
+
+% Set rasterization mode
+glRenderMode(Mode):-
+    c_glRenderMode(Mode).
 
 % Multiply the current matrix by a rotation matrix
 glRotated(Angle,X,Y,Z) :-
