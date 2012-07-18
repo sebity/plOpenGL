@@ -13,11 +13,6 @@ Platforms
 Windows, Mac OSX and Linux
 
 
-Compiling
----------
-Coming Soon...
-
-
 Setup
 -----
 plOpenGL does require setting up, but luckily it is easy.  All that is required is to open the <code>plOpenGL.pl</code> file and comment/uncomment the libraries that is associated with the OS that plOpenGL is running on.
@@ -40,7 +35,8 @@ Command Line Usage
 plOpenGL can be run from the command line, e.g.
 
 <pre>
-> swipl -g main -s examples/helloworld.pl
+> cd examples
+> swipl -g main -s helloworld.pl
 </pre>
 
 Example Applications
