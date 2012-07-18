@@ -155,6 +155,7 @@ foreign_t c_glPushName(term_t Name);
 foreign_t c_glRasterPos2i(term_t X, term_t Y);
 foreign_t c_glReadBuffer(term_t Mode);
 foreign_t c_glRectf(term_t X1, term_t Y1, term_t X2, term_t Y2);
+foreign_t c_glRenderMode(term_t Mode);
 foreign_t c_glRotated(term_t Angle, term_t X, term_t Y, term_t Z);
 foreign_t c_glRotatef(term_t Angle, term_t X, term_t Y, term_t Z);
 foreign_t c_glScaled(term_t X, term_t Y, term_t Z);
@@ -304,6 +305,7 @@ install_t install() {
   PL_register_foreign("c_glRasterPos2i",2,c_glRasterPos2i,PL_FA_NOTRACE);
   PL_register_foreign("c_glReadBuffer",4,c_glReadBuffer,PL_FA_NOTRACE);
   PL_register_foreign("c_glRectf",4,c_glRectf,PL_FA_NOTRACE);
+  PL_register_foreign("c_glRenderMode",1,c_glRenderMode,PL_FA_NOTRACE);
   PL_register_foreign("c_glRotated",4,c_glRotated,PL_FA_NOTRACE);
   PL_register_foreign("c_glRotatef",4,c_glRotatef,PL_FA_NOTRACE);
   PL_register_foreign("c_glScaled",3,c_glScaled,PL_FA_NOTRACE);
@@ -1991,6 +1993,21 @@ foreign_t c_glRectf(term_t PL_X1, term_t PL_Y1, term_t PL_X2, term_t PL_Y2) {
     return FALSE;
   glRectf((GLfloat)x1,(GLfloat)y1,(GLfloat)x2,(GLfloat)y2);
 
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glRenderMode
+ * Params:
+ * Returns:
+ */
+foreign_t c_glRenderMode(term_t PL_Mode) {
+  int mode;
+
+  if(!PL_get_integer(PL_Mode,&mode))
+    return FALSE;
+
+  glRenderMode((GLenum)mode);
   PL_succeed;
 }
 

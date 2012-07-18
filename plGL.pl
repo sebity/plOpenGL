@@ -311,6 +311,10 @@ glRectf(X1,Y1,X2,Y2) :-
 	float(Y2),
 	c_glRectf(X1,Y1,X2,Y2).
 
+% Set rasterization mode
+glRenderMode(Mode):-
+    c_glRenderMode(Mode).
+
 % Multiply the current matrix by a rotation matrix
 glRotated(Angle,X,Y,Z) :-
 	float(Angle),
