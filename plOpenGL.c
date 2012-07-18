@@ -116,6 +116,7 @@ foreign_t c_glDepthRange(term_t NearVal, term_t FarVal);
 foreign_t c_glDisable(term_t Mode);
 foreign_t c_glDrawArrays(term_t Mode, term_t First, term_t Count);
 foreign_t c_glDrawBuffer(term_t Mode);
+foreign_t c_glDrawPixels(term_t Width, term_t Height, term_t Format, term_t Type, term_t Data);
 foreign_t c_glEnable(term_t Mode);
 foreign_t c_glEnd(void);
 foreign_t c_glEndList(void);
@@ -267,6 +268,7 @@ install_t install() {
   PL_register_foreign("c_glDisable",1,c_glDisable,PL_FA_NOTRACE);
   PL_register_foreign("c_gDrawArrays",3,c_glDrawArrays,PL_FA_NOTRACE);
   PL_register_foreign("c_gDrawBuffer",4,c_glDrawBuffer,PL_FA_NOTRACE);
+  PL_register_foreign("c_gDrawPixels",5,c_glDrawPixels,PL_FA_NOTRACE);
   PL_register_foreign("c_glEnable",1,c_glEnable,PL_FA_NOTRACE);
   PL_register_foreign("c_glEnd",0,c_glEnd,PL_FA_NOTRACE);
   PL_register_foreign("c_glEndList",0,c_glEndList,PL_FA_NOTRACE);
