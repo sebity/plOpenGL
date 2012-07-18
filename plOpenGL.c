@@ -114,6 +114,7 @@ foreign_t c_glDepthFunc(term_t Mode);
 foreign_t c_glDepthMask(term_t Flag);
 foreign_t c_glDepthRange(term_t NearVal, term_t FarVal);
 foreign_t c_glDisable(term_t Mode);
+foreign_t c_glDrawArrays(term_t Mode, term_t First, term_t Count);
 foreign_t c_glDrawBuffer(term_t Mode);
 foreign_t c_glEnable(term_t Mode);
 foreign_t c_glEnd(void);
@@ -264,6 +265,7 @@ install_t install() {
   PL_register_foreign("c_glDepthMask",1,c_glDepthMask,PL_FA_NOTRACE);
   PL_register_foreign("c_glDepthRange",2,c_glDepthRange,PL_FA_NOTRACE);
   PL_register_foreign("c_glDisable",1,c_glDisable,PL_FA_NOTRACE);
+  PL_register_foreign("c_gDrawArrays",3,c_glDrawArrays,PL_FA_NOTRACE);
   PL_register_foreign("c_gDrawBuffer",4,c_glDrawBuffer,PL_FA_NOTRACE);
   PL_register_foreign("c_glEnable",1,c_glEnable,PL_FA_NOTRACE);
   PL_register_foreign("c_glEnd",0,c_glEnd,PL_FA_NOTRACE);
@@ -1276,6 +1278,24 @@ foreign_t c_glDisable(term_t PL_Mode) {
     return FALSE;
   mode = (GLenum)temp;
   glDisable(mode);
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glDrawArrays
+ * Desc:    Render primitives from array data
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glDrawArrays(term_t PL_Mode, term_t PL_First, term_t PL_Count) {
+  int mode, first, count;
+
+  if(!PL_get_integer(PL_Mode,&mode) ||
+     !PL_get_integer(PL_First,&first) ||
+     !PL_get_integer(PL_Count,&count))
+    return FALSE;
+
+  glDrawArrays((GLenum)mode, (GLint)first, (GLsizei)count);
   PL_succeed;
 }
 

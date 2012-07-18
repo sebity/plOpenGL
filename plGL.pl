@@ -144,6 +144,10 @@ glDisable(Mode):-
 	Mode_Eval is Mode,
 	c_glDisable(Mode_Eval).
 
+% Render primitives from array data
+glDrawArrays(Mode, First, Count):-
+    c_glDrawArrays(Mode, First, Count).
+
 % Specify which color buffers are to be drawn into
 glDrawBuffer(Mode):-
     c_glDrawBuffer(Mode).
