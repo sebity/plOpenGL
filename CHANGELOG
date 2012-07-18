@@ -1,5 +1,12 @@
 plOpenGL CHANGELOG
 =================================================
+
+0.2.3
+=====
+    * Add: glColorMask, glDepthMask, glDepthRange, glDrawArrays, glDrawPixels,
+           glIndexMask, glRenderMode
+    * Update: OpenGL Definitions are now more complete
+
 0.2.2
 =====
     * Add: OS Preprocessor Directive for glTexImage3D and glActiveTextureARB
