@@ -152,6 +152,10 @@ glDrawArrays(Mode, First, Count):-
 glDrawBuffer(Mode):-
     c_glDrawBuffer(Mode).
 
+% Write a block of pixels to the frame buffer
+glDrawPixels(Width, Height, Format, Type, Data):-
+    c_glDrawPixels(Width, Height, Format, Type, Data).
+
 glEnable(Mode):-
 	Mode_Eval is Mode,
 	c_glEnable(Mode_Eval).

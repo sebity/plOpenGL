@@ -1315,6 +1315,26 @@ foreign_t c_glDrawBuffer(term_t PL_Mode) {
 }
 
 /***************************************
+ * Name: c_glDrawPixels
+ * Params:
+ * Returns:
+ */
+foreign_t c_glDrawPixels(term_t PL_Width, term_t PL_Height, term_t PL_Format, term_t PL_Type, term_t PL_Data) {
+  int width, height, format, type;
+  void *data;
+
+  if(!PL_get_integer(PL_Width,&width) ||
+     !PL_get_integer(PL_Height,&height) ||
+     !PL_get_integer(PL_Format,&format) ||
+     !PL_get_integer(PL_Type,&type) ||
+     !PL_get_pointer(PL_Data,&data))
+    return FALSE;
+
+  glDrawPixels((GLsizei)width, (GLsizei)height, (GLenum)format, (GLenum)type, data);
+  PL_succeed;
+}
+
+/***************************************
  * Name: c_glEnable
  * Params:
  * Returns:
