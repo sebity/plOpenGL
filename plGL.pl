@@ -120,6 +120,14 @@ glCopyTexImage1D(Target, Level, Internal, X, Y, Width, Border):-
 glCopyTexImage2D(Target, Level, Internal, X, Y, Width, Height, Border):-
     c_glCopyTexImage2D(Target, Level, Internal, X, Y, Width, Height, Border).
 
+% Copy a one-dimensional texture subimage
+glCopyTexSubImage1D(Target, Level, XOffset, X, Y, Width):-
+    c_glCopyTexSubImage1D(Target, Level, XOffset, X, Y, Width).
+
+% Copy a two-dimensional texture subimage
+glCopyTexSubImage2D(Target, Level, XOffset, YOffset, X, Y, Width, Height):-
+    c_glCopyTexSubImage2D(Target, Level, XOffset, YOffset, X, Y, Width, Height).
+
 % Specify whether front- or back-facing facets can be culled
 glCullFace(Mode):-
 	Mode_Eval is Mode,
@@ -203,6 +211,14 @@ glGenLists(Range):-
 
 glGenTextures(N,TextureNames):-
     c_glGenTextures(N,TextureNames).
+
+% Return light source parameter values
+glGetLightfv(Light, PName, Params) :-
+    c_glGetLightfv(Light, PName, Params).
+
+% Return light source parameter values
+glGetLightiv(Light, PName, Params) :-
+    c_glGetLightiv(Light, PName, Params).
 
 glHint(Target,Hint):-
 	T is Target,

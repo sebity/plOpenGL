@@ -109,6 +109,10 @@ foreign_t c_glCopyTexImage1D(term_t Target, term_t Level, term_t Internal, term_
                              term_t Width, term_t Border);
 foreign_t c_glCopyTexImage2D(term_t Target, term_t Level, term_t Internal, term_t X, term_t Y,
                              term_t Width, term_t Height, term_t Border);
+foreign_t c_glCopyTexSubImage1D(term_t Target, term_t Level, term_t XOffset, term_t X, term_t Y,
+                             term_t Width);
+foreign_t c_glCopyTexSubImage2D(term_t Target, term_t Level, term_t XOffset, term_t YOffset, 
+                                term_t X, term_t Y, term_t Width, term_t Height);
 foreign_t c_glCullFace(term_t Mode);
 foreign_t c_glDepthFunc(term_t Mode);
 foreign_t c_glDepthMask(term_t Flag);
@@ -128,6 +132,8 @@ foreign_t c_glFrontFace(term_t Mode);
 foreign_t c_glFrustum(term_t Left, term_t Right, term_t Bottom, term_t Top, term_t Near, term_t Far);
 foreign_t c_glGenLists(term_t Range);
 foreign_t c_glGenTextures(term_t N, term_t TextureNames);
+foreign_t c_glGetLightfv(term_t Light, term_t PName, term_t Params);
+foreign_t c_glGetLightiv(term_t Light, term_t PName, term_t Params);
 foreign_t c_glHint(term_t Target, term_t Hint);
 foreign_t c_glIndexi(term_t Index);
 foreign_t c_glIndexMask(term_t Mask);
@@ -261,6 +267,8 @@ install_t install() {
   PL_register_foreign("c_glCopyPixels",5,c_glCopyPixels,PL_FA_NOTRACE);
   PL_register_foreign("c_glCopyTexImage1D",7,c_glCopyTexImage1D,PL_FA_NOTRACE);
   PL_register_foreign("c_glCopyTexImage2D",8,c_glCopyTexImage2D,PL_FA_NOTRACE);
+  PL_register_foreign("c_glCopyTexSubImage1D",6,c_glCopyTexSubImage1D,PL_FA_NOTRACE);
+  PL_register_foreign("c_glCopyTexSubImage2D",8,c_glCopyTexSubImage2D,PL_FA_NOTRACE);
   PL_register_foreign("c_glCullFace",1,c_glCullFace,PL_FA_NOTRACE);
   PL_register_foreign("c_glDepthFunc",1,c_glDepthFunc,PL_FA_NOTRACE);
   PL_register_foreign("c_glDepthMask",1,c_glDepthMask,PL_FA_NOTRACE);
@@ -280,6 +288,8 @@ install_t install() {
   PL_register_foreign("c_glFrustum",6,c_glFrustum,PL_FA_NOTRACE);
   PL_register_foreign("c_glGenLists",1,c_glGenLists,PL_FA_NOTRACE);
   PL_register_foreign("c_glGenTextures",2,c_glGenTextures,PL_FA_NOTRACE);
+  PL_register_foreign("c_glGetLightfv",3,c_glGetLightfv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glGetLightiv",3,c_glGetLightiv,PL_FA_NOTRACE);
   PL_register_foreign("c_glHint",2,c_glHint,PL_FA_NOTRACE);
   PL_register_foreign("c_glIndexi",1,c_glIndexi,PL_FA_NOTRACE);
   PL_register_foreign("c_glIndexMask",1,c_glIndexMask,PL_FA_NOTRACE);
@@ -1199,6 +1209,53 @@ foreign_t c_glCopyTexImage2D(term_t PL_Target, term_t PL_Level, term_t PL_Intern
   PL_succeed;
 }
 
+/***************************************
+ * Name: c_glCopyTexSubImage1D
+ * Params:
+ * Returns:
+ */
+foreign_t c_glCopyTexSubImage1D(term_t PL_Target, term_t PL_Level, term_t PL_XOffset,
+                             term_t PL_X, term_t PL_Y, term_t PL_Width) {
+  int target, level, xoffset, x, y, width;
+
+  if(!PL_get_integer(PL_Target,&target) ||
+     !PL_get_integer(PL_Level,&level) ||
+     !PL_get_integer(PL_XOffset,&xoffset) ||
+     !PL_get_integer(PL_X,&x) ||
+     !PL_get_integer(PL_Y,&y) ||
+     !PL_get_integer(PL_Width,&width))
+    return FALSE;
+
+  glCopyTexSubImage1D((GLenum)target, (GLint)level, (GLenum)xoffset, 
+                      (GLint)x, (GLint)y, (GLsizei)width);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glCopyTexSubImage2D
+ * Params:
+ * Returns:
+ */
+foreign_t c_glCopyTexSubImage2D(term_t PL_Target, term_t PL_Level, term_t PL_XOffset, term_t PL_YOffset,
+                                term_t PL_X, term_t PL_Y, term_t PL_Width, term_t PL_Height) {
+  int target, level, xoffset, yoffset, x, y, width, height;
+
+  if(!PL_get_integer(PL_Target,&target) ||
+     !PL_get_integer(PL_Level,&level) ||
+     !PL_get_integer(PL_XOffset,&xoffset) ||
+     !PL_get_integer(PL_YOffset,&yoffset) ||
+     !PL_get_integer(PL_X,&x) ||
+     !PL_get_integer(PL_Y,&y) ||
+     !PL_get_integer(PL_Width,&width) ||
+     !PL_get_integer(PL_Height,&height))
+    return FALSE;
+
+  glCopyTexSubImage2D((GLenum)target, (GLint)level, (GLenum)xoffset, (GLenum)yoffset,
+                      (GLint)x, (GLint)y, (GLsizei)width, (GLsizei)height);
+
+  PL_succeed;
+}
 
 /***************************************
  * Name: c_glCullFace
@@ -1506,6 +1563,91 @@ foreign_t c_glGenTextures(term_t PL_N, term_t PL_TextureNames) {
 
   PL_succeed;
 }
+
+/***************************************
+ * Name:    c_glGetLightfv
+ * Desc:    return light source parameter values
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glGetLightfv(term_t PL_Light, term_t PL_PName, term_t PL_Params) {
+  int light, pname, i, size;
+  float *parameters;
+
+  term_t list = PL_copy_term_ref(PL_Params);
+  term_t head = PL_new_term_ref();
+
+  if(!PL_get_integer(PL_Light,&light) ||
+     !PL_get_integer(PL_PName,&pname))
+    return FALSE;
+  
+  if(pname >= 4608 && pname <= 4611) {
+    size = 4;
+  }
+  else if (pname == 4612) {
+    size = 3;
+  }
+  else {
+    size = 1;
+  }
+
+  parameters = malloc(size * sizeof(GLfloat));
+
+  glGetLightfv((GLenum)light, (GLenum)pname, parameters);
+
+  for (i = 0; i < size; i++) {
+    if (!PL_unify_list(list, head, list) ||
+        !PL_unify_float(head, parameters[i]))
+        return FALSE;
+  }
+
+  free(parameters);
+  return PL_unify_nil(list);
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glGetLightiv
+ * Desc:    return light source parameter values
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glGetLightiv(term_t PL_Light, term_t PL_PName, term_t PL_Params) {
+  int light, pname, i, size;
+  int *parameters;
+
+  term_t list = PL_copy_term_ref(PL_Params);
+  term_t head = PL_new_term_ref();
+
+  if(!PL_get_integer(PL_Light,&light) ||
+     !PL_get_integer(PL_PName,&pname))
+    return FALSE;
+  
+  if(pname >= 4608 && pname <= 4611) {
+    size = 4;
+  }
+  else if (pname == 4612) {
+    size = 3;
+  }
+  else {
+    size = 1;
+  }
+
+  parameters = malloc(size * sizeof(GLint));
+
+  glGetLightiv((GLenum)light, (GLenum)pname, parameters);
+
+  for (i = 0; i < size; i++) {
+    if (!PL_unify_list(list, head, list) ||
+        !PL_unify_integer(head, parameters[i]))
+        return FALSE;
+  }
+
+  free(parameters);
+  return PL_unify_nil(list);
+  PL_succeed;
+}
+
 
 
 /***************************************
