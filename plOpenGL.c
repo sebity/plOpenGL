@@ -109,6 +109,10 @@ foreign_t c_glCopyTexImage1D(term_t Target, term_t Level, term_t Internal, term_
                              term_t Width, term_t Border);
 foreign_t c_glCopyTexImage2D(term_t Target, term_t Level, term_t Internal, term_t X, term_t Y,
                              term_t Width, term_t Height, term_t Border);
+foreign_t c_glCopyTexSubImage1D(term_t Target, term_t Level, term_t XOffset, term_t X, term_t Y,
+                             term_t Width);
+foreign_t c_glCopyTexSubImage2D(term_t Target, term_t Level, term_t XOffset, term_t YOffset, 
+                                term_t X, term_t Y, term_t Width, term_t Height);
 foreign_t c_glCullFace(term_t Mode);
 foreign_t c_glDepthFunc(term_t Mode);
 foreign_t c_glDepthMask(term_t Flag);
@@ -128,6 +132,10 @@ foreign_t c_glFrontFace(term_t Mode);
 foreign_t c_glFrustum(term_t Left, term_t Right, term_t Bottom, term_t Top, term_t Near, term_t Far);
 foreign_t c_glGenLists(term_t Range);
 foreign_t c_glGenTextures(term_t N, term_t TextureNames);
+foreign_t c_glGetLightfv(term_t Light, term_t PName, term_t Params);
+foreign_t c_glGetLightiv(term_t Light, term_t PName, term_t Params);
+foreign_t c_glGetMaterialfv(term_t Light, term_t PName, term_t Params);
+foreign_t c_glGetMaterialiv(term_t Light, term_t PName, term_t Params);
 foreign_t c_glHint(term_t Target, term_t Hint);
 foreign_t c_glIndexi(term_t Index);
 foreign_t c_glIndexMask(term_t Mask);
@@ -139,6 +147,7 @@ foreign_t c_glLoadIdentity(void);
 foreign_t c_glLoadName(term_t Name);
 foreign_t c_glMaterialfv(term_t Face, term_t PName, term_t Params, term_t Num);
 foreign_t c_glMatrixMode(term_t Mode);
+foreign_t c_glMinmax(term_t Target, term_t InternalFormat, term_t Sink);
 foreign_t c_glNewList(term_t List, term_t Mode);
 foreign_t c_glNormal3f(term_t X, term_t Y, term_t Z);
 foreign_t c_glOrtho(term_t Left, term_t Right, term_t Bottom, term_t Top, term_t Near, term_t Far);
@@ -158,6 +167,7 @@ foreign_t c_glRasterPos2i(term_t X, term_t Y);
 foreign_t c_glReadBuffer(term_t Mode);
 foreign_t c_glRectf(term_t X1, term_t Y1, term_t X2, term_t Y2);
 foreign_t c_glRenderMode(term_t Mode);
+foreign_t c_glResetMinmax(term_t Target);
 foreign_t c_glRotated(term_t Angle, term_t X, term_t Y, term_t Z);
 foreign_t c_glRotatef(term_t Angle, term_t X, term_t Y, term_t Z);
 foreign_t c_glScaled(term_t X, term_t Y, term_t Z);
@@ -261,6 +271,8 @@ install_t install() {
   PL_register_foreign("c_glCopyPixels",5,c_glCopyPixels,PL_FA_NOTRACE);
   PL_register_foreign("c_glCopyTexImage1D",7,c_glCopyTexImage1D,PL_FA_NOTRACE);
   PL_register_foreign("c_glCopyTexImage2D",8,c_glCopyTexImage2D,PL_FA_NOTRACE);
+  PL_register_foreign("c_glCopyTexSubImage1D",6,c_glCopyTexSubImage1D,PL_FA_NOTRACE);
+  PL_register_foreign("c_glCopyTexSubImage2D",8,c_glCopyTexSubImage2D,PL_FA_NOTRACE);
   PL_register_foreign("c_glCullFace",1,c_glCullFace,PL_FA_NOTRACE);
   PL_register_foreign("c_glDepthFunc",1,c_glDepthFunc,PL_FA_NOTRACE);
   PL_register_foreign("c_glDepthMask",1,c_glDepthMask,PL_FA_NOTRACE);
@@ -280,6 +292,10 @@ install_t install() {
   PL_register_foreign("c_glFrustum",6,c_glFrustum,PL_FA_NOTRACE);
   PL_register_foreign("c_glGenLists",1,c_glGenLists,PL_FA_NOTRACE);
   PL_register_foreign("c_glGenTextures",2,c_glGenTextures,PL_FA_NOTRACE);
+  PL_register_foreign("c_glGetLightfv",3,c_glGetLightfv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glGetLightiv",3,c_glGetLightiv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glGetMaterialfv",3,c_glGetMaterialfv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glGetMaterialiv",3,c_glGetMaterialiv,PL_FA_NOTRACE);
   PL_register_foreign("c_glHint",2,c_glHint,PL_FA_NOTRACE);
   PL_register_foreign("c_glIndexi",1,c_glIndexi,PL_FA_NOTRACE);
   PL_register_foreign("c_glIndexMask",1,c_glIndexMask,PL_FA_NOTRACE);
@@ -291,6 +307,7 @@ install_t install() {
   PL_register_foreign("c_glLoadName",1,c_glLoadName,PL_FA_NOTRACE);
   PL_register_foreign("c_glMaterialfv",4,c_glMaterialfv,PL_FA_NOTRACE);
   PL_register_foreign("c_glMatrixMode",1,c_glMatrixMode,PL_FA_NOTRACE);
+  PL_register_foreign("c_glMinmax",3,c_glMinmax,PL_FA_NOTRACE);
   PL_register_foreign("c_glNewList",2,c_glNewList,PL_FA_NOTRACE);
   PL_register_foreign("c_glNormal3f",3,c_glNormal3f,PL_FA_NOTRACE);
   PL_register_foreign("c_glOrtho",6,c_glOrtho,PL_FA_NOTRACE);
@@ -310,6 +327,7 @@ install_t install() {
   PL_register_foreign("c_glReadBuffer",4,c_glReadBuffer,PL_FA_NOTRACE);
   PL_register_foreign("c_glRectf",4,c_glRectf,PL_FA_NOTRACE);
   PL_register_foreign("c_glRenderMode",1,c_glRenderMode,PL_FA_NOTRACE);
+  PL_register_foreign("c_glResetMinmax",1,c_glResetMinmax,PL_FA_NOTRACE);
   PL_register_foreign("c_glRotated",4,c_glRotated,PL_FA_NOTRACE);
   PL_register_foreign("c_glRotatef",4,c_glRotatef,PL_FA_NOTRACE);
   PL_register_foreign("c_glScaled",3,c_glScaled,PL_FA_NOTRACE);
@@ -1199,6 +1217,53 @@ foreign_t c_glCopyTexImage2D(term_t PL_Target, term_t PL_Level, term_t PL_Intern
   PL_succeed;
 }
 
+/***************************************
+ * Name: c_glCopyTexSubImage1D
+ * Params:
+ * Returns:
+ */
+foreign_t c_glCopyTexSubImage1D(term_t PL_Target, term_t PL_Level, term_t PL_XOffset,
+                             term_t PL_X, term_t PL_Y, term_t PL_Width) {
+  int target, level, xoffset, x, y, width;
+
+  if(!PL_get_integer(PL_Target,&target) ||
+     !PL_get_integer(PL_Level,&level) ||
+     !PL_get_integer(PL_XOffset,&xoffset) ||
+     !PL_get_integer(PL_X,&x) ||
+     !PL_get_integer(PL_Y,&y) ||
+     !PL_get_integer(PL_Width,&width))
+    return FALSE;
+
+  glCopyTexSubImage1D((GLenum)target, (GLint)level, (GLenum)xoffset, 
+                      (GLint)x, (GLint)y, (GLsizei)width);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glCopyTexSubImage2D
+ * Params:
+ * Returns:
+ */
+foreign_t c_glCopyTexSubImage2D(term_t PL_Target, term_t PL_Level, term_t PL_XOffset, term_t PL_YOffset,
+                                term_t PL_X, term_t PL_Y, term_t PL_Width, term_t PL_Height) {
+  int target, level, xoffset, yoffset, x, y, width, height;
+
+  if(!PL_get_integer(PL_Target,&target) ||
+     !PL_get_integer(PL_Level,&level) ||
+     !PL_get_integer(PL_XOffset,&xoffset) ||
+     !PL_get_integer(PL_YOffset,&yoffset) ||
+     !PL_get_integer(PL_X,&x) ||
+     !PL_get_integer(PL_Y,&y) ||
+     !PL_get_integer(PL_Width,&width) ||
+     !PL_get_integer(PL_Height,&height))
+    return FALSE;
+
+  glCopyTexSubImage2D((GLenum)target, (GLint)level, (GLenum)xoffset, (GLenum)yoffset,
+                      (GLint)x, (GLint)y, (GLsizei)width, (GLsizei)height);
+
+  PL_succeed;
+}
 
 /***************************************
  * Name: c_glCullFace
@@ -1507,6 +1572,181 @@ foreign_t c_glGenTextures(term_t PL_N, term_t PL_TextureNames) {
   PL_succeed;
 }
 
+/***************************************
+ * Name:    c_glGetLightfv
+ * Desc:    return light source parameter values
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glGetLightfv(term_t PL_Light, term_t PL_PName, term_t PL_Params) {
+  int light, pname, i, size;
+  float *parameters;
+
+  term_t list = PL_copy_term_ref(PL_Params);
+  term_t head = PL_new_term_ref();
+
+  if(!PL_get_integer(PL_Light,&light) ||
+     !PL_get_integer(PL_PName,&pname))
+    return FALSE;
+  
+  if(pname >= 4608 && pname <= 4611) {
+    size = 4;
+  }
+  else if (pname == 4612) {
+    size = 3;
+  }
+  else {
+    size = 1;
+  }
+
+  parameters = malloc(size * sizeof(GLfloat));
+
+  glGetLightfv((GLenum)light, (GLenum)pname, parameters);
+
+  for (i = 0; i < size; i++) {
+    if (!PL_unify_list(list, head, list) ||
+        !PL_unify_float(head, parameters[i]))
+        return FALSE;
+  }
+
+  free(parameters);
+  return PL_unify_nil(list);
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glGetLightiv
+ * Desc:    return light source parameter values
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glGetLightiv(term_t PL_Light, term_t PL_PName, term_t PL_Params) {
+  int light, pname, i, size;
+  int *parameters;
+
+  term_t list = PL_copy_term_ref(PL_Params);
+  term_t head = PL_new_term_ref();
+
+  if(!PL_get_integer(PL_Light,&light) ||
+     !PL_get_integer(PL_PName,&pname))
+    return FALSE;
+  
+  if(pname >= 4608 && pname <= 4611) {
+    size = 4;
+  }
+  else if (pname == 4612) {
+    size = 3;
+  }
+  else {
+    size = 1;
+  }
+
+  parameters = malloc(size * sizeof(GLint));
+
+  glGetLightiv((GLenum)light, (GLenum)pname, parameters);
+
+  for (i = 0; i < size; i++) {
+    if (!PL_unify_list(list, head, list) ||
+        !PL_unify_integer(head, parameters[i]))
+        return FALSE;
+  }
+
+  free(parameters);
+  return PL_unify_nil(list);
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glGetMaterialfv
+ * Desc:    return material parameters
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glGetMaterialfv(term_t PL_Light, term_t PL_PName, term_t PL_Params) {
+  int light, pname, i, size;
+  float *parameters;
+
+  term_t list = PL_copy_term_ref(PL_Params);
+  term_t head = PL_new_term_ref();
+
+  if(!PL_get_integer(PL_Light,&light) ||
+     !PL_get_integer(PL_PName,&pname))
+    return FALSE;
+  
+  if(pname >= 4608 && pname <= 4610) {
+    size = 4;
+  }
+  else if (pname == 5632) {
+    size = 4;
+  }
+  else if (pname == 5635) {
+    size = 3;
+  }
+  else {
+    size = 1;
+  }
+
+  parameters = malloc(size * sizeof(GLfloat));
+
+  glGetMaterialfv((GLenum)light, (GLenum)pname, parameters);
+
+  for (i = 0; i < size; i++) {
+    if (!PL_unify_list(list, head, list) ||
+        !PL_unify_float(head, parameters[i]))
+        return FALSE;
+  }
+
+  free(parameters);
+  return PL_unify_nil(list);
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glGetMaterialiv
+ * Desc:    return material parameters
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glGetMaterialiv(term_t PL_Light, term_t PL_PName, term_t PL_Params) {
+  int light, pname, i, size;
+  int *parameters;
+
+  term_t list = PL_copy_term_ref(PL_Params);
+  term_t head = PL_new_term_ref();
+
+  if(!PL_get_integer(PL_Light,&light) ||
+     !PL_get_integer(PL_PName,&pname))
+    return FALSE;
+  
+  if(pname >= 4608 && pname <= 4610) {
+    size = 4;
+  }
+  else if (pname == 5632) {
+    size = 4;
+  }
+  else if (pname == 5635) {
+    size = 3;
+  }
+  else {
+    size = 1;
+  }
+
+  parameters = malloc(size * sizeof(GLint));
+
+  glGetMaterialiv((GLenum)light, (GLenum)pname, parameters);
+
+  for (i = 0; i < size; i++) {
+    if (!PL_unify_list(list, head, list) ||
+        !PL_unify_integer(head, parameters[i]))
+        return FALSE;
+  }
+
+  free(parameters);
+  return PL_unify_nil(list);
+  PL_succeed;
+}
+
+
 
 /***************************************
  * Name: c_glHint
@@ -1766,6 +2006,27 @@ foreign_t c_glMatrixMode(term_t PL_Mode) {
 
   PL_succeed;
 }
+
+/***************************************
+ * Name:    c_glMinmax
+ * Desc:    Define minmax table
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glMinmax(term_t PL_Target, term_t PL_InternalFormat, term_t PL_Sink) {
+  int target, internalFormat, sink;
+
+  if(!PL_get_integer(PL_Target,&target) ||
+     !PL_get_integer(PL_InternalFormat,&internalFormat) ||
+     !PL_get_integer(PL_Sink,&sink))
+    return FALSE;
+
+  glMinmax((GLenum)target, (GLenum)internalFormat, (GLboolean)sink);
+
+
+  PL_succeed;
+}
+
 
 /***************************************
  * Name: c_glNewList
@@ -2050,6 +2311,21 @@ foreign_t c_glRenderMode(term_t PL_Mode) {
     return FALSE;
 
   glRenderMode((GLenum)mode);
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glResetMinmax
+ * Params:
+ * Returns:
+ */
+foreign_t c_glResetMinmax(term_t PL_Target) {
+  int target;
+
+  if(!PL_get_integer(PL_Target,&target))
+    return FALSE;
+
+  glResetMinmax((GLenum)target);
   PL_succeed;
 }
 

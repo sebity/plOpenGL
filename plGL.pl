@@ -120,6 +120,14 @@ glCopyTexImage1D(Target, Level, Internal, X, Y, Width, Border):-
 glCopyTexImage2D(Target, Level, Internal, X, Y, Width, Height, Border):-
     c_glCopyTexImage2D(Target, Level, Internal, X, Y, Width, Height, Border).
 
+% Copy a one-dimensional texture subimage
+glCopyTexSubImage1D(Target, Level, XOffset, X, Y, Width):-
+    c_glCopyTexSubImage1D(Target, Level, XOffset, X, Y, Width).
+
+% Copy a two-dimensional texture subimage
+glCopyTexSubImage2D(Target, Level, XOffset, YOffset, X, Y, Width, Height):-
+    c_glCopyTexSubImage2D(Target, Level, XOffset, YOffset, X, Y, Width, Height).
+
 % Specify whether front- or back-facing facets can be culled
 glCullFace(Mode):-
 	Mode_Eval is Mode,
@@ -204,6 +212,22 @@ glGenLists(Range):-
 glGenTextures(N,TextureNames):-
     c_glGenTextures(N,TextureNames).
 
+% Return light source parameter values
+glGetLightfv(Light, PName, Params) :-
+    c_glGetLightfv(Light, PName, Params).
+
+% Return light source parameter values
+glGetLightiv(Light, PName, Params) :-
+    c_glGetLightiv(Light, PName, Params).
+
+% Return material parameters
+glGetMaterialfv(Light, PName, Params) :-
+    c_glGetMaterialfv(Light, PName, Params).
+
+% Return material parameters
+glGetMaterialiv(Light, PName, Params) :-
+    c_glGetMaterialiv(Light, PName, Params).
+
 glHint(Target,Hint):-
 	T is Target,
 	H is Hint,
@@ -245,6 +269,10 @@ glMaterialfv(Face, PName, Params):-
 
 glMatrixMode(Mode):-
 	c_glMatrixMode(Mode).
+
+% Define minmax table
+glMinmax(Target, InternalFormat, Sink):-
+	c_glMinmax(Target, InternalFormat, Sink).
 
 glNewList(List,Mode) :-
 	c_glNewList(List,Mode).
@@ -322,6 +350,10 @@ glRectf(X1,Y1,X2,Y2) :-
 % Set rasterization mode
 glRenderMode(Mode):-
     c_glRenderMode(Mode).
+
+% Reset minmax table entries to initial values
+glResetMinmax(Target):-
+    c_glResetMinmax(Target).
 
 % Multiply the current matrix by a rotation matrix
 glRotated(Angle,X,Y,Z) :-
