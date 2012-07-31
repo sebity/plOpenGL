@@ -1,6 +1,11 @@
 plOpenGL CHANGELOG
 =================================================
 
+0.3.0
+=====
+    * Add: glCopyTexSubImage1D, glCopyTexSubImage2D, glGetLightfv, glGetLightiv
+    * Add: glGetMaterialfv, glGetMaterialiv, glMinmax, glResetMinmax
+
 0.2.3
 =====
     * Add: glColorMask, glDepthMask, glDepthRange, glDrawArrays, glDrawPixels,
