@@ -220,6 +220,14 @@ glGetLightfv(Light, PName, Params) :-
 glGetLightiv(Light, PName, Params) :-
     c_glGetLightiv(Light, PName, Params).
 
+% Return material parameters
+glGetMaterialfv(Light, PName, Params) :-
+    c_glGetMaterialfv(Light, PName, Params).
+
+% Return material parameters
+glGetMaterialiv(Light, PName, Params) :-
+    c_glGetMaterialiv(Light, PName, Params).
+
 glHint(Target,Hint):-
 	T is Target,
 	H is Hint,

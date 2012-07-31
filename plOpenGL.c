@@ -134,6 +134,8 @@ foreign_t c_glGenLists(term_t Range);
 foreign_t c_glGenTextures(term_t N, term_t TextureNames);
 foreign_t c_glGetLightfv(term_t Light, term_t PName, term_t Params);
 foreign_t c_glGetLightiv(term_t Light, term_t PName, term_t Params);
+foreign_t c_glGetMaterialfv(term_t Light, term_t PName, term_t Params);
+foreign_t c_glGetMaterialiv(term_t Light, term_t PName, term_t Params);
 foreign_t c_glHint(term_t Target, term_t Hint);
 foreign_t c_glIndexi(term_t Index);
 foreign_t c_glIndexMask(term_t Mask);
@@ -290,6 +292,8 @@ install_t install() {
   PL_register_foreign("c_glGenTextures",2,c_glGenTextures,PL_FA_NOTRACE);
   PL_register_foreign("c_glGetLightfv",3,c_glGetLightfv,PL_FA_NOTRACE);
   PL_register_foreign("c_glGetLightiv",3,c_glGetLightiv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glGetMaterialfv",3,c_glGetMaterialfv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glGetMaterialiv",3,c_glGetMaterialiv,PL_FA_NOTRACE);
   PL_register_foreign("c_glHint",2,c_glHint,PL_FA_NOTRACE);
   PL_register_foreign("c_glIndexi",1,c_glIndexi,PL_FA_NOTRACE);
   PL_register_foreign("c_glIndexMask",1,c_glIndexMask,PL_FA_NOTRACE);
@@ -1636,6 +1640,96 @@ foreign_t c_glGetLightiv(term_t PL_Light, term_t PL_PName, term_t PL_Params) {
   parameters = malloc(size * sizeof(GLint));
 
   glGetLightiv((GLenum)light, (GLenum)pname, parameters);
+
+  for (i = 0; i < size; i++) {
+    if (!PL_unify_list(list, head, list) ||
+        !PL_unify_integer(head, parameters[i]))
+        return FALSE;
+  }
+
+  free(parameters);
+  return PL_unify_nil(list);
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glGetMaterialfv
+ * Desc:    return material parameters
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glGetMaterialfv(term_t PL_Light, term_t PL_PName, term_t PL_Params) {
+  int light, pname, i, size;
+  float *parameters;
+
+  term_t list = PL_copy_term_ref(PL_Params);
+  term_t head = PL_new_term_ref();
+
+  if(!PL_get_integer(PL_Light,&light) ||
+     !PL_get_integer(PL_PName,&pname))
+    return FALSE;
+  
+  if(pname >= 4608 && pname <= 4610) {
+    size = 4;
+  }
+  else if (pname == 5632) {
+    size = 4;
+  }
+  else if (pname == 5635) {
+    size = 3;
+  }
+  else {
+    size = 1;
+  }
+
+  parameters = malloc(size * sizeof(GLfloat));
+
+  glGetMaterialfv((GLenum)light, (GLenum)pname, parameters);
+
+  for (i = 0; i < size; i++) {
+    if (!PL_unify_list(list, head, list) ||
+        !PL_unify_float(head, parameters[i]))
+        return FALSE;
+  }
+
+  free(parameters);
+  return PL_unify_nil(list);
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glGetMaterialiv
+ * Desc:    return material parameters
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glGetMaterialiv(term_t PL_Light, term_t PL_PName, term_t PL_Params) {
+  int light, pname, i, size;
+  int *parameters;
+
+  term_t list = PL_copy_term_ref(PL_Params);
+  term_t head = PL_new_term_ref();
+
+  if(!PL_get_integer(PL_Light,&light) ||
+     !PL_get_integer(PL_PName,&pname))
+    return FALSE;
+  
+  if(pname >= 4608 && pname <= 4610) {
+    size = 4;
+  }
+  else if (pname == 5632) {
+    size = 4;
+  }
+  else if (pname == 5635) {
+    size = 3;
+  }
+  else {
+    size = 1;
+  }
+
+  parameters = malloc(size * sizeof(GLint));
+
+  glGetMaterialiv((GLenum)light, (GLenum)pname, parameters);
 
   for (i = 0; i < size; i++) {
     if (!PL_unify_list(list, head, list) ||
