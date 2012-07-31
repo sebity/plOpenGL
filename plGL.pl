@@ -270,6 +270,10 @@ glMaterialfv(Face, PName, Params):-
 glMatrixMode(Mode):-
 	c_glMatrixMode(Mode).
 
+% Define minmax table
+glMinmax(Target, InternalFormat, Sink):-
+	c_glMinmax(Target, InternalFormat, Sink).
+
 glNewList(List,Mode) :-
 	c_glNewList(List,Mode).
 
@@ -346,6 +350,10 @@ glRectf(X1,Y1,X2,Y2) :-
 % Set rasterization mode
 glRenderMode(Mode):-
     c_glRenderMode(Mode).
+
+% Reset minmax table entries to initial values
+glResetMinmax(Target):-
+    c_glResetMinmax(Target).
 
 % Multiply the current matrix by a rotation matrix
 glRotated(Angle,X,Y,Z) :-

@@ -147,6 +147,7 @@ foreign_t c_glLoadIdentity(void);
 foreign_t c_glLoadName(term_t Name);
 foreign_t c_glMaterialfv(term_t Face, term_t PName, term_t Params, term_t Num);
 foreign_t c_glMatrixMode(term_t Mode);
+foreign_t c_glMinmax(term_t Target, term_t InternalFormat, term_t Sink);
 foreign_t c_glNewList(term_t List, term_t Mode);
 foreign_t c_glNormal3f(term_t X, term_t Y, term_t Z);
 foreign_t c_glOrtho(term_t Left, term_t Right, term_t Bottom, term_t Top, term_t Near, term_t Far);
@@ -166,6 +167,7 @@ foreign_t c_glRasterPos2i(term_t X, term_t Y);
 foreign_t c_glReadBuffer(term_t Mode);
 foreign_t c_glRectf(term_t X1, term_t Y1, term_t X2, term_t Y2);
 foreign_t c_glRenderMode(term_t Mode);
+foreign_t c_glResetMinmax(term_t Target);
 foreign_t c_glRotated(term_t Angle, term_t X, term_t Y, term_t Z);
 foreign_t c_glRotatef(term_t Angle, term_t X, term_t Y, term_t Z);
 foreign_t c_glScaled(term_t X, term_t Y, term_t Z);
@@ -305,6 +307,7 @@ install_t install() {
   PL_register_foreign("c_glLoadName",1,c_glLoadName,PL_FA_NOTRACE);
   PL_register_foreign("c_glMaterialfv",4,c_glMaterialfv,PL_FA_NOTRACE);
   PL_register_foreign("c_glMatrixMode",1,c_glMatrixMode,PL_FA_NOTRACE);
+  PL_register_foreign("c_glMinmax",3,c_glMinmax,PL_FA_NOTRACE);
   PL_register_foreign("c_glNewList",2,c_glNewList,PL_FA_NOTRACE);
   PL_register_foreign("c_glNormal3f",3,c_glNormal3f,PL_FA_NOTRACE);
   PL_register_foreign("c_glOrtho",6,c_glOrtho,PL_FA_NOTRACE);
@@ -324,6 +327,7 @@ install_t install() {
   PL_register_foreign("c_glReadBuffer",4,c_glReadBuffer,PL_FA_NOTRACE);
   PL_register_foreign("c_glRectf",4,c_glRectf,PL_FA_NOTRACE);
   PL_register_foreign("c_glRenderMode",1,c_glRenderMode,PL_FA_NOTRACE);
+  PL_register_foreign("c_glResetMinmax",1,c_glResetMinmax,PL_FA_NOTRACE);
   PL_register_foreign("c_glRotated",4,c_glRotated,PL_FA_NOTRACE);
   PL_register_foreign("c_glRotatef",4,c_glRotatef,PL_FA_NOTRACE);
   PL_register_foreign("c_glScaled",3,c_glScaled,PL_FA_NOTRACE);
@@ -2004,6 +2008,27 @@ foreign_t c_glMatrixMode(term_t PL_Mode) {
 }
 
 /***************************************
+ * Name:    c_glMinmax
+ * Desc:    Define minmax table
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glMinmax(term_t PL_Target, term_t PL_InternalFormat, term_t PL_Sink) {
+  int target, internalFormat, sink;
+
+  if(!PL_get_integer(PL_Target,&target) ||
+     !PL_get_integer(PL_InternalFormat,&internalFormat) ||
+     !PL_get_integer(PL_Sink,&sink))
+    return FALSE;
+
+  glMinmax((GLenum)target, (GLenum)internalFormat, (GLboolean)sink);
+
+
+  PL_succeed;
+}
+
+
+/***************************************
  * Name: c_glNewList
  * Params:
  * Returns:
@@ -2286,6 +2311,21 @@ foreign_t c_glRenderMode(term_t PL_Mode) {
     return FALSE;
 
   glRenderMode((GLenum)mode);
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glResetMinmax
+ * Params:
+ * Returns:
+ */
+foreign_t c_glResetMinmax(term_t PL_Target) {
+  int target;
+
+  if(!PL_get_integer(PL_Target,&target))
+    return FALSE;
+
+  glResetMinmax((GLenum)target);
   PL_succeed;
 }
 
