@@ -111,7 +111,7 @@ foreign_t c_glCopyTexImage2D(term_t Target, term_t Level, term_t Internal, term_
                              term_t Width, term_t Height, term_t Border);
 foreign_t c_glCopyTexSubImage1D(term_t Target, term_t Level, term_t XOffset, term_t X, term_t Y,
                              term_t Width);
-foreign_t c_glCopyTexSubImage2D(term_t Target, term_t Level, term_t XOffset, term_t YOffset, 
+foreign_t c_glCopyTexSubImage2D(term_t Target, term_t Level, term_t XOffset, term_t YOffset,
                                 term_t X, term_t Y, term_t Width, term_t Height);
 foreign_t c_glCullFace(term_t Mode);
 foreign_t c_glDepthFunc(term_t Mode);
@@ -201,7 +201,7 @@ foreign_t c_glVertex3f(term_t X, term_t Y, term_t Z);
 foreign_t c_glVertex3i(term_t X, term_t Y, term_t Z);
 foreign_t c_glViewport(term_t X, term_t Y, term_t Width, term_t Height);
 
-/***************** 
+/*****************
  * glu functions *
  *****************/
 foreign_t c_gluBuild2DMipmaps(term_t Target, term_t Internal, term_t Width, term_t Height,
@@ -343,8 +343,8 @@ install_t install() {
   PL_register_foreign("c_glTexParameteri",3,c_glTexParameteri,PL_FA_NOTRACE);
   PL_register_foreign("c_glTexSubImage1D",7,c_glTexSubImage1D,PL_FA_NOTRACE);
   PL_register_foreign("c_glTexSubImage2D",9,c_glTexSubImage2D,PL_FA_NOTRACE);
-/* 
- * PL_register_foreign("c_glTexSubImage3D",11,c_glTexSubImage3D,PL_FA_NOTRACE); 
+/*
+ * PL_register_foreign("c_glTexSubImage3D",11,c_glTexSubImage3D,PL_FA_NOTRACE);
  */
   PL_register_foreign("c_glTranslatef",3,c_glTranslatef,PL_FA_NOTRACE);
   PL_register_foreign("c_glVertex2f",2,c_glVertex2f,PL_FA_NOTRACE);
@@ -424,8 +424,8 @@ void c_idle(void) {
   static predicate_t p;
   static term_t idle_predicate;
   int rc;
-  
-/* 
+
+/*
   char *string;
 
   if(!PL_get_atom_chars(PL_String,&temp_string))
@@ -1234,7 +1234,7 @@ foreign_t c_glCopyTexSubImage1D(term_t PL_Target, term_t PL_Level, term_t PL_XOf
      !PL_get_integer(PL_Width,&width))
     return FALSE;
 
-  glCopyTexSubImage1D((GLenum)target, (GLint)level, (GLenum)xoffset, 
+  glCopyTexSubImage1D((GLenum)target, (GLint)level, (GLenum)xoffset,
                       (GLint)x, (GLint)y, (GLsizei)width);
 
   PL_succeed;
@@ -1322,13 +1322,13 @@ foreign_t c_glDepthMask(term_t PL_Flag) {
  * Returns: -
  */
 foreign_t c_glDepthRange(term_t PL_NearVal, term_t PL_FarVal) {
-  double near, far;
+  GLdouble nearVal, farVal;
 
-  if(!PL_get_float(PL_NearVal,&near) ||
-     !PL_get_float(PL_FarVal,&far))
+  if(!PL_get_float(PL_NearVal,&nearVal) ||
+     !PL_get_float(PL_FarVal,&farVal))
     return FALSE;
 
-  glDepthRange((GLclampd)near, (GLclampd)far);
+  glDepthRange((GLclampd)nearVal, (GLclampd)farVal);
   PL_succeed;
 }
 
@@ -1588,7 +1588,7 @@ foreign_t c_glGetLightfv(term_t PL_Light, term_t PL_PName, term_t PL_Params) {
   if(!PL_get_integer(PL_Light,&light) ||
      !PL_get_integer(PL_PName,&pname))
     return FALSE;
-  
+
   if(pname >= 4608 && pname <= 4611) {
     size = 4;
   }
@@ -1630,7 +1630,7 @@ foreign_t c_glGetLightiv(term_t PL_Light, term_t PL_PName, term_t PL_Params) {
   if(!PL_get_integer(PL_Light,&light) ||
      !PL_get_integer(PL_PName,&pname))
     return FALSE;
-  
+
   if(pname >= 4608 && pname <= 4611) {
     size = 4;
   }
@@ -1672,7 +1672,7 @@ foreign_t c_glGetMaterialfv(term_t PL_Light, term_t PL_PName, term_t PL_Params) 
   if(!PL_get_integer(PL_Light,&light) ||
      !PL_get_integer(PL_PName,&pname))
     return FALSE;
-  
+
   if(pname >= 4608 && pname <= 4610) {
     size = 4;
   }
@@ -1717,7 +1717,7 @@ foreign_t c_glGetMaterialiv(term_t PL_Light, term_t PL_PName, term_t PL_Params) 
   if(!PL_get_integer(PL_Light,&light) ||
      !PL_get_integer(PL_PName,&pname))
     return FALSE;
-  
+
   if(pname >= 4608 && pname <= 4610) {
     size = 4;
   }
@@ -2021,6 +2021,9 @@ foreign_t c_glMinmax(term_t PL_Target, term_t PL_InternalFormat, term_t PL_Sink)
      !PL_get_integer(PL_Sink,&sink))
     return FALSE;
 
+  #ifdef WIN32
+  PFNGLMINMAXPROC glMinmax = (PFNGLMINMAXPROC)wglGetProcAddress("glMinmax");
+  #endif
   glMinmax((GLenum)target, (GLenum)internalFormat, (GLboolean)sink);
 
 
@@ -2325,6 +2328,9 @@ foreign_t c_glResetMinmax(term_t PL_Target) {
   if(!PL_get_integer(PL_Target,&target))
     return FALSE;
 
+  #ifdef WIN32
+  PFNGLRESETMINMAXPROC glResetMinmax = (PFNGLRESETMINMAXPROC)wglGetProcAddress("glResetMinmax");
+  #endif
   glResetMinmax((GLenum)target);
   PL_succeed;
 }
@@ -2439,7 +2445,7 @@ foreign_t c_glStencilFunc(term_t PL_Func, term_t PL_Ref, term_t PL_Mask) {
   PL_succeed;
 }
 
-/************************************** 
+/**************************************
  * Name: c_glStencilMask
  * Params:
  * Returns:

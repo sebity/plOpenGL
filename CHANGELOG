@@ -1,6 +1,11 @@
 plOpenGL CHANGELOG
 =================================================
 
+0.3.1
+=====
+    * Add: OS Preprocessor Directive for glMinmax and glResetMinmax
+    * Update: variable names for glDepthRange 
+
 0.3.0
 =====
     * Add: glCopyTexSubImage1D, glCopyTexSubImage2D, glGetLightfv, glGetLightiv
