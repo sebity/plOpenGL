@@ -23,3 +23,22 @@
 	<stddef.h>
 	<inttypes.h>
 
+1341674889 source:c:\users\jan-t\devel\prolog\libraries\plopengl\plopengl.c
+	<SWI-Prolog.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<windows.h>
+	<GL/gl.h>
+	<GL/glu.h>
+	<GL/glut.h>
+	<GL/glext.h>
+	<GL/gl.h>
+	<GL/glu.h>
+	<GL/glut.h>
+	<unistd.h>
+	<OpenGL/gl.h>
+	<OpenGL/glu.h>
+	<GLUT/glut.h>
+	<unistd.h>
+
