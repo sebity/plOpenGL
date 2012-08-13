@@ -102,6 +102,7 @@ foreign_t c_glClearStencil(term_t S);
 foreign_t c_glClipPlane(term_t Plane, term_t Equation, term_t Num);
 foreign_t c_glColor3f(term_t Red, term_t Green, term_t Blue);
 foreign_t c_glColor4f(term_t Red, term_t Green, term_t Blue, term_t Alpha);
+foreign_t c_glColor4ub(term_t Red, term_t Green, term_t Blue, term_t Alpha);
 foreign_t c_glColorMask(term_t Red, term_t Green, term_t Blue, term_t Alpha);
 foreign_t c_glColorMaterial(term_t Face, term_t Mode);
 foreign_t c_glCopyPixels(term_t X, term_t Y, term_t Width, term_t Height, term_t Type);
@@ -266,6 +267,7 @@ install_t install() {
   PL_register_foreign("c_glClipPlane",3,c_glClipPlane,PL_FA_NOTRACE);
   PL_register_foreign("c_glColor3f",3,c_glColor3f,PL_FA_NOTRACE);
   PL_register_foreign("c_glColor4f",4,c_glColor4f,PL_FA_NOTRACE);
+  PL_register_foreign("c_glColor4ub",4,c_glColor4ub,PL_FA_NOTRACE);
   PL_register_foreign("c_glColorMask",4,c_glColorMask,PL_FA_NOTRACE);
   PL_register_foreign("c_glColorMaterial",2,c_glColorMaterial,PL_FA_NOTRACE);
   PL_register_foreign("c_glCopyPixels",5,c_glCopyPixels,PL_FA_NOTRACE);
@@ -1108,6 +1110,25 @@ foreign_t c_glColor4f(term_t PL_Red, term_t PL_Green, term_t PL_Blue, term_t PL_
      !PL_get_float(PL_Alpha,&alpha))
     return FALSE;
   glColor4f((float)red,(float)green,(float)blue,(float)alpha);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glColor4ub
+ * Desc:    Set the current color
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glColor4ub(term_t PL_Red, term_t PL_Green, term_t PL_Blue, term_t PL_Alpha) {
+  int red, green, blue, alpha;
+
+  if(!PL_get_integer(PL_Red,&red) ||
+     !PL_get_integer(PL_Green,&green) ||
+     !PL_get_integer(PL_Blue,&blue) ||
+     !PL_get_integer(PL_Alpha,&alpha))
+    return FALSE;
+  glColor4ub((GLubyte)red,(GLubyte)green,(GLubyte)blue,(GLubyte)alpha);
 
   PL_succeed;
 }

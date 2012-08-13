@@ -100,6 +100,10 @@ glColor4f(Red,Green,Blue,Alpha):-
 	float(Alpha),
 	c_glColor4f(Red,Green,Blue,Alpha).
 
+% Sets the current color.
+glColor4ub(Red,Green,Blue,Alpha):-
+	c_glColor4ub(Red,Green,Blue,Alpha).
+
 % Enable and disable writing of frame buffer color components
 glColorMask(Red,Green,Blue,Alpha):-
 	c_glColorMask(Red,Green,Blue,Alpha).
