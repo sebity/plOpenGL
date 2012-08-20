@@ -1,9 +1,9 @@
 :- ['../plOpenGL.pl'].
 
-:- dynamic xrot/1,yrot/1,xspeed/1,yspeed/1,zdepth/1,filter/1,light/1,lp/1,fp/1.
+:- dynamic xrot/1,yrot/1,xspeed/1,yspeed/1,zdepth/1,filter/1,light/1.
 
-width(640).
-height(480).
+width(800).
+height(600).
 xrot(0.0).
 yrot(0.0).
 xspeed(0.0).
@@ -11,8 +11,6 @@ yspeed(0.0).
 zdepth(-5.0).
 filter(1).
 light(1).
-lp(0).
-fp(0).
 
 display:-
 	% defs
@@ -188,61 +186,71 @@ keyboard(27,_,_) :-
 keyboard(108,_,_):-
 	light(L),
 	kGL_LIGHTING(LIGHTING),
-	write('l pressed, light is: '),write(L),nl,
+
 	(   L = 1
 	->  glDisable(LIGHTING),
 	    retract(light(_)),
-	    assert(light(0))
+	    assert(light(0)),
+	    write('l pressed, light is: 0'),nl
 	;   glEnable(LIGHTING),
 	    retract(light(_)),
-	    assert(light(1))
+	    assert(light(1)),
+	    write('l pressed, light is: 1'),nl
 	).
 keyboard(102,_,_):-
 	filter(F),
-	write('f pressed, filter is: '),write(F),nl,
+
 	F1 is F + 1,
 	(   F1 > 3
 	->  retract(filter(_)),
-	    assert(filter(1))
+	    assert(filter(1)),
+	    write('f pressed, filter is: 1'),nl
 	;   retract(filter(_)),
-	    assert(filter(F1))
+	    assert(filter(F1)),
+	    write('f pressed, filter is: '),write(F1),nl
 	).
 % Press z to zoom in
 keyboard(122,_,_):-
 	zdepth(Z),
 	Z1 is Z + 0.2,
 	retract(zdepth(_)),
-	assert(zdepth(Z1)).
+	assert(zdepth(Z1)),
+	write('Z Depth: '),write(Z1),nl.
 % Press x to zoom out
 keyboard(120,_,_):-
 	zdepth(Z),
 	Z1 is Z - 0.2,
 	retract(zdepth(_)),
-	assert(zdepth(Z1)).
+	assert(zdepth(Z1)),
+	write('Z Depth: '),write(Z1),nl.
 % Press w to increase y rotation speed
 keyboard(119,_,_):-
 	xspeed(X),
 	X1 is X + 0.1,
 	retract(xspeed(_)),
-	assert(xspeed(X1)).
+	assert(xspeed(X1)),
+	write('X Speed: '),write(X1),nl.
 % Press s to increase y rotation speed
 keyboard(115,_,_):-
 	xspeed(X),
 	X1 is X - 0.1,
 	retract(xspeed(_)),
-	assert(xspeed(X1)).
+	assert(xspeed(X1)),
+	write('X Speed: '),write(X1),nl.
 % Press a to increase y rotation speed
 keyboard(97,_,_):-
 	yspeed(Y),
 	Y1 is Y + 0.1,
 	retract(yspeed(_)),
-	assert(yspeed(Y1)).
+	assert(yspeed(Y1)),
+	write('Y Speed: '),write(Y1),nl.
 % Press d to increase y rotation speed
 keyboard(100,_,_):-
 	yspeed(Y),
 	Y1 is Y - 0.1,
 	retract(yspeed(_)),
-	assert(yspeed(Y1)).
+	assert(yspeed(Y1)),
+	write('Y Speed: '),write(Y1),nl.
 
 
 idle:-
