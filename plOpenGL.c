@@ -195,6 +195,7 @@ foreign_t c_glTexSubImage2D(term_t Target, term_t Level, term_t XOffset, term_t 
    than 10 arguments */
 /*foreign_t c_glTexSubImage3D(term_t Target, term_t Level, term_t XOffset, term_t YOffset, term_t ZOffset,
   term_t Width, term_t Height, term_t Depth, term_t Format, term_t Type, term_t Texels); */
+foreign_t c_glTranslated(term_t X, term_t Y, term_t Z);
 foreign_t c_glTranslatef(term_t X, term_t Y, term_t Z);
 foreign_t c_glVertex2f(term_t X, term_t Y);
 foreign_t c_glVertex2i(term_t X, term_t Y);
@@ -353,6 +354,7 @@ install_t install() {
 /*
  * PL_register_foreign("c_glTexSubImage3D",11,c_glTexSubImage3D,PL_FA_NOTRACE);
  */
+  PL_register_foreign("c_glTranslated",3,c_glTranslated,PL_FA_NOTRACE);
   PL_register_foreign("c_glTranslatef",3,c_glTranslatef,PL_FA_NOTRACE);
   PL_register_foreign("c_glVertex2f",2,c_glVertex2f,PL_FA_NOTRACE);
   PL_register_foreign("c_glVertex2i",2,c_glVertex2i,PL_FA_NOTRACE);
@@ -2744,6 +2746,23 @@ foreign_t c_glTexSubImage3D(term_t PL_Target, term_t PL_Level, term_t PL_XOffset
   PL_succeed;
 }
 */
+
+/***************************************
+ * Name: c_glTranslated
+ * Params:
+ * Returns:
+ */
+foreign_t c_glTranslated(term_t PL_X, term_t PL_Y, term_t PL_Z) {
+  GLdouble x,y,z;
+
+  if(!PL_get_float(PL_X,&x) ||
+     !PL_get_float(PL_Y,&y) ||
+     !PL_get_float(PL_Z,&z))
+    return FALSE;
+  glTranslated((GLdouble)x,(GLdouble)y,(GLdouble)z);
+
+  PL_succeed;
+}
 
 /***************************************
  * Name: c_glTranslatef

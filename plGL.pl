@@ -434,6 +434,11 @@ glTexSubImage2D(Target,Level,XOffset,YOffset,Width,Height,Format,Type,Texels):-
 glTexSubImage3D(Target,Level,XOffset,YOffset,ZOffset,Width,Height,Depth,Format,Type,Texels):-
 	c_glTexSubImage3D(Target,Level,XOffset,YOffset,ZOffset,Width,Height,Depth,Format,Type,Texels).
 
+glTranslated(X,Y,Z):-
+	float(X),
+	float(Y),
+	float(Z),
+	c_glTranslated(X,Y,Z).
 
 glTranslatef(X,Y,Z):-
 	float(X),
