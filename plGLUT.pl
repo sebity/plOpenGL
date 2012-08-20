@@ -9,6 +9,12 @@ glutDestroyWindow:-
 glutDisplayFunc:-
 	c_glutDisplayFunc.
 
+glutFullScreen:-
+	c_glutFullScreen.
+
+glutGet(State, Answer):-
+	c_glutGet(State, Answer).
+
 glutDisplayFunc(String):-
 	c_glutDisplayFunc(String).
 
@@ -49,6 +55,9 @@ glutPostRedisplay:-
 
 glutReshapeFunc:-
 	c_glutReshapeFunc.
+
+glutReshapeWindow(W,H):-
+	c_glutReshapeWindow(W,H).
 
 glutSetColor(Index, Red, Green, Blue) :-
     float(Red),

@@ -177,6 +177,7 @@ foreign_t c_glShadeModel(term_t Mode);
 foreign_t c_glStencilFunc(term_t Func, term_t Ref, term_t Mask);
 foreign_t c_glStencilMask(term_t Mask);
 foreign_t c_glStencilOp(term_t Fail, term_t zFail, term_t zPass);
+foreign_t c_glTexCoord2d(term_t S, term_t T);
 foreign_t c_glTexCoord2f(term_t S, term_t T);
 foreign_t c_glTexImage1D(term_t Target, term_t Level, term_t Internal, term_t Width,
                          term_t Border, term_t Format, term_t Type, term_t Texels);
@@ -220,6 +221,8 @@ foreign_t c_gluPerspective(term_t Fovy, term_t Aspect, term_t Near, term_t Far);
 foreign_t c_glutCreateWindow(term_t String);
 foreign_t c_glutDestroyWindow(void);
 foreign_t c_glutDisplayFunc(void);
+foreign_t c_glutFullScreen(void);
+foreign_t c_glutGet(term_t State, term_t Answer);
 foreign_t c_glutIdleFunc(term_t String);
 foreign_t c_glutInit(void);
 foreign_t c_glutInitDisplayMode(term_t DisplayMode);
@@ -231,6 +234,7 @@ foreign_t c_glutMotionFunc(void);
 foreign_t c_glutMouseFunc(void);
 foreign_t c_glutPostRedisplay(void);
 foreign_t c_glutReshapeFunc(void);
+foreign_t c_glutReshapeWindow(term_t Width, term_t Height);
 foreign_t c_glutSetColor(term_t Index, term_t Red, term_t Green, term_t Blue);
 foreign_t c_glutSolidCone(term_t Radius, term_t Height, term_t Slices, term_t Stacks);
 foreign_t c_glutSolidCube(term_t Size);
@@ -338,6 +342,7 @@ install_t install() {
   PL_register_foreign("c_glStencilMask",1,c_glStencilMask,PL_FA_NOTRACE);
   PL_register_foreign("c_glStencilFunc",3,c_glStencilFunc,PL_FA_NOTRACE);
   PL_register_foreign("c_glStencilOp",3,c_glStencilOp,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord2d",2,c_glTexCoord2d,PL_FA_NOTRACE);
   PL_register_foreign("c_glTexCoord2f",2,c_glTexCoord2f,PL_FA_NOTRACE);
   PL_register_foreign("c_glTexImage1D",8,c_glTexImage1D,PL_FA_NOTRACE);
   PL_register_foreign("c_glTexImage2D",9,c_glTexImage2D,PL_FA_NOTRACE);
@@ -364,6 +369,8 @@ install_t install() {
   PL_register_foreign("c_glutCreateWindow",1,c_glutCreateWindow,PL_FA_NOTRACE);
   PL_register_foreign("c_glutDestroyWindow",0,c_glutDestroyWindow,PL_FA_NOTRACE);
   PL_register_foreign("c_glutDisplayFunc",0,c_glutDisplayFunc,PL_FA_NOTRACE);
+  PL_register_foreign("c_glutFullScreen",0,c_glutFullScreen,PL_FA_NOTRACE);
+  PL_register_foreign("c_glutGet",2,c_glutGet,PL_FA_NOTRACE);
   PL_register_foreign("c_glutIdleFunc",1,c_glutIdleFunc,PL_FA_NOTRACE);
   PL_register_foreign("c_glutInit",0,c_glutInit,PL_FA_NOTRACE);
   PL_register_foreign("c_glutInitDisplayMode",1,c_glutInitDisplayMode,PL_FA_NOTRACE);
@@ -375,6 +382,7 @@ install_t install() {
   PL_register_foreign("c_glutMouseFunc",0,c_glutMouseFunc,PL_FA_NOTRACE);
   PL_register_foreign("c_glutPostRedisplay",0,c_glutPostRedisplay,PL_FA_NOTRACE);
   PL_register_foreign("c_glutReshapeFunc",0,c_glutReshapeFunc,PL_FA_NOTRACE);
+  PL_register_foreign("c_glutReshapeWindow",2,c_glutReshapeWindow,PL_FA_NOTRACE);
   PL_register_foreign("c_glutSetColor",4,c_glutSetColor,PL_FA_NOTRACE);
   PL_register_foreign("c_glutSolidCone",4,c_glutSolidCone,PL_FA_NOTRACE);
   PL_register_foreign("c_glutSolidCube",1,c_glutWireCube,PL_FA_NOTRACE);
@@ -2501,6 +2509,23 @@ foreign_t c_glStencilOp(term_t PL_Fail, term_t PL_zFail, term_t PL_zPass) {
 }
 
 /***************************************
+ * Name: c_glTexCoord2d
+ * Params:
+ * Returns:
+ */
+foreign_t c_glTexCoord2d(term_t PL_S, term_t PL_T) {
+  GLdouble s,t;
+
+  if(!PL_get_float(PL_S,&s) ||
+     !PL_get_float(PL_T,&t))
+    return FALSE;
+
+  glTexCoord2d((GLdouble)s,(GLdouble)t);
+
+  PL_succeed;
+}
+
+/***************************************
  * Name: c_glTexCoord2f
  * Params:
  * Returns:
@@ -2987,6 +3012,38 @@ foreign_t c_glutDisplayFunc(void) {
 }
 
 /***************************************
+ * Name: c_glutFullScreen
+ * Params:
+ * Returns:
+ */
+foreign_t c_glutFullScreen(void) {
+
+  glutFullScreen();
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glutGet
+ * Params:
+ * Returns:
+ */
+foreign_t c_glutGet(term_t PL_State, term_t PL_Answer) {
+  int state, answer, rval;
+
+  if (!PL_get_integer(PL_State,&state))
+    return FALSE;
+  
+  answer = glutGet((GLenum)state);
+
+  rval = PL_unify_integer(PL_Answer, answer);
+
+  return rval;
+
+  PL_succeed;
+}
+
+/***************************************
  * Name: c_glutIdleFunc
  * Params:
  * Returns:
@@ -3160,6 +3217,26 @@ foreign_t c_glutReshapeFunc(void) {
   printf("glutReshapeFunc %p\n",fp);
   PL_succeed;
 }
+
+/***************************************
+ * Name: c_glutReshapeWindow
+ * Params:
+ * Returns:
+ */
+foreign_t c_glutReshapeWindow(term_t PL_Width, term_t PL_Height) {
+  int width;
+  int height;
+
+  if (!PL_get_integer(PL_Width,&width))
+    width = 640;
+  if (!PL_get_integer(PL_Height,&height))
+    height = 480;
+
+  glutReshapeWindow(width,height);
+
+  PL_succeed;
+}
+
 
 /***************************************
  * Name: c_glutSetColor
