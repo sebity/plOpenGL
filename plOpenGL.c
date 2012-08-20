@@ -173,6 +173,7 @@ foreign_t c_glRotated(term_t Angle, term_t X, term_t Y, term_t Z);
 foreign_t c_glRotatef(term_t Angle, term_t X, term_t Y, term_t Z);
 foreign_t c_glScaled(term_t X, term_t Y, term_t Z);
 foreign_t c_glScalef(term_t X, term_t Y, term_t Z);
+foreign_t c_glScissor(term_t X, term_t Y, term_t Width, term_t Height);
 foreign_t c_glShadeModel(term_t Mode);
 foreign_t c_glStencilFunc(term_t Func, term_t Ref, term_t Mask);
 foreign_t c_glStencilMask(term_t Mask);
@@ -339,6 +340,7 @@ install_t install() {
   PL_register_foreign("c_glRotatef",4,c_glRotatef,PL_FA_NOTRACE);
   PL_register_foreign("c_glScaled",3,c_glScaled,PL_FA_NOTRACE);
   PL_register_foreign("c_glScalef",3,c_glScalef,PL_FA_NOTRACE);
+  PL_register_foreign("c_glScissor",4,c_glScissor,PL_FA_NOTRACE);
   PL_register_foreign("c_glShadeModel",1,c_glShadeModel,PL_FA_NOTRACE);
   PL_register_foreign("c_glStencilMask",1,c_glStencilMask,PL_FA_NOTRACE);
   PL_register_foreign("c_glStencilFunc",3,c_glStencilFunc,PL_FA_NOTRACE);
@@ -2433,6 +2435,25 @@ foreign_t c_glScalef(term_t PL_X, term_t PL_Y, term_t PL_Z) {
      !PL_get_float(PL_Z,&z))
     return FALSE;
   glScalef((float)x,(float)y,(float)z);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glScissor
+ * Params:
+ * Returns:
+ */
+foreign_t c_glScissor(term_t PL_X, term_t PL_Y, term_t PL_Width, term_t PL_Height) {
+  int x,y,width,height;
+
+  if(!PL_get_integer(PL_X,&x) ||
+     !PL_get_integer(PL_Y,&y) ||
+     !PL_get_integer(PL_Width,&width) ||
+     !PL_get_integer(PL_Height,&height))
+    return FALSE;
+
+  glScissor((GLint)x,(GLint)y,(GLsizei)width,(GLsizei)height);
 
   PL_succeed;
 }

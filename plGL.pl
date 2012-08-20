@@ -389,6 +389,9 @@ glScalef(X,Y,Z):-
 	float(Z),
 	c_glScalef(X,Y,Z).
 
+glScissor(X,Y,Width,Height) :-
+    c_glScissor(X,Y,Width,Height).
+
 glShadeModel(Mode):-
 	c_glShadeModel(Mode).
 
