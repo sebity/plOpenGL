@@ -156,6 +156,9 @@ glDisable(Mode):-
 	Mode_Eval is Mode,
 	c_glDisable(Mode_Eval).
 
+glDisableClientState(Cap):-
+    c_glDisableClientState(Cap).
+
 % Render primitives from array data
 glDrawArrays(Mode, First, Count):-
     c_glDrawArrays(Mode, First, Count).
@@ -163,6 +166,10 @@ glDrawArrays(Mode, First, Count):-
 % Specify which color buffers are to be drawn into
 glDrawBuffer(Mode):-
     c_glDrawBuffer(Mode).
+
+% Render primitives from array data
+glDrawElements(Mode, Count, Type, Indices):-
+    c_glDrawElements(Mode, Count, Type, Indices).
 
 % Write a block of pixels to the frame buffer
 glDrawPixels(Width, Height, Format, Type, Data):-
@@ -172,6 +179,9 @@ glEnable(Mode):-
 	Mode_Eval is Mode,
 	c_glEnable(Mode_Eval).
 
+glEnableClientState(Cap):-
+    c_glEnableClientState(Cap).
+
 % Delimits the vertices of a primitive or group of like primitives.
 glEnd:-
 	c_glEnd.
@@ -179,6 +189,23 @@ glEnd:-
 % Create or replace a display list
 glEndList :-
 	c_glEndList.
+
+% Compute a one- or two-dimensional grid of points or lines
+glEvalMesh1(Mode,I1,I2) :-
+    c_glEvalMesh1(Mode,I1,I2).
+
+% Compute a one- or two-dimensional grid of points or lines
+glEvalMesh2(Mode,I1,I2,J1,J2) :-
+    c_glEvalMesh2(Mode,I1,I2,J1,J2).
+
+% Generate and evaluate a single point in a mesh
+glEvalPoint1(I) :-
+    c_glEvalPoint1(I).
+
+% Generate and evaluate a single point in a mesh
+glEvalPoint2(I,J) :-
+    c_glEvalPoint2(I,J).
+
 
 % block until all GL execution is complete
 glFinish:-

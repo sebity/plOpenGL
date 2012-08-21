@@ -119,12 +119,19 @@ foreign_t c_glDepthFunc(term_t Mode);
 foreign_t c_glDepthMask(term_t Flag);
 foreign_t c_glDepthRange(term_t NearVal, term_t FarVal);
 foreign_t c_glDisable(term_t Mode);
+foreign_t c_glDisableClientState(term_t Cap);
 foreign_t c_glDrawArrays(term_t Mode, term_t First, term_t Count);
 foreign_t c_glDrawBuffer(term_t Mode);
+foreign_t c_glDrawElements(term_t Mode, term_t Count, term_t Type, term_t Indices);
 foreign_t c_glDrawPixels(term_t Width, term_t Height, term_t Format, term_t Type, term_t Data);
 foreign_t c_glEnable(term_t Mode);
+foreign_t c_glEnableClientState(term_t Cap);
 foreign_t c_glEnd(void);
 foreign_t c_glEndList(void);
+foreign_t c_glEvalMesh1(term_t Mode, term_t I1, term_t I2);
+foreign_t c_glEvalMesh2(term_t Mode, term_t I1, term_t I2, term_t J1, term_t J2);
+foreign_t c_glEvalPoint1(term_t I);
+foreign_t c_glEvalPoint2(term_t I, term_t J);
 foreign_t c_glFinish(void);
 foreign_t c_glFlush(void);
 foreign_t c_glFogf(term_t PName, term_t Param);
@@ -286,12 +293,19 @@ install_t install() {
   PL_register_foreign("c_glDepthMask",1,c_glDepthMask,PL_FA_NOTRACE);
   PL_register_foreign("c_glDepthRange",2,c_glDepthRange,PL_FA_NOTRACE);
   PL_register_foreign("c_glDisable",1,c_glDisable,PL_FA_NOTRACE);
+  PL_register_foreign("c_glDisableClientState",1,c_glDisableClientState,PL_FA_NOTRACE);
   PL_register_foreign("c_gDrawArrays",3,c_glDrawArrays,PL_FA_NOTRACE);
   PL_register_foreign("c_gDrawBuffer",4,c_glDrawBuffer,PL_FA_NOTRACE);
+  PL_register_foreign("c_gDrawElements",4,c_glDrawElements,PL_FA_NOTRACE);
   PL_register_foreign("c_gDrawPixels",5,c_glDrawPixels,PL_FA_NOTRACE);
   PL_register_foreign("c_glEnable",1,c_glEnable,PL_FA_NOTRACE);
+  PL_register_foreign("c_glEnableClientState",1,c_glEnableClientState,PL_FA_NOTRACE);
   PL_register_foreign("c_glEnd",0,c_glEnd,PL_FA_NOTRACE);
   PL_register_foreign("c_glEndList",0,c_glEndList,PL_FA_NOTRACE);
+  PL_register_foreign("c_glEvalMesh1",3,c_glEvalMesh1,PL_FA_NOTRACE);
+  PL_register_foreign("c_glEvalMesh2",5,c_glEvalMesh2,PL_FA_NOTRACE);
+  PL_register_foreign("c_glEvalPoint1",1,c_glEvalPoint1,PL_FA_NOTRACE);
+  PL_register_foreign("c_glEvalPoint2",2,c_glEvalPoint2,PL_FA_NOTRACE);
   PL_register_foreign("c_glFinish",0,c_glFinish,PL_FA_NOTRACE);
   PL_register_foreign("c_glFlush",0,c_glFlush,PL_FA_NOTRACE);
   PL_register_foreign("c_glFogf",2,c_glFogf,PL_FA_NOTRACE);
@@ -1382,6 +1396,21 @@ foreign_t c_glDisable(term_t PL_Mode) {
 }
 
 /***************************************
+ * Name: c_glDisableClientState
+ * Params:
+ * Returns:
+ */
+foreign_t c_glDisableClientState(term_t PL_Cap) {
+  int cap;
+
+  if(!PL_get_integer(PL_Cap,&cap))
+    return FALSE;
+
+  glDisableClientState((GLenum)cap);
+  PL_succeed;
+}
+
+/***************************************
  * Name:    c_glDrawArrays
  * Desc:    Render primitives from array data
  * Params:  -
@@ -1411,6 +1440,25 @@ foreign_t c_glDrawBuffer(term_t PL_Mode) {
     return FALSE;
 
   glDrawBuffer((GLenum)mode);
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glDrawElements
+ * Params:
+ * Returns:
+ */
+foreign_t c_glDrawElements(term_t PL_Mode, term_t PL_Count, term_t PL_Type, term_t PL_Indices) {
+  int mode, count, type;
+  void *indices;
+
+  if(!PL_get_integer(PL_Mode,&mode) ||
+     !PL_get_integer(PL_Count,&count) ||
+     !PL_get_integer(PL_Type,&type) ||
+     !PL_get_pointer(PL_Indices,&indices))
+    return FALSE;
+
+  glDrawElements((GLenum)mode, (GLsizei)count, (GLenum)type, indices);
   PL_succeed;
 }
 
@@ -1451,6 +1499,21 @@ foreign_t c_glEnable(term_t PL_Mode) {
 }
 
 /***************************************
+ * Name: c_glEnableClientState
+ * Params:
+ * Returns:
+ */
+foreign_t c_glEnableClientState(term_t PL_Cap) {
+  int cap;
+
+  if(!PL_get_integer(PL_Cap,&cap))
+    return FALSE;
+
+  glEnableClientState((GLenum)cap);
+  PL_succeed;
+}
+
+/***************************************
  * Name: c_glEnd
  * Params:
  * Returns:
@@ -1467,6 +1530,73 @@ foreign_t c_glEnd(void) {
  */
 foreign_t c_glEndList(void) {
   glEndList();
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glEvalMesh1
+ * Params:
+ * Returns:
+ */
+foreign_t c_glEvalMesh1(term_t PL_Mode, term_t PL_I1, term_t PL_I2) {
+  int mode, i1, i2;
+
+  if(!PL_get_integer(PL_Mode,&mode) ||
+     !PL_get_integer(PL_I1,&i1) ||
+     !PL_get_integer(PL_I2,&i2))
+    return FALSE;
+
+  glEvalMesh1((GLenum)mode, (GLint)i1, (GLint)i2);
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glEvalMesh2
+ * Params:
+ * Returns:
+ */
+foreign_t c_glEvalMesh2(term_t PL_Mode, term_t PL_I1, term_t PL_I2, term_t PL_J1, term_t PL_J2) {
+  int mode, i1, i2, j1, j2;
+
+  if(!PL_get_integer(PL_Mode,&mode) ||
+     !PL_get_integer(PL_I1,&i1) ||
+     !PL_get_integer(PL_I2,&i2) ||
+     !PL_get_integer(PL_J1,&j1) ||
+     !PL_get_integer(PL_J2,&j2))
+    return FALSE;
+
+  glEvalMesh2((GLenum)mode, (GLint)i1, (GLint)i2, (GLint)j1, (GLint)j2);
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glEvalPoint1
+ * Params:
+ * Returns:
+ */
+foreign_t c_glEvalPoint1(term_t PL_I) {
+  int i;
+
+  if(!PL_get_integer(PL_I,&i))
+    return FALSE;
+
+  glEvalPoint1((GLint)i);
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glEvalPoint2
+ * Params:
+ * Returns:
+ */
+foreign_t c_glEvalPoint2(term_t PL_I, term_t PL_J) {
+  int i, j;
+
+  if(!PL_get_integer(PL_I,&i) ||
+     !PL_get_integer(PL_J,&j))
+    return FALSE;
+
+  glEvalPoint2((GLint)i, (GLint)j);
   PL_succeed;
 }
 
