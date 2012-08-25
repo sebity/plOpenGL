@@ -102,6 +102,7 @@ foreign_t c_glClearStencil(term_t S);
 foreign_t c_glClipPlane(term_t Plane, term_t Equation, term_t Num);
 foreign_t c_glColor3f(term_t Red, term_t Green, term_t Blue);
 foreign_t c_glColor4f(term_t Red, term_t Green, term_t Blue, term_t Alpha);
+foreign_t c_glColor4ub(term_t Red, term_t Green, term_t Blue, term_t Alpha);
 foreign_t c_glColorMask(term_t Red, term_t Green, term_t Blue, term_t Alpha);
 foreign_t c_glColorMaterial(term_t Face, term_t Mode);
 foreign_t c_glCopyPixels(term_t X, term_t Y, term_t Width, term_t Height, term_t Type);
@@ -118,12 +119,19 @@ foreign_t c_glDepthFunc(term_t Mode);
 foreign_t c_glDepthMask(term_t Flag);
 foreign_t c_glDepthRange(term_t NearVal, term_t FarVal);
 foreign_t c_glDisable(term_t Mode);
+foreign_t c_glDisableClientState(term_t Cap);
 foreign_t c_glDrawArrays(term_t Mode, term_t First, term_t Count);
 foreign_t c_glDrawBuffer(term_t Mode);
+foreign_t c_glDrawElements(term_t Mode, term_t Count, term_t Type, term_t Indices);
 foreign_t c_glDrawPixels(term_t Width, term_t Height, term_t Format, term_t Type, term_t Data);
 foreign_t c_glEnable(term_t Mode);
+foreign_t c_glEnableClientState(term_t Cap);
 foreign_t c_glEnd(void);
 foreign_t c_glEndList(void);
+foreign_t c_glEvalMesh1(term_t Mode, term_t I1, term_t I2);
+foreign_t c_glEvalMesh2(term_t Mode, term_t I1, term_t I2, term_t J1, term_t J2);
+foreign_t c_glEvalPoint1(term_t I);
+foreign_t c_glEvalPoint2(term_t I, term_t J);
 foreign_t c_glFinish(void);
 foreign_t c_glFlush(void);
 foreign_t c_glFogf(term_t PName, term_t Param);
@@ -172,10 +180,12 @@ foreign_t c_glRotated(term_t Angle, term_t X, term_t Y, term_t Z);
 foreign_t c_glRotatef(term_t Angle, term_t X, term_t Y, term_t Z);
 foreign_t c_glScaled(term_t X, term_t Y, term_t Z);
 foreign_t c_glScalef(term_t X, term_t Y, term_t Z);
+foreign_t c_glScissor(term_t X, term_t Y, term_t Width, term_t Height);
 foreign_t c_glShadeModel(term_t Mode);
 foreign_t c_glStencilFunc(term_t Func, term_t Ref, term_t Mask);
 foreign_t c_glStencilMask(term_t Mask);
 foreign_t c_glStencilOp(term_t Fail, term_t zFail, term_t zPass);
+foreign_t c_glTexCoord2d(term_t S, term_t T);
 foreign_t c_glTexCoord2f(term_t S, term_t T);
 foreign_t c_glTexImage1D(term_t Target, term_t Level, term_t Internal, term_t Width,
                          term_t Border, term_t Format, term_t Type, term_t Texels);
@@ -193,6 +203,7 @@ foreign_t c_glTexSubImage2D(term_t Target, term_t Level, term_t XOffset, term_t 
    than 10 arguments */
 /*foreign_t c_glTexSubImage3D(term_t Target, term_t Level, term_t XOffset, term_t YOffset, term_t ZOffset,
   term_t Width, term_t Height, term_t Depth, term_t Format, term_t Type, term_t Texels); */
+foreign_t c_glTranslated(term_t X, term_t Y, term_t Z);
 foreign_t c_glTranslatef(term_t X, term_t Y, term_t Z);
 foreign_t c_glVertex2f(term_t X, term_t Y);
 foreign_t c_glVertex2i(term_t X, term_t Y);
@@ -219,6 +230,8 @@ foreign_t c_gluPerspective(term_t Fovy, term_t Aspect, term_t Near, term_t Far);
 foreign_t c_glutCreateWindow(term_t String);
 foreign_t c_glutDestroyWindow(void);
 foreign_t c_glutDisplayFunc(void);
+foreign_t c_glutFullScreen(void);
+foreign_t c_glutGet(term_t State, term_t Answer);
 foreign_t c_glutIdleFunc(term_t String);
 foreign_t c_glutInit(void);
 foreign_t c_glutInitDisplayMode(term_t DisplayMode);
@@ -230,6 +243,7 @@ foreign_t c_glutMotionFunc(void);
 foreign_t c_glutMouseFunc(void);
 foreign_t c_glutPostRedisplay(void);
 foreign_t c_glutReshapeFunc(void);
+foreign_t c_glutReshapeWindow(term_t Width, term_t Height);
 foreign_t c_glutSetColor(term_t Index, term_t Red, term_t Green, term_t Blue);
 foreign_t c_glutSolidCone(term_t Radius, term_t Height, term_t Slices, term_t Stacks);
 foreign_t c_glutSolidCube(term_t Size);
@@ -266,6 +280,7 @@ install_t install() {
   PL_register_foreign("c_glClipPlane",3,c_glClipPlane,PL_FA_NOTRACE);
   PL_register_foreign("c_glColor3f",3,c_glColor3f,PL_FA_NOTRACE);
   PL_register_foreign("c_glColor4f",4,c_glColor4f,PL_FA_NOTRACE);
+  PL_register_foreign("c_glColor4ub",4,c_glColor4ub,PL_FA_NOTRACE);
   PL_register_foreign("c_glColorMask",4,c_glColorMask,PL_FA_NOTRACE);
   PL_register_foreign("c_glColorMaterial",2,c_glColorMaterial,PL_FA_NOTRACE);
   PL_register_foreign("c_glCopyPixels",5,c_glCopyPixels,PL_FA_NOTRACE);
@@ -278,12 +293,19 @@ install_t install() {
   PL_register_foreign("c_glDepthMask",1,c_glDepthMask,PL_FA_NOTRACE);
   PL_register_foreign("c_glDepthRange",2,c_glDepthRange,PL_FA_NOTRACE);
   PL_register_foreign("c_glDisable",1,c_glDisable,PL_FA_NOTRACE);
+  PL_register_foreign("c_glDisableClientState",1,c_glDisableClientState,PL_FA_NOTRACE);
   PL_register_foreign("c_gDrawArrays",3,c_glDrawArrays,PL_FA_NOTRACE);
   PL_register_foreign("c_gDrawBuffer",4,c_glDrawBuffer,PL_FA_NOTRACE);
+  PL_register_foreign("c_gDrawElements",4,c_glDrawElements,PL_FA_NOTRACE);
   PL_register_foreign("c_gDrawPixels",5,c_glDrawPixels,PL_FA_NOTRACE);
   PL_register_foreign("c_glEnable",1,c_glEnable,PL_FA_NOTRACE);
+  PL_register_foreign("c_glEnableClientState",1,c_glEnableClientState,PL_FA_NOTRACE);
   PL_register_foreign("c_glEnd",0,c_glEnd,PL_FA_NOTRACE);
   PL_register_foreign("c_glEndList",0,c_glEndList,PL_FA_NOTRACE);
+  PL_register_foreign("c_glEvalMesh1",3,c_glEvalMesh1,PL_FA_NOTRACE);
+  PL_register_foreign("c_glEvalMesh2",5,c_glEvalMesh2,PL_FA_NOTRACE);
+  PL_register_foreign("c_glEvalPoint1",1,c_glEvalPoint1,PL_FA_NOTRACE);
+  PL_register_foreign("c_glEvalPoint2",2,c_glEvalPoint2,PL_FA_NOTRACE);
   PL_register_foreign("c_glFinish",0,c_glFinish,PL_FA_NOTRACE);
   PL_register_foreign("c_glFlush",0,c_glFlush,PL_FA_NOTRACE);
   PL_register_foreign("c_glFogf",2,c_glFogf,PL_FA_NOTRACE);
@@ -332,10 +354,12 @@ install_t install() {
   PL_register_foreign("c_glRotatef",4,c_glRotatef,PL_FA_NOTRACE);
   PL_register_foreign("c_glScaled",3,c_glScaled,PL_FA_NOTRACE);
   PL_register_foreign("c_glScalef",3,c_glScalef,PL_FA_NOTRACE);
+  PL_register_foreign("c_glScissor",4,c_glScissor,PL_FA_NOTRACE);
   PL_register_foreign("c_glShadeModel",1,c_glShadeModel,PL_FA_NOTRACE);
   PL_register_foreign("c_glStencilMask",1,c_glStencilMask,PL_FA_NOTRACE);
   PL_register_foreign("c_glStencilFunc",3,c_glStencilFunc,PL_FA_NOTRACE);
   PL_register_foreign("c_glStencilOp",3,c_glStencilOp,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord2d",2,c_glTexCoord2d,PL_FA_NOTRACE);
   PL_register_foreign("c_glTexCoord2f",2,c_glTexCoord2f,PL_FA_NOTRACE);
   PL_register_foreign("c_glTexImage1D",8,c_glTexImage1D,PL_FA_NOTRACE);
   PL_register_foreign("c_glTexImage2D",9,c_glTexImage2D,PL_FA_NOTRACE);
@@ -346,6 +370,7 @@ install_t install() {
 /*
  * PL_register_foreign("c_glTexSubImage3D",11,c_glTexSubImage3D,PL_FA_NOTRACE);
  */
+  PL_register_foreign("c_glTranslated",3,c_glTranslated,PL_FA_NOTRACE);
   PL_register_foreign("c_glTranslatef",3,c_glTranslatef,PL_FA_NOTRACE);
   PL_register_foreign("c_glVertex2f",2,c_glVertex2f,PL_FA_NOTRACE);
   PL_register_foreign("c_glVertex2i",2,c_glVertex2i,PL_FA_NOTRACE);
@@ -362,6 +387,8 @@ install_t install() {
   PL_register_foreign("c_glutCreateWindow",1,c_glutCreateWindow,PL_FA_NOTRACE);
   PL_register_foreign("c_glutDestroyWindow",0,c_glutDestroyWindow,PL_FA_NOTRACE);
   PL_register_foreign("c_glutDisplayFunc",0,c_glutDisplayFunc,PL_FA_NOTRACE);
+  PL_register_foreign("c_glutFullScreen",0,c_glutFullScreen,PL_FA_NOTRACE);
+  PL_register_foreign("c_glutGet",2,c_glutGet,PL_FA_NOTRACE);
   PL_register_foreign("c_glutIdleFunc",1,c_glutIdleFunc,PL_FA_NOTRACE);
   PL_register_foreign("c_glutInit",0,c_glutInit,PL_FA_NOTRACE);
   PL_register_foreign("c_glutInitDisplayMode",1,c_glutInitDisplayMode,PL_FA_NOTRACE);
@@ -373,6 +400,7 @@ install_t install() {
   PL_register_foreign("c_glutMouseFunc",0,c_glutMouseFunc,PL_FA_NOTRACE);
   PL_register_foreign("c_glutPostRedisplay",0,c_glutPostRedisplay,PL_FA_NOTRACE);
   PL_register_foreign("c_glutReshapeFunc",0,c_glutReshapeFunc,PL_FA_NOTRACE);
+  PL_register_foreign("c_glutReshapeWindow",2,c_glutReshapeWindow,PL_FA_NOTRACE);
   PL_register_foreign("c_glutSetColor",4,c_glutSetColor,PL_FA_NOTRACE);
   PL_register_foreign("c_glutSolidCone",4,c_glutSolidCone,PL_FA_NOTRACE);
   PL_register_foreign("c_glutSolidCube",1,c_glutWireCube,PL_FA_NOTRACE);
@@ -1113,6 +1141,25 @@ foreign_t c_glColor4f(term_t PL_Red, term_t PL_Green, term_t PL_Blue, term_t PL_
 }
 
 /***************************************
+ * Name:    c_glColor4ub
+ * Desc:    Set the current color
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glColor4ub(term_t PL_Red, term_t PL_Green, term_t PL_Blue, term_t PL_Alpha) {
+  int red, green, blue, alpha;
+
+  if(!PL_get_integer(PL_Red,&red) ||
+     !PL_get_integer(PL_Green,&green) ||
+     !PL_get_integer(PL_Blue,&blue) ||
+     !PL_get_integer(PL_Alpha,&alpha))
+    return FALSE;
+  glColor4ub((GLubyte)red,(GLubyte)green,(GLubyte)blue,(GLubyte)alpha);
+
+  PL_succeed;
+}
+
+/***************************************
  * Name:    c_glColorMask
  * Desc:    Enable and disable writing of frame buffer color components
  * Params:  -
@@ -1349,6 +1396,21 @@ foreign_t c_glDisable(term_t PL_Mode) {
 }
 
 /***************************************
+ * Name: c_glDisableClientState
+ * Params:
+ * Returns:
+ */
+foreign_t c_glDisableClientState(term_t PL_Cap) {
+  int cap;
+
+  if(!PL_get_integer(PL_Cap,&cap))
+    return FALSE;
+
+  glDisableClientState((GLenum)cap);
+  PL_succeed;
+}
+
+/***************************************
  * Name:    c_glDrawArrays
  * Desc:    Render primitives from array data
  * Params:  -
@@ -1378,6 +1440,25 @@ foreign_t c_glDrawBuffer(term_t PL_Mode) {
     return FALSE;
 
   glDrawBuffer((GLenum)mode);
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glDrawElements
+ * Params:
+ * Returns:
+ */
+foreign_t c_glDrawElements(term_t PL_Mode, term_t PL_Count, term_t PL_Type, term_t PL_Indices) {
+  int mode, count, type;
+  void *indices;
+
+  if(!PL_get_integer(PL_Mode,&mode) ||
+     !PL_get_integer(PL_Count,&count) ||
+     !PL_get_integer(PL_Type,&type) ||
+     !PL_get_pointer(PL_Indices,&indices))
+    return FALSE;
+
+  glDrawElements((GLenum)mode, (GLsizei)count, (GLenum)type, indices);
   PL_succeed;
 }
 
@@ -1418,6 +1499,21 @@ foreign_t c_glEnable(term_t PL_Mode) {
 }
 
 /***************************************
+ * Name: c_glEnableClientState
+ * Params:
+ * Returns:
+ */
+foreign_t c_glEnableClientState(term_t PL_Cap) {
+  int cap;
+
+  if(!PL_get_integer(PL_Cap,&cap))
+    return FALSE;
+
+  glEnableClientState((GLenum)cap);
+  PL_succeed;
+}
+
+/***************************************
  * Name: c_glEnd
  * Params:
  * Returns:
@@ -1434,6 +1530,73 @@ foreign_t c_glEnd(void) {
  */
 foreign_t c_glEndList(void) {
   glEndList();
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glEvalMesh1
+ * Params:
+ * Returns:
+ */
+foreign_t c_glEvalMesh1(term_t PL_Mode, term_t PL_I1, term_t PL_I2) {
+  int mode, i1, i2;
+
+  if(!PL_get_integer(PL_Mode,&mode) ||
+     !PL_get_integer(PL_I1,&i1) ||
+     !PL_get_integer(PL_I2,&i2))
+    return FALSE;
+
+  glEvalMesh1((GLenum)mode, (GLint)i1, (GLint)i2);
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glEvalMesh2
+ * Params:
+ * Returns:
+ */
+foreign_t c_glEvalMesh2(term_t PL_Mode, term_t PL_I1, term_t PL_I2, term_t PL_J1, term_t PL_J2) {
+  int mode, i1, i2, j1, j2;
+
+  if(!PL_get_integer(PL_Mode,&mode) ||
+     !PL_get_integer(PL_I1,&i1) ||
+     !PL_get_integer(PL_I2,&i2) ||
+     !PL_get_integer(PL_J1,&j1) ||
+     !PL_get_integer(PL_J2,&j2))
+    return FALSE;
+
+  glEvalMesh2((GLenum)mode, (GLint)i1, (GLint)i2, (GLint)j1, (GLint)j2);
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glEvalPoint1
+ * Params:
+ * Returns:
+ */
+foreign_t c_glEvalPoint1(term_t PL_I) {
+  int i;
+
+  if(!PL_get_integer(PL_I,&i))
+    return FALSE;
+
+  glEvalPoint1((GLint)i);
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glEvalPoint2
+ * Params:
+ * Returns:
+ */
+foreign_t c_glEvalPoint2(term_t PL_I, term_t PL_J) {
+  int i, j;
+
+  if(!PL_get_integer(PL_I,&i) ||
+     !PL_get_integer(PL_J,&j))
+    return FALSE;
+
+  glEvalPoint2((GLint)i, (GLint)j);
   PL_succeed;
 }
 
@@ -2407,6 +2570,25 @@ foreign_t c_glScalef(term_t PL_X, term_t PL_Y, term_t PL_Z) {
 }
 
 /***************************************
+ * Name: c_glScissor
+ * Params:
+ * Returns:
+ */
+foreign_t c_glScissor(term_t PL_X, term_t PL_Y, term_t PL_Width, term_t PL_Height) {
+  int x,y,width,height;
+
+  if(!PL_get_integer(PL_X,&x) ||
+     !PL_get_integer(PL_Y,&y) ||
+     !PL_get_integer(PL_Width,&width) ||
+     !PL_get_integer(PL_Height,&height))
+    return FALSE;
+
+  glScissor((GLint)x,(GLint)y,(GLsizei)width,(GLsizei)height);
+
+  PL_succeed;
+}
+
+/***************************************
  * Name: c_glShadeModel
  * Params:
  * Returns:
@@ -2475,6 +2657,23 @@ foreign_t c_glStencilOp(term_t PL_Fail, term_t PL_zFail, term_t PL_zPass) {
     return FALSE;
 
   glStencilFunc((GLenum)fail, (GLenum)zfail, (GLenum)zpass);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glTexCoord2d
+ * Params:
+ * Returns:
+ */
+foreign_t c_glTexCoord2d(term_t PL_S, term_t PL_T) {
+  GLdouble s,t;
+
+  if(!PL_get_float(PL_S,&s) ||
+     !PL_get_float(PL_T,&t))
+    return FALSE;
+
+  glTexCoord2d((GLdouble)s,(GLdouble)t);
 
   PL_succeed;
 }
@@ -2698,6 +2897,23 @@ foreign_t c_glTexSubImage3D(term_t PL_Target, term_t PL_Level, term_t PL_XOffset
   PL_succeed;
 }
 */
+
+/***************************************
+ * Name: c_glTranslated
+ * Params:
+ * Returns:
+ */
+foreign_t c_glTranslated(term_t PL_X, term_t PL_Y, term_t PL_Z) {
+  GLdouble x,y,z;
+
+  if(!PL_get_float(PL_X,&x) ||
+     !PL_get_float(PL_Y,&y) ||
+     !PL_get_float(PL_Z,&z))
+    return FALSE;
+  glTranslated((GLdouble)x,(GLdouble)y,(GLdouble)z);
+
+  PL_succeed;
+}
 
 /***************************************
  * Name: c_glTranslatef
@@ -2966,6 +3182,38 @@ foreign_t c_glutDisplayFunc(void) {
 }
 
 /***************************************
+ * Name: c_glutFullScreen
+ * Params:
+ * Returns:
+ */
+foreign_t c_glutFullScreen(void) {
+
+  glutFullScreen();
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glutGet
+ * Params:
+ * Returns:
+ */
+foreign_t c_glutGet(term_t PL_State, term_t PL_Answer) {
+  int state, answer, rval;
+
+  if (!PL_get_integer(PL_State,&state))
+    return FALSE;
+  
+  answer = glutGet((GLenum)state);
+
+  rval = PL_unify_integer(PL_Answer, answer);
+
+  return rval;
+
+  PL_succeed;
+}
+
+/***************************************
  * Name: c_glutIdleFunc
  * Params:
  * Returns:
@@ -3139,6 +3387,26 @@ foreign_t c_glutReshapeFunc(void) {
   printf("glutReshapeFunc %p\n",fp);
   PL_succeed;
 }
+
+/***************************************
+ * Name: c_glutReshapeWindow
+ * Params:
+ * Returns:
+ */
+foreign_t c_glutReshapeWindow(term_t PL_Width, term_t PL_Height) {
+  int width;
+  int height;
+
+  if (!PL_get_integer(PL_Width,&width))
+    width = 640;
+  if (!PL_get_integer(PL_Height,&height))
+    height = 480;
+
+  glutReshapeWindow(width,height);
+
+  PL_succeed;
+}
+
 
 /***************************************
  * Name: c_glutSetColor

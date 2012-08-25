@@ -100,6 +100,10 @@ glColor4f(Red,Green,Blue,Alpha):-
 	float(Alpha),
 	c_glColor4f(Red,Green,Blue,Alpha).
 
+% Sets the current color.
+glColor4ub(Red,Green,Blue,Alpha):-
+	c_glColor4ub(Red,Green,Blue,Alpha).
+
 % Enable and disable writing of frame buffer color components
 glColorMask(Red,Green,Blue,Alpha):-
 	c_glColorMask(Red,Green,Blue,Alpha).
@@ -152,6 +156,9 @@ glDisable(Mode):-
 	Mode_Eval is Mode,
 	c_glDisable(Mode_Eval).
 
+glDisableClientState(Cap):-
+    c_glDisableClientState(Cap).
+
 % Render primitives from array data
 glDrawArrays(Mode, First, Count):-
     c_glDrawArrays(Mode, First, Count).
@@ -159,6 +166,10 @@ glDrawArrays(Mode, First, Count):-
 % Specify which color buffers are to be drawn into
 glDrawBuffer(Mode):-
     c_glDrawBuffer(Mode).
+
+% Render primitives from array data
+glDrawElements(Mode, Count, Type, Indices):-
+    c_glDrawElements(Mode, Count, Type, Indices).
 
 % Write a block of pixels to the frame buffer
 glDrawPixels(Width, Height, Format, Type, Data):-
@@ -168,6 +179,9 @@ glEnable(Mode):-
 	Mode_Eval is Mode,
 	c_glEnable(Mode_Eval).
 
+glEnableClientState(Cap):-
+    c_glEnableClientState(Cap).
+
 % Delimits the vertices of a primitive or group of like primitives.
 glEnd:-
 	c_glEnd.
@@ -175,6 +189,23 @@ glEnd:-
 % Create or replace a display list
 glEndList :-
 	c_glEndList.
+
+% Compute a one- or two-dimensional grid of points or lines
+glEvalMesh1(Mode,I1,I2) :-
+    c_glEvalMesh1(Mode,I1,I2).
+
+% Compute a one- or two-dimensional grid of points or lines
+glEvalMesh2(Mode,I1,I2,J1,J2) :-
+    c_glEvalMesh2(Mode,I1,I2,J1,J2).
+
+% Generate and evaluate a single point in a mesh
+glEvalPoint1(I) :-
+    c_glEvalPoint1(I).
+
+% Generate and evaluate a single point in a mesh
+glEvalPoint2(I,J) :-
+    c_glEvalPoint2(I,J).
+
 
 % block until all GL execution is complete
 glFinish:-
@@ -385,6 +416,9 @@ glScalef(X,Y,Z):-
 	float(Z),
 	c_glScalef(X,Y,Z).
 
+glScissor(X,Y,Width,Height) :-
+    c_glScissor(X,Y,Width,Height).
+
 glShadeModel(Mode):-
 	c_glShadeModel(Mode).
 
@@ -396,6 +430,11 @@ glStencilMask(Mask):-
 
 glStencilOp(Fail, ZFail, ZPass):-
 	c_glStencilOp(Fail, ZFail, ZPass).
+
+glTexCoord2d(S,T):-
+	float(S),
+	float(T),
+	c_glTexCoord2d(S,T).
 
 glTexCoord2f(S,T):-
 	float(S),
@@ -425,6 +464,11 @@ glTexSubImage2D(Target,Level,XOffset,YOffset,Width,Height,Format,Type,Texels):-
 glTexSubImage3D(Target,Level,XOffset,YOffset,ZOffset,Width,Height,Depth,Format,Type,Texels):-
 	c_glTexSubImage3D(Target,Level,XOffset,YOffset,ZOffset,Width,Height,Depth,Format,Type,Texels).
 
+glTranslated(X,Y,Z):-
+	float(X),
+	float(Y),
+	float(Z),
+	c_glTranslated(X,Y,Z).
 
 glTranslatef(X,Y,Z):-
 	float(X),

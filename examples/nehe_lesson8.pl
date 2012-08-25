@@ -1,17 +1,18 @@
 :- ['../plOpenGL.pl'].
 
-:- dynamic xrot/1,yrot/1,xspeed/1,yspeed/1,zdepth/1,filter/1,light/1,blend/1.
+:- dynamic xrot/1,yrot/1,xspeed/1,yspeed/1,zdepth/1,filter/1,light/1,blend/1,fullscreen/1.
 
-width(640).
-height(480).
+width(1024).
+height(768).
 xrot(0.0).
 yrot(0.0).
 xspeed(0.0).
 yspeed(0.0).
 zdepth(-5.0).
 filter(1).
-light(1).
-blend(1).
+light(0).
+blend(0).
+fullscreen(0).
 
 display:-
 	% defs
@@ -101,7 +102,7 @@ display:-
 	Y1 is Y + YS,
 	retract(yrot(_)),
 	assert(yrot(Y1)),
-	sleep(30),
+	sleep(20),
 	glutSwapBuffers.
 
 init:-
@@ -171,18 +172,30 @@ init:-
 
 reshape:-
 	% defs
+	fullscreen(F),
 	X is 0,
 	Y is 0,
 	width(W),
 	height(H),
-	Aspect is float(W) / float(H),
+	kGLUT_SCREEN_WIDTH(SCREEN_WIDTH),
+	kGLUT_SCREEN_HEIGHT(SCREEN_HEIGHT),
+	glutGet(SCREEN_WIDTH,SW),
+	glutGet(SCREEN_HEIGHT,SH),
 	kGL_PROJECTION(PROJECTION),
 	kGL_MODELVIEW(MODELVIEW),
 	% gl code
-	glViewport(X,Y,W,H),
+	(   F = 1
+	->  glViewport(X,Y,SW,SH)
+	;   glViewport(X,Y,W,H)
+	),
 	glMatrixMode(PROJECTION),
 	glLoadIdentity,
-	gluPerspective(45.0, Aspect, 0.1, 100.0),
+	(   F = 1
+	->  AF is float(SW) / float(SH),
+	    gluPerspective(45.0, AF, 0.1, 100.0)
+	;   ANF is float(W) / float(H),
+	    gluPerspective(45.0, ANF, 0.1, 100.0)
+	),
 	glMatrixMode(MODELVIEW).
 
 keyboard(27,_,_) :-
@@ -191,39 +204,42 @@ keyboard(27,_,_) :-
 keyboard(108,_,_):-
 	light(L),
 	kGL_LIGHTING(LIGHTING),
-	write('l pressed, light is: '),write(L),nl,
 	(   L = 1
 	->  glDisable(LIGHTING),
 	    retract(light(_)),
-	    assert(light(0))
+	    assert(light(0)),
+	    write('l pressed, light is: 0'),nl
 	;   glEnable(LIGHTING),
 	    retract(light(_)),
-	    assert(light(1))
+	    assert(light(1)),
+	    write('l pressed, light is: 1'),nl
 	).
 keyboard(102,_,_):-
 	filter(F),
-	write('f pressed, filter is: '),write(F),nl,
 	F1 is F + 1,
 	(   F1 > 3
 	->  retract(filter(_)),
-	    assert(filter(1))
+	    assert(filter(1)),
+	    write('f pressed, filter is: 1'),nl
 	;   retract(filter(_)),
-	    assert(filter(F1))
+	    assert(filter(F1)),
+	    write('f pressed, filter is: '),write(F1),nl
 	).
 keyboard(98,_,_):-
 	blend(B),
 	kGL_BLEND(BLEND),
 	kGL_DEPTH_TEST(DEPTH_TEST),
-	write('b pressed, blend is: '),write(B),nl,
 	(   B = 1
 	->  glDisable(BLEND),
 	    glEnable(DEPTH_TEST),
 	    retract(blend(_)),
-	    assert(blend(0))
+	    assert(blend(0)),
+	    write('b pressed, blend is: 0'),nl
 	;   glEnable(BLEND),
 	    glDisable(DEPTH_TEST),
 	    retract(blend(_)),
-	    assert(blend(1))
+	    assert(blend(1)),
+	    write('b pressed, blend is: 1'),nl
 	).
 
 % Press z to zoom in
@@ -262,7 +278,19 @@ keyboard(100,_,_):-
 	Y1 is Y - 0.1,
 	retract(yspeed(_)),
 	assert(yspeed(Y1)).
-
+% Press 1 to toggle fullscreen
+keyboard(49,_,_) :-
+	width(W),
+	height(H),
+	fullscreen(F),
+	(   F = 0
+	->  glutFullScreen,
+	    retract(fullscreen(_)),
+	    assert(fullscreen(1))
+	;   glutReshapeWindow(W,H),
+	    retract(fullscreen(_)),
+	    assert(fullscreen(0))
+	).
 
 idle:-
 	display.
@@ -281,7 +309,7 @@ main:-
 	glutInitDisplayMode(DOUBLE \/ RGB \/ ALPHA \/ DEPTH),
 	glutInitWindowSize(W, H),
 	glutInitWindowPosition(0,0),
-	glutCreateWindow('NeHe''s Belnding'),
+	glutCreateWindow('NeHe''s Blending'),
 	init,
 	glutDisplayFunc,
 	glutIdleFunc(idle),
