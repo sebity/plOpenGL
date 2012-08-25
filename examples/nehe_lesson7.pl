@@ -186,7 +186,6 @@ keyboard(27,_,_) :-
 keyboard(108,_,_):-
 	light(L),
 	kGL_LIGHTING(LIGHTING),
-
 	(   L = 1
 	->  glDisable(LIGHTING),
 	    retract(light(_)),
@@ -199,7 +198,6 @@ keyboard(108,_,_):-
 	).
 keyboard(102,_,_):-
 	filter(F),
-
 	F1 is F + 1,
 	(   F1 > 3
 	->  retract(filter(_)),
