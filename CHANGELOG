@@ -1,6 +1,18 @@
 plOpenGL CHANGELOG
 =================================================
 
+0.3.2
+=====
+    * Add: glColor4ub, glDrawElements
+    * Add: glDisableClientState, glEnableClientState
+    * Add: glEvalMesh1, glEvalMesh2
+    * Add: glEvalPoint1, glEvalPoint2
+    * Add: glScissor, glTexCoord2d, glTranslated
+    * Add: glutFullScreen, glutGet, glutReshapeWindow
+    * Add: NeHe Lesson 9 - Moving Bitmaps in 3D Space
+    * Update: GLUT Definitions
+    * Update: Minor improvements to NeHe Lesson 7 and 8
+
 0.3.1
 =====
     * Add: OS Preprocessor Directive for glMinmax and glResetMinmax
