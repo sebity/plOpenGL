@@ -112,6 +112,10 @@ glColorMask(Red,Green,Blue,Alpha):-
 glColorMaterial(Face, Mode):-
 	c_glColorMaterial(Face,Mode).
 
+% Copy pixels into a color table
+glCopyColorTable(Target, Format, X, Y, Width):-
+    c_glCopyColorTable(Target, Format, X, Y, Width).
+
 % Copy pixels in the frame buffer
 glCopyPixels(X, Y, Width, Height, Type):-
     c_glCopyPixels(X, Y, Width, Height, Type).

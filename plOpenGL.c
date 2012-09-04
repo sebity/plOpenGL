@@ -104,6 +104,7 @@ foreign_t c_glColor3f(term_t Red, term_t Green, term_t Blue);
 foreign_t c_glColor4f(term_t Red, term_t Green, term_t Blue, term_t Alpha);
 foreign_t c_glColor4ub(term_t Red, term_t Green, term_t Blue, term_t Alpha);
 foreign_t c_glColorMask(term_t Red, term_t Green, term_t Blue, term_t Alpha);
+foreign_t c_glCopyColorTable(term_t Target, term_t Format, term_t X, term_t Y, term_t Width);
 foreign_t c_glColorMaterial(term_t Face, term_t Mode);
 foreign_t c_glCopyPixels(term_t X, term_t Y, term_t Width, term_t Height, term_t Type);
 foreign_t c_glCopyTexImage1D(term_t Target, term_t Level, term_t Internal, term_t X, term_t Y,
@@ -283,6 +284,7 @@ install_t install() {
   PL_register_foreign("c_glColor4ub",4,c_glColor4ub,PL_FA_NOTRACE);
   PL_register_foreign("c_glColorMask",4,c_glColorMask,PL_FA_NOTRACE);
   PL_register_foreign("c_glColorMaterial",2,c_glColorMaterial,PL_FA_NOTRACE);
+  PL_register_foreign("c_glCopyColorTable",5,c_glCopyColorTable,PL_FA_NOTRACE);
   PL_register_foreign("c_glCopyPixels",5,c_glCopyPixels,PL_FA_NOTRACE);
   PL_register_foreign("c_glCopyTexImage1D",7,c_glCopyTexImage1D,PL_FA_NOTRACE);
   PL_register_foreign("c_glCopyTexImage2D",8,c_glCopyTexImage2D,PL_FA_NOTRACE);
@@ -1193,6 +1195,26 @@ foreign_t c_glColorMaterial(term_t PL_Face, term_t PL_Mode) {
     return FALSE;
 
   glColorMaterial((GLenum)face, (GLenum)mode);
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glCopyColorTable
+ * Desc:    Copy pixels into a color table
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glCopyColorTable(term_t PL_Target, term_t PL_Format, term_t PL_X, term_t PL_Y, term_t PL_Width) {
+  int target, format, x, y, width;
+
+  if(!PL_get_integer(PL_Target,&target) ||
+     !PL_get_integer(PL_Format,&format) ||
+     !PL_get_integer(PL_X,&x) ||
+     !PL_get_integer(PL_Y,&y) ||
+     !PL_get_integer(PL_Width,&width))
+    return FALSE;
+  glCopyColorTable((GLenum)target,(GLenum)format,(GLint)x,(GLint)y,(GLsizei)width);
+
   PL_succeed;
 }
 
