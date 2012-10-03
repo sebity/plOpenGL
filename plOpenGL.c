@@ -100,12 +100,17 @@ foreign_t c_glClearDepth(term_t Depth);
 foreign_t c_glClearIndex(term_t Index);
 foreign_t c_glClearStencil(term_t S);
 foreign_t c_glClipPlane(term_t Plane, term_t Equation, term_t Num);
+foreign_t c_glColor3b(term_t Red, term_t Green, term_t Blue);
+foreign_t c_glColor3bv(term_t V);
 foreign_t c_glColor3f(term_t Red, term_t Green, term_t Blue);
+foreign_t c_glColor3i(term_t Red, term_t Green, term_t Blue);
+foreign_t c_glColor3iv(term_t V);
+foreign_t c_glColor3s(term_t Red, term_t Green, term_t Blue);
 foreign_t c_glColor4f(term_t Red, term_t Green, term_t Blue, term_t Alpha);
 foreign_t c_glColor4ub(term_t Red, term_t Green, term_t Blue, term_t Alpha);
 foreign_t c_glColorMask(term_t Red, term_t Green, term_t Blue, term_t Alpha);
-foreign_t c_glCopyColorTable(term_t Target, term_t Format, term_t X, term_t Y, term_t Width);
 foreign_t c_glColorMaterial(term_t Face, term_t Mode);
+foreign_t c_glCopyColorTable(term_t Target, term_t Format, term_t X, term_t Y, term_t Width);
 foreign_t c_glCopyPixels(term_t X, term_t Y, term_t Width, term_t Height, term_t Type);
 foreign_t c_glCopyTexImage1D(term_t Target, term_t Level, term_t Internal, term_t X, term_t Y,
                              term_t Width, term_t Border);
@@ -279,7 +284,12 @@ install_t install() {
   PL_register_foreign("c_glClearIndex",1,c_glClearIndex,PL_FA_NOTRACE);
   PL_register_foreign("c_glClearStencil",1,c_glClearStencil,PL_FA_NOTRACE);
   PL_register_foreign("c_glClipPlane",3,c_glClipPlane,PL_FA_NOTRACE);
+  PL_register_foreign("c_glColor3b",3,c_glColor3b,PL_FA_NOTRACE);
+  PL_register_foreign("c_glColor3bv",1,c_glColor3bv,PL_FA_NOTRACE);
   PL_register_foreign("c_glColor3f",3,c_glColor3f,PL_FA_NOTRACE);
+  PL_register_foreign("c_glColor3i",3,c_glColor3i,PL_FA_NOTRACE);
+  PL_register_foreign("c_glColor3iv",1,c_glColor3iv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glColor3s",3,c_glColor3s,PL_FA_NOTRACE);
   PL_register_foreign("c_glColor4f",4,c_glColor4f,PL_FA_NOTRACE);
   PL_register_foreign("c_glColor4ub",4,c_glColor4ub,PL_FA_NOTRACE);
   PL_register_foreign("c_glColorMask",4,c_glColorMask,PL_FA_NOTRACE);
@@ -1104,6 +1114,42 @@ foreign_t c_glClipPlane(term_t PL_Plane, term_t PL_Equation, term_t PL_Num) {
   PL_succeed;
 }
 
+/***************************************
+ * Name:    c_glColor3b
+ * Desc:    Set the current color
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glColor3b(term_t PL_Red, term_t PL_Green, term_t PL_Blue) {
+  int red, green, blue;
+
+  if(!PL_get_integer(PL_Red,&red) ||
+     !PL_get_integer(PL_Green,&green) ||
+     !PL_get_integer(PL_Blue,&blue) )
+    return FALSE;
+  glColor3b((GLbyte)red,(GLbyte)green,(GLbyte)blue);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glColor3bv
+ * Desc:    Set the current color
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glColor3bv(term_t PL_V) {
+  void *temp;
+
+  if(!PL_get_pointer(PL_V,&temp))
+    return FALSE;
+
+  const GLbyte *v = temp;
+
+  glColor3bv(v);
+
+  PL_succeed;
+}
 
 /***************************************
  * Name:    c_glColor3f
@@ -1119,6 +1165,61 @@ foreign_t c_glColor3f(term_t PL_Red, term_t PL_Green, term_t PL_Blue) {
      !PL_get_float(PL_Blue,&blue) )
     return FALSE;
   glColor3f((float)red,(float)green,(float)blue);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glColor3i
+ * Desc:    Set the current color
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glColor3i(term_t PL_Red, term_t PL_Green, term_t PL_Blue) {
+  int red, green, blue;
+
+  if(!PL_get_integer(PL_Red,&red) ||
+     !PL_get_integer(PL_Green,&green) ||
+     !PL_get_integer(PL_Blue,&blue) )
+    return FALSE;
+  glColor3i((GLint)red,(GLint)green,(GLint)blue);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glColor3iv
+ * Desc:    Set the current color
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glColor3iv(term_t PL_V) {
+  void *temp;
+
+  if(!PL_get_pointer(PL_V,&temp))
+    return FALSE;
+
+  const GLint *v = temp;
+
+  glColor3iv(v);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glColor3s
+ * Desc:    Set the current color
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glColor3s(term_t PL_Red, term_t PL_Green, term_t PL_Blue) {
+  int red, green, blue;
+
+  if(!PL_get_integer(PL_Red,&red) ||
+     !PL_get_integer(PL_Green,&green) ||
+     !PL_get_integer(PL_Blue,&blue) )
+    return FALSE;
+  glColor3s((GLshort)red,(GLshort)green,(GLshort)blue);
 
   PL_succeed;
 }

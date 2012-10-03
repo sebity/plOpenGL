@@ -86,11 +86,32 @@ glClipPlane(Plane,Equation) :-
 	c_glClipPlane(Plane,Equation,N).
 
 % Sets the current color.
+glColor3b(Red,Green,Blue):-
+	c_glColor3b(Red,Green,Blue).
+
+% Sets the current color.
+glColor3bv(Red,Green,Blue):-
+	c_glColor3bv(Red,Green,Blue).
+
+% Sets the current color.
 glColor3f(Red,Green,Blue):-
 	float(Red),
 	float(Green),
 	float(Blue),
 	c_glColor3f(Red,Green,Blue).
+
+% Sets the current color.
+glColor3i(Red,Green,Blue):-
+	c_glColor3i(Red,Green,Blue).
+
+
+% Sets the current color.
+glColor3s(Red,Green,Blue):-
+	c_glColor3s(Red,Green,Blue).
+
+% Sets the current color.
+glColor3iv(Red,Green,Blue):-
+	c_glColor3iv(Red,Green,Blue).
 
 % Sets the current color.
 glColor4f(Red,Green,Blue,Alpha):-
