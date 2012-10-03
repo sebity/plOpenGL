@@ -216,6 +216,7 @@ foreign_t c_glVertex2i(term_t X, term_t Y);
 foreign_t c_glVertex3d(term_t X, term_t Y, term_t Z);
 foreign_t c_glVertex3f(term_t X, term_t Y, term_t Z);
 foreign_t c_glVertex3i(term_t X, term_t Y, term_t Z);
+foreign_t c_glVertexPointer(term_t Size, term_t Type, term_t Stride, term_t Pointer);
 foreign_t c_glViewport(term_t X, term_t Y, term_t Width, term_t Height);
 
 /*****************
@@ -389,6 +390,7 @@ install_t install() {
   PL_register_foreign("c_glVertex3d",3,c_glVertex3d,PL_FA_NOTRACE);
   PL_register_foreign("c_glVertex3f",3,c_glVertex3f,PL_FA_NOTRACE);
   PL_register_foreign("c_glVertex3i",3,c_glVertex3i,PL_FA_NOTRACE);
+  PL_register_foreign("c_glVertexPointer",4,c_glVertexPointer,PL_FA_NOTRACE);
   PL_register_foreign("c_glViewport",4,c_glViewport,PL_FA_NOTRACE);
 
   PL_register_foreign("c_gluBuild2DMipmaps",7,c_gluBuild2DMipmaps,PL_FA_NOTRACE);
@@ -3135,6 +3137,29 @@ foreign_t c_glVertex3i(term_t PL_X, term_t PL_Y, term_t PL_Z) {
      !PL_get_integer(PL_Z,&z))
     return FALSE;
   glVertex3i(x,y,z);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glVertexPointer
+ * Params:
+ * Returns:
+ */
+foreign_t c_glVertexPointer(term_t PL_Size, term_t PL_Type, term_t PL_Stride, term_t PL_Pointer) {
+  int size, type, stride;
+  void *temp;
+  const GLvoid *pointer;
+
+  if(!PL_get_integer(PL_Size,&size) ||
+     !PL_get_integer(PL_Type,&type) ||
+     !PL_get_integer(PL_Stride,&stride) ||
+     !PL_get_pointer(PL_Pointer,&temp))
+    return FALSE;
+
+  pointer = temp;
+
+  glVertexPointer((GLint)size, (GLenum)type, (GLsizei)stride, pointer);
 
   PL_succeed;
 }

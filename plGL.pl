@@ -529,6 +529,10 @@ glVertex3f(X,Y,Z):-
 glVertex3i(X,Y,Z):-
 	c_glVertex3i(X,Y,Z).
 
+% Define an array of vertex data
+glVertexPointer(Size, Type, Stride, Pointer):-
+    c_glVertexPointer(Size, Type, Stride, Pointer).
+
 % Set the viewport
 glViewport(X,Y,W,H):-
 	c_glViewport(X,Y,W,H).
