@@ -502,10 +502,24 @@ glTranslatef(X,Y,Z):-
 	c_glTranslatef(X,Y,Z).
 
 % Specify a vertex
+glVertex2d(X,Y):-
+	float(X),
+	float(Y),
+	c_glVertex2d(X,Y).
+
+% Specify a vertex
+glVertex2dv(X):-
+	c_glVertex2dv(X).
+
+% Specify a vertex
 glVertex2f(X,Y):-
 	float(X),
 	float(Y),
 	c_glVertex2f(X,Y).
+
+% Specify a vertex
+glVertex2fv(X):-
+	c_glVertex2fv(X).
 
 % Specify a vertex
 glVertex2i(X,Y):-

@@ -211,8 +211,12 @@ foreign_t c_glTexSubImage2D(term_t Target, term_t Level, term_t XOffset, term_t 
   term_t Width, term_t Height, term_t Depth, term_t Format, term_t Type, term_t Texels); */
 foreign_t c_glTranslated(term_t X, term_t Y, term_t Z);
 foreign_t c_glTranslatef(term_t X, term_t Y, term_t Z);
+foreign_t c_glVertex2d(term_t X, term_t Y);
+foreign_t c_glVertex2dv(term_t V);
 foreign_t c_glVertex2f(term_t X, term_t Y);
+foreign_t c_glVertex2fv(term_t V);
 foreign_t c_glVertex2i(term_t X, term_t Y);
+foreign_t c_glVertex2iv(term_t V);
 foreign_t c_glVertex3d(term_t X, term_t Y, term_t Z);
 foreign_t c_glVertex3f(term_t X, term_t Y, term_t Z);
 foreign_t c_glVertex3i(term_t X, term_t Y, term_t Z);
@@ -385,8 +389,12 @@ install_t install() {
  */
   PL_register_foreign("c_glTranslated",3,c_glTranslated,PL_FA_NOTRACE);
   PL_register_foreign("c_glTranslatef",3,c_glTranslatef,PL_FA_NOTRACE);
+  PL_register_foreign("c_glVertex2d",2,c_glVertex2d,PL_FA_NOTRACE);
+  PL_register_foreign("c_glVertex2dv",1,c_glVertex2dv,PL_FA_NOTRACE);
   PL_register_foreign("c_glVertex2f",2,c_glVertex2f,PL_FA_NOTRACE);
+  PL_register_foreign("c_glVertex2fv",1,c_glVertex2fv,PL_FA_NOTRACE);
   PL_register_foreign("c_glVertex2i",2,c_glVertex2i,PL_FA_NOTRACE);
+  PL_register_foreign("c_glVertex2iv",1,c_glVertex2iv,PL_FA_NOTRACE);
   PL_register_foreign("c_glVertex3d",3,c_glVertex3d,PL_FA_NOTRACE);
   PL_register_foreign("c_glVertex3f",3,c_glVertex3f,PL_FA_NOTRACE);
   PL_register_foreign("c_glVertex3i",3,c_glVertex3i,PL_FA_NOTRACE);
@@ -3058,6 +3066,42 @@ foreign_t c_glTranslatef(term_t PL_X, term_t PL_Y, term_t PL_Z) {
 }
 
 /***************************************
+ * Name: c_glVertex2d
+ * Params:
+ * Returns:
+ */
+foreign_t c_glVertex2d(term_t PL_X, term_t PL_Y) {
+  GLdouble x,y;
+
+  if(!PL_get_float(PL_X,&x) ||
+     !PL_get_float(PL_Y,&y))
+    return FALSE;
+
+  glVertex2d(x,y);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glVertex2dv
+ * Params:
+ * Returns:
+ */
+foreign_t c_glVertex2dv(term_t PL_V) {
+  void *temp;
+  const GLdouble *v;
+
+  if(!PL_get_pointer(PL_V,&temp))
+    return FALSE;
+
+  v = temp;
+
+  glVertex2dv(v);
+
+  PL_succeed;
+}
+
+/***************************************
  * Name: c_glVertex2f
  * Params:
  * Returns:
@@ -3075,6 +3119,25 @@ foreign_t c_glVertex2f(term_t PL_X, term_t PL_Y) {
 }
 
 /***************************************
+ * Name: c_glVertex2fv
+ * Params:
+ * Returns:
+ */
+foreign_t c_glVertex2fv(term_t PL_V) {
+  void *temp;
+  const GLfloat *v;
+
+  if(!PL_get_pointer(PL_V,&temp))
+    return FALSE;
+
+  v = temp;
+
+  glVertex2fv(v);
+
+  PL_succeed;
+}
+
+/***************************************
  * Name: c_glVertex2i
  * Params:
  * Returns:
@@ -3086,6 +3149,25 @@ foreign_t c_glVertex2i(term_t PL_X, term_t PL_Y) {
      !PL_get_integer(PL_Y,&y))
     return FALSE;
   glVertex2i(x,y);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glVertex2iv
+ * Params:
+ * Returns:
+ */
+foreign_t c_glVertex2iv(term_t PL_V) {
+  void *temp;
+  const GLint *v;
+
+  if(!PL_get_pointer(PL_V,&temp))
+    return FALSE;
+
+  v = temp;
+
+  glVertex2iv(v);
 
   PL_succeed;
 }
