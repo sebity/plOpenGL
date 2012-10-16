@@ -526,11 +526,29 @@ glVertex2i(X,Y):-
 	c_glVertex2i(X,Y).
 
 % Specify a vertex
+glVertex2iv(X):-
+	c_glVertex2iv(X).
+
+% Specify a vertex
+glVertex2s(X,Y):-
+	float(X),
+	float(Y),
+	c_glVertex2s(X,Y).
+
+% Specify a vertex
+glVertex2sv(X):-
+	c_glVertex2sv(X).
+
+% Specify a vertex
 glVertex3d(X,Y,Z):-
 	float(X),
 	float(Y),
 	float(Z),
 	c_glVertex3d(X,Y,Z).
+
+% Specify a vertex
+glVertex3dv(X):-
+	c_glVertex3dv(X).
 
 % Specify a vertex
 glVertex3f(X,Y,Z):-
