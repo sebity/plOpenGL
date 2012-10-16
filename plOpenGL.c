@@ -225,6 +225,8 @@ foreign_t c_glVertex3f(term_t X, term_t Y, term_t Z);
 foreign_t c_glVertex3fv(term_t V);
 foreign_t c_glVertex3i(term_t X, term_t Y, term_t Z);
 foreign_t c_glVertex3iv(term_t V);
+foreign_t c_glVertex3s(term_t X, term_t Y, term_t Z);
+foreign_t c_glVertex3sv(term_t V);
 foreign_t c_glVertexPointer(term_t Size, term_t Type, term_t Stride, term_t Pointer);
 foreign_t c_glViewport(term_t X, term_t Y, term_t Width, term_t Height);
 
@@ -408,6 +410,8 @@ install_t install() {
   PL_register_foreign("c_glVertex3fv",1,c_glVertex3fv,PL_FA_NOTRACE);
   PL_register_foreign("c_glVertex3i",3,c_glVertex3i,PL_FA_NOTRACE);
   PL_register_foreign("c_glVertex3iv",1,c_glVertex3iv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glVertex3s",3,c_glVertex3s,PL_FA_NOTRACE);
+  PL_register_foreign("c_glVertex3sv",1,c_glVertex3sv,PL_FA_NOTRACE);
   PL_register_foreign("c_glVertexPointer",4,c_glVertexPointer,PL_FA_NOTRACE);
   PL_register_foreign("c_glViewport",4,c_glViewport,PL_FA_NOTRACE);
 
@@ -3321,6 +3325,43 @@ foreign_t c_glVertex3iv(term_t PL_V) {
   v = temp;
 
   glVertex3iv(v);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glVertex3s
+ * Params:
+ * Returns:
+ */
+foreign_t c_glVertex3s(term_t PL_X, term_t PL_Y, term_t PL_Z) {
+  GLint x,y,z;
+
+  if(!PL_get_integer(PL_X,&x) ||
+     !PL_get_integer(PL_Y,&y) ||
+     !PL_get_integer(PL_Z,&z))
+    return FALSE;
+
+  glVertex3s((GLshort)x, (GLshort)y, (GLshort)z);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glVertex3sv
+ * Params:
+ * Returns:
+ */
+foreign_t c_glVertex3sv(term_t PL_V) {
+  void *temp;
+  const GLshort *v;
+
+  if(!PL_get_pointer(PL_V,&temp))
+    return FALSE;
+
+  v = temp;
+
+  glVertex3sv(v);
 
   PL_succeed;
 }
