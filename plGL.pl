@@ -558,8 +558,16 @@ glVertex3f(X,Y,Z):-
 	c_glVertex3f(X,Y,Z).
 
 % Specify a vertex
+glVertex3fv(X):-
+	c_glVertex3fv(X).
+
+% Specify a vertex
 glVertex3i(X,Y,Z):-
 	c_glVertex3i(X,Y,Z).
+
+% Specify a vertex
+glVertex3iv(X):-
+	c_glVertex3iv(X).
 
 % Define an array of vertex data
 glVertexPointer(Size, Type, Stride, Pointer):-
