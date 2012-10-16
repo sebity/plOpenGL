@@ -577,6 +577,46 @@ glVertex3s(X,Y,Z):-
 glVertex3sv(X):-
 	c_glVertex3sv(X).
 
+% Specify a vertex
+glVertex4d(X,Y,Z,W):-
+	float(X),
+	float(Y),
+	float(Z),
+    float(W),
+	c_glVertex4d(X,Y,Z,W).
+
+% Specify a vertex
+glVertex4dv(X):-
+	c_glVertex4dv(X).
+
+% Specify a vertex
+glVertex4f(X,Y,Z,W):-
+	float(X),
+	float(Y),
+	float(Z),
+    float(W),
+	c_glVertex4f(X,Y,Z,W).
+
+% Specify a vertex
+glVertex4fv(X):-
+	c_glVertex4fv(X).
+
+% Specify a vertex
+glVertex4i(X,Y,Z,W):-
+	c_glVertex4i(X,Y,Z,W).
+
+% Specify a vertex
+glVertex4iv(X):-
+	c_glVertex4iv(X).
+
+% Specify a vertex
+glVertex4s(X,Y,Z,W):-
+	c_glVertex4s(X,Y,Z,W).
+
+% Specify a vertex
+glVertex4sv(X):-
+	c_glVertex4sv(X).
+
 
 % Define an array of vertex data
 glVertexPointer(Size, Type, Stride, Pointer):-

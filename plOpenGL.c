@@ -227,6 +227,14 @@ foreign_t c_glVertex3i(term_t X, term_t Y, term_t Z);
 foreign_t c_glVertex3iv(term_t V);
 foreign_t c_glVertex3s(term_t X, term_t Y, term_t Z);
 foreign_t c_glVertex3sv(term_t V);
+foreign_t c_glVertex4d(term_t X, term_t Y, term_t Z, term_t W);
+foreign_t c_glVertex4dv(term_t V);
+foreign_t c_glVertex4f(term_t X, term_t Y, term_t Z, term_t W);
+foreign_t c_glVertex4fv(term_t V);
+foreign_t c_glVertex4i(term_t X, term_t Y, term_t Z, term_t W);
+foreign_t c_glVertex4iv(term_t V);
+foreign_t c_glVertex4s(term_t X, term_t Y, term_t Z, term_t W);
+foreign_t c_glVertex4sv(term_t V);
 foreign_t c_glVertexPointer(term_t Size, term_t Type, term_t Stride, term_t Pointer);
 foreign_t c_glViewport(term_t X, term_t Y, term_t Width, term_t Height);
 
@@ -412,6 +420,14 @@ install_t install() {
   PL_register_foreign("c_glVertex3iv",1,c_glVertex3iv,PL_FA_NOTRACE);
   PL_register_foreign("c_glVertex3s",3,c_glVertex3s,PL_FA_NOTRACE);
   PL_register_foreign("c_glVertex3sv",1,c_glVertex3sv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glVertex4d",4,c_glVertex4d,PL_FA_NOTRACE);
+  PL_register_foreign("c_glVertex4dv",1,c_glVertex4dv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glVertex4f",4,c_glVertex4f,PL_FA_NOTRACE);
+  PL_register_foreign("c_glVertex4fv",1,c_glVertex4fv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glVertex4i",4,c_glVertex4i,PL_FA_NOTRACE);
+  PL_register_foreign("c_glVertex4iv",1,c_glVertex4iv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glVertex4s",4,c_glVertex4s,PL_FA_NOTRACE);
+  PL_register_foreign("c_glVertex4sv",1,c_glVertex4sv,PL_FA_NOTRACE);
   PL_register_foreign("c_glVertexPointer",4,c_glVertexPointer,PL_FA_NOTRACE);
   PL_register_foreign("c_glViewport",4,c_glViewport,PL_FA_NOTRACE);
 
@@ -3362,6 +3378,158 @@ foreign_t c_glVertex3sv(term_t PL_V) {
   v = temp;
 
   glVertex3sv(v);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glVertex4d
+ * Params:
+ * Returns:
+ */
+foreign_t c_glVertex4d(term_t PL_X, term_t PL_Y, term_t PL_Z, term_t PL_W) {
+  GLdouble x,y,z,w;
+
+  if(!PL_get_float(PL_X,&x) ||
+     !PL_get_float(PL_Y,&y) ||
+     !PL_get_float(PL_Z,&z) ||
+     !PL_get_float(PL_W,&w))
+    return FALSE;
+
+  glVertex4d((GLdouble)x,(GLdouble)y,(GLdouble)z,(GLdouble)w);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glVertex4dv
+ * Params:
+ * Returns:
+ */
+foreign_t c_glVertex4dv(term_t PL_V) {
+  void *temp;
+  const GLdouble *v;
+
+  if(!PL_get_pointer(PL_V,&temp))
+    return FALSE;
+
+  v = temp;
+
+  glVertex4dv(v);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glVertexdf
+ * Params:
+ * Returns:
+ */
+foreign_t c_glVertexdf(term_t PL_X, term_t PL_Y, term_t PL_Z, term_t PL_W) {
+  GLdouble x,y,z,w;
+
+  if(!PL_get_float(PL_X,&x) ||
+     !PL_get_float(PL_Y,&y) ||
+     !PL_get_float(PL_Z,&z) ||
+     !PL_get_float(PL_W,&w))
+    return FALSE;
+
+  glVertex4f((float)x,(float)y,(float)z,(float)w);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glVertex4fv
+ * Params:
+ * Returns:
+ */
+foreign_t c_glVertex4fv(term_t PL_V) {
+  void *temp;
+  const GLfloat *v;
+
+  if(!PL_get_pointer(PL_V,&temp))
+    return FALSE;
+
+  v = temp;
+
+  glVertex4fv(v);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glVertex3i
+ * Params:
+ * Returns:
+ */
+foreign_t c_glVertex4i(term_t PL_X, term_t PL_Y, term_t PL_Z, term_t PL_W) {
+  GLint x,y,z,w;
+
+  if(!PL_get_integer(PL_X,&x) ||
+     !PL_get_integer(PL_Y,&y) ||
+     !PL_get_integer(PL_Z,&z) ||
+     !PL_get_integer(PL_W,&w))
+    return FALSE;
+
+  glVertex4i(x,y,z,w);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glVertex4iv
+ * Params:
+ * Returns:
+ */
+foreign_t c_glVertex4iv(term_t PL_V) {
+  void *temp;
+  const GLint *v;
+
+  if(!PL_get_pointer(PL_V,&temp))
+    return FALSE;
+
+  v = temp;
+
+  glVertex4iv(v);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glVertex4s
+ * Params:
+ * Returns:
+ */
+foreign_t c_glVertex4s(term_t PL_X, term_t PL_Y, term_t PL_Z, term_t PL_W) {
+  GLint x,y,z,w;
+
+  if(!PL_get_integer(PL_X,&x) ||
+     !PL_get_integer(PL_Y,&y) ||
+     !PL_get_integer(PL_Z,&z) ||
+     !PL_get_integer(PL_W,&w))
+    return FALSE;
+
+  glVertex4s((GLshort)x, (GLshort)y, (GLshort)z, (GLshort)w);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glVertex4sv
+ * Params:
+ * Returns:
+ */
+foreign_t c_glVertex4sv(term_t PL_V) {
+  void *temp;
+  const GLshort *v;
+
+  if(!PL_get_pointer(PL_V,&temp))
+    return FALSE;
+
+  v = temp;
+
+  glVertex4sv(v);
 
   PL_succeed;
 }
