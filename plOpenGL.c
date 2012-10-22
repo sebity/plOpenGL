@@ -103,6 +103,7 @@ foreign_t c_glClipPlane(term_t Plane, term_t Equation, term_t Num);
 foreign_t c_glColor3b(term_t Red, term_t Green, term_t Blue);
 foreign_t c_glColor3bv(term_t V);
 foreign_t c_glColor3d(term_t Red, term_t Green, term_t Blue);
+foreign_t c_glColor3dv(term_t V);
 foreign_t c_glColor3f(term_t Red, term_t Green, term_t Blue);
 foreign_t c_glColor3fv(term_t V);
 foreign_t c_glColor3i(term_t Red, term_t Green, term_t Blue);
@@ -309,6 +310,7 @@ install_t install() {
   PL_register_foreign("c_glColor3b",3,c_glColor3b,PL_FA_NOTRACE);
   PL_register_foreign("c_glColor3bv",1,c_glColor3bv,PL_FA_NOTRACE);
   PL_register_foreign("c_glColor3d",3,c_glColor3d,PL_FA_NOTRACE);
+  PL_register_foreign("c_glColor3dv",1,c_glColor3dv,PL_FA_NOTRACE);
   PL_register_foreign("c_glColor3f",3,c_glColor3f,PL_FA_NOTRACE);
   PL_register_foreign("c_glColor3fv",1,c_glColor3fv,PL_FA_NOTRACE);
   PL_register_foreign("c_glColor3i",3,c_glColor3i,PL_FA_NOTRACE);
@@ -1226,6 +1228,43 @@ foreign_t c_glColor3d(term_t PL_Red, term_t PL_Green, term_t PL_Blue) {
      !PL_get_float(PL_Blue,&blue) )
     return FALSE;
   glColor3d((GLdouble)red,(GLdouble)green,(GLdouble)blue);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glColor3dv
+ * Desc:    Set the current color
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glColor3dv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+
+  int num, count;
+  GLdouble *v;
+  
+  num = 3;
+  count = 0;
+  v = malloc(num * sizeof(GLfloat));
+  
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_FLOAT) )
+      v[count] = (atof(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+
+  glColor3dv(v);
+
+  free(v);
+  return PL_get_nil(list);
 
   PL_succeed;
 }
@@ -3353,15 +3392,31 @@ foreign_t c_glVertex3d(term_t PL_X, term_t PL_Y, term_t PL_Z) {
  * Returns:
  */
 foreign_t c_glVertex3dv(term_t PL_V) {
-  void *temp;
-  const GLdouble *v;
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
 
-  if(!PL_get_pointer(PL_V,&temp))
-    return FALSE;
+  int num, count;
+  GLdouble *v;
+  
+  num = 3;
+  count = 0;
+  v = malloc(num * sizeof(GLfloat));
+  
+  while( PL_get_list(list, head, list) ) {
+    char *s;
 
-  v = temp;
+    if ( PL_get_chars(head, &s, CVT_FLOAT) )
+      v[count] = (atof(s));
+    else
+      PL_fail;
+
+    count++;
+  }
 
   glVertex3dv(v);
+
+  free(v);
+  return PL_get_nil(list);
 
   PL_succeed;
 }
@@ -3389,15 +3444,31 @@ foreign_t c_glVertex3f(term_t PL_X, term_t PL_Y, term_t PL_Z) {
  * Returns:
  */
 foreign_t c_glVertex3fv(term_t PL_V) {
-  void *temp;
-  const GLfloat *v;
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
 
-  if(!PL_get_pointer(PL_V,&temp))
-    return FALSE;
+  int num, count;
+  GLfloat *v;
+  
+  num = 3;
+  count = 0;
+  v = malloc(num * sizeof(GLfloat));
+  
+  while( PL_get_list(list, head, list) ) {
+    char *s;
 
-  v = temp;
+    if ( PL_get_chars(head, &s, CVT_FLOAT) )
+      v[count] = (atof(s));
+    else
+      PL_fail;
+
+    count++;
+  }
 
   glVertex3fv(v);
+
+  free(v);
+  return PL_get_nil(list);
 
   PL_succeed;
 }
@@ -3425,15 +3496,31 @@ foreign_t c_glVertex3i(term_t PL_X, term_t PL_Y, term_t PL_Z) {
  * Returns:
  */
 foreign_t c_glVertex3iv(term_t PL_V) {
-  void *temp;
-  const GLint *v;
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
 
-  if(!PL_get_pointer(PL_V,&temp))
-    return FALSE;
+  int num, count;
+  GLint *v;
+  
+  num = 3;
+  count = 0;
+  v = malloc(num * sizeof(GLint));
+  
+  while( PL_get_list(list, head, list) ) {
+    char *s;
 
-  v = temp;
+    if ( PL_get_chars(head, &s, CVT_INTEGER) )
+      v[count] = (atoi(s));
+    else
+      PL_fail;
+
+    count++;
+  }
 
   glVertex3iv(v);
+
+  free(v);
+  return PL_get_nil(list);
 
   PL_succeed;
 }
@@ -3462,15 +3549,31 @@ foreign_t c_glVertex3s(term_t PL_X, term_t PL_Y, term_t PL_Z) {
  * Returns:
  */
 foreign_t c_glVertex3sv(term_t PL_V) {
-  void *temp;
-  const GLshort *v;
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
 
-  if(!PL_get_pointer(PL_V,&temp))
-    return FALSE;
+  int num, count;
+  GLshort *v;
+  
+  num = 3;
+  count = 0;
+  v = malloc(num * sizeof(GLint));
+  
+  while( PL_get_list(list, head, list) ) {
+    char *s;
 
-  v = temp;
+    if ( PL_get_chars(head, &s, CVT_INTEGER) )
+      v[count] = (atoi(s));
+    else
+      PL_fail;
+
+    count++;
+  }
 
   glVertex3sv(v);
+
+  free(v);
+  return PL_get_nil(list);
 
   PL_succeed;
 }
