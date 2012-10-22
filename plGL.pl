@@ -582,7 +582,7 @@ glVertex4d(X,Y,Z,W):-
 	float(X),
 	float(Y),
 	float(Z),
-    float(W),
+	float(W),
 	c_glVertex4d(X,Y,Z,W).
 
 % Specify a vertex
@@ -594,7 +594,7 @@ glVertex4f(X,Y,Z,W):-
 	float(X),
 	float(Y),
 	float(Z),
-    float(W),
+	float(W),
 	c_glVertex4f(X,Y,Z,W).
 
 % Specify a vertex

@@ -3421,11 +3421,11 @@ foreign_t c_glVertex4dv(term_t PL_V) {
 }
 
 /***************************************
- * Name: c_glVertexdf
+ * Name: c_glVertex4f
  * Params:
  * Returns:
  */
-foreign_t c_glVertexdf(term_t PL_X, term_t PL_Y, term_t PL_Z, term_t PL_W) {
+foreign_t c_glVertex4f(term_t PL_X, term_t PL_Y, term_t PL_Z, term_t PL_W) {
   GLdouble x,y,z,w;
 
   if(!PL_get_float(PL_X,&x) ||
