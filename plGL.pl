@@ -94,6 +94,13 @@ glColor3bv(Red,Green,Blue):-
 	c_glColor3bv(Red,Green,Blue).
 
 % Sets the current color.
+glColor3d(Red,Green,Blue):-
+	float(Red),
+	float(Green),
+	float(Blue),
+	c_glColor3d(Red,Green,Blue).
+
+% Sets the current color.
 glColor3f(Red,Green,Blue):-
 	float(Red),
 	float(Green),
@@ -104,14 +111,17 @@ glColor3f(Red,Green,Blue):-
 glColor3i(Red,Green,Blue):-
 	c_glColor3i(Red,Green,Blue).
 
+% Sets the current color.
+glColor3fv(X):-
+	c_glColor3fv(X).
 
 % Sets the current color.
 glColor3s(Red,Green,Blue):-
 	c_glColor3s(Red,Green,Blue).
 
 % Sets the current color.
-glColor3iv(Red,Green,Blue):-
-	c_glColor3iv(Red,Green,Blue).
+glColor3iv(X):-
+	c_glColor3iv(X).
 
 % Sets the current color.
 glColor4f(Red,Green,Blue,Alpha):-

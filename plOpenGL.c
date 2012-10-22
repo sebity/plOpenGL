@@ -102,7 +102,9 @@ foreign_t c_glClearStencil(term_t S);
 foreign_t c_glClipPlane(term_t Plane, term_t Equation, term_t Num);
 foreign_t c_glColor3b(term_t Red, term_t Green, term_t Blue);
 foreign_t c_glColor3bv(term_t V);
+foreign_t c_glColor3d(term_t Red, term_t Green, term_t Blue);
 foreign_t c_glColor3f(term_t Red, term_t Green, term_t Blue);
+foreign_t c_glColor3fv(term_t V);
 foreign_t c_glColor3i(term_t Red, term_t Green, term_t Blue);
 foreign_t c_glColor3iv(term_t V);
 foreign_t c_glColor3s(term_t Red, term_t Green, term_t Blue);
@@ -306,7 +308,9 @@ install_t install() {
   PL_register_foreign("c_glClipPlane",3,c_glClipPlane,PL_FA_NOTRACE);
   PL_register_foreign("c_glColor3b",3,c_glColor3b,PL_FA_NOTRACE);
   PL_register_foreign("c_glColor3bv",1,c_glColor3bv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glColor3d",3,c_glColor3d,PL_FA_NOTRACE);
   PL_register_foreign("c_glColor3f",3,c_glColor3f,PL_FA_NOTRACE);
+  PL_register_foreign("c_glColor3fv",1,c_glColor3fv,PL_FA_NOTRACE);
   PL_register_foreign("c_glColor3i",3,c_glColor3i,PL_FA_NOTRACE);
   PL_register_foreign("c_glColor3iv",1,c_glColor3iv,PL_FA_NOTRACE);
   PL_register_foreign("c_glColor3s",3,c_glColor3s,PL_FA_NOTRACE);
@@ -1179,14 +1183,49 @@ foreign_t c_glColor3b(term_t PL_Red, term_t PL_Green, term_t PL_Blue) {
  * Returns: -
  */
 foreign_t c_glColor3bv(term_t PL_V) {
-  void *temp;
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
 
-  if(!PL_get_pointer(PL_V,&temp))
-    return FALSE;
+  int num, count;
+  GLbyte *v;
+  
+  num = 3;
+  count = 0;
+  v = malloc(num * sizeof(GLint));
+  
+  while( PL_get_list(list, head, list) ) {
+    char *s;
 
-  const GLbyte *v = temp;
+    if ( PL_get_chars(head, &s, CVT_INTEGER) )
+      v[count] = (atoi(s));
+    else
+      PL_fail;
+
+    count++;
+  }
 
   glColor3bv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glColor3d
+ * Desc:    Set the current color
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glColor3d(term_t PL_Red, term_t PL_Green, term_t PL_Blue) {
+  GLdouble red, green, blue;
+
+  if(!PL_get_float(PL_Red,&red) ||
+     !PL_get_float(PL_Green,&green) ||
+     !PL_get_float(PL_Blue,&blue) )
+    return FALSE;
+  glColor3d((GLdouble)red,(GLdouble)green,(GLdouble)blue);
 
   PL_succeed;
 }
@@ -1205,6 +1244,43 @@ foreign_t c_glColor3f(term_t PL_Red, term_t PL_Green, term_t PL_Blue) {
      !PL_get_float(PL_Blue,&blue) )
     return FALSE;
   glColor3f((float)red,(float)green,(float)blue);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glColor3fv
+ * Desc:    Set the current color
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glColor3fv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+
+  int num, count;
+  GLfloat *v;
+  
+  num = 3;
+  count = 0;
+  v = malloc(num * sizeof(GLfloat));
+  
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_FLOAT) )
+      v[count] = (atof(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+
+  glColor3fv(v);
+
+  free(v);
+  return PL_get_nil(list);
 
   PL_succeed;
 }
@@ -1234,14 +1310,31 @@ foreign_t c_glColor3i(term_t PL_Red, term_t PL_Green, term_t PL_Blue) {
  * Returns: -
  */
 foreign_t c_glColor3iv(term_t PL_V) {
-  void *temp;
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
 
-  if(!PL_get_pointer(PL_V,&temp))
-    return FALSE;
+  int num, count;
+  GLint *v;
+  
+  num = 3;
+  count = 0;
+  v = malloc(num * sizeof(GLint));
+  
+  while( PL_get_list(list, head, list) ) {
+    char *s;
 
-  const GLint *v = temp;
+    if ( PL_get_chars(head, &s, CVT_INTEGER) )
+      v[count] = (atoi(s));
+    else
+      PL_fail;
+
+    count++;
+  }
 
   glColor3iv(v);
+
+  free(v);
+  return PL_get_nil(list);
 
   PL_succeed;
 }
