@@ -1,6 +1,20 @@
 plOpenGL CHANGELOG
 =================================================
 
+0.4.0
+=====
+    * Add: glColor3b, glColor3i, glColor3s
+    * Add: glColor3bv, glColor3dv, glColor3fv, glColor3iv, glColor3sv
+    * Add: glColor4dv, glColor4fv
+    * Add: glCopyColorTable
+    * Add: glVertexPointer
+    * Add: glVertex2d, glVertex2s
+    * Add: glVertex4d, glVertex4f, glVertex4i, glVertex4s
+    * Add: glVertex2dv, glVertex2fv, glVertex2iv, glVertex2sv 
+    * Add: glVertex3dv, glVertex3fv, glVertex3iv, glVertex3sv
+    * Add: glVertex4dv, glVertex4fv, glVertex4iv, glVertex4sv
+
+
 0.3.2
 =====
     * Add: glColor4ub, glDrawElements
@@ -25,8 +39,8 @@ plOpenGL CHANGELOG
 
 0.2.3
 =====
-    * Add: glColorMask, glDepthMask, glDepthRange, glDrawArrays, glDrawPixels,
-           glIndexMask, glRenderMode
+    * Add: glColorMask, glDepthMask, glDepthRange, glDrawArrays, glDrawPixels
+    * Add: glIndexMask, glRenderMode
     * Update: OpenGL Definitions are now more complete
 
 0.2.2
@@ -44,15 +58,15 @@ plOpenGL CHANGELOG
 
 0.2.1
 =====
-    * Add: glColorMaterial, glFrontFace, glPolygonOffset, glTexImage1D, 
-           glTexImage3D, glTexSubImage1D, glTexSubImage2D
+    * Add: glColorMaterial, glFrontFace, glPolygonOffset, glTexImage1D
+    * Add: glTexImage3D, glTexSubImage1D, glTexSubImage2D
     * Update: glTexImage2D
 
 0.2.0
 =====
     * Add: Examples of NeHe's Lessons 1-5.
-    * Add: glClearAccum, glDrawBuffer, glLoadName, glNormal3f, glPolygonMode, 
-           glReadBuffer
+    * Add: glClearAccum, glDrawBuffer, glLoadName, glNormal3f, glPolygonMode
+    * Add: glReadBuffer
     * Add: gluBuild2DMipmaps
     * Add: loadGLTextures
 

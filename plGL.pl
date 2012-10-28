@@ -86,11 +86,54 @@ glClipPlane(Plane,Equation) :-
 	c_glClipPlane(Plane,Equation,N).
 
 % Sets the current color.
+glColor3b(Red,Green,Blue):-
+	c_glColor3b(Red,Green,Blue).
+
+% Sets the current color.
+glColor3bv(X):-
+	c_glColor3bv(X).
+
+% Sets the current color.
+glColor3d(Red,Green,Blue):-
+	float(Red),
+	float(Green),
+	float(Blue),
+	c_glColor3d(Red,Green,Blue).
+
+% Sets the current color.
+glColor3dv(X):-
+	c_glColor3dv(X).
+
+% Sets the current color.
 glColor3f(Red,Green,Blue):-
 	float(Red),
 	float(Green),
 	float(Blue),
 	c_glColor3f(Red,Green,Blue).
+
+% Sets the current color.
+glColor3fv(X):-
+	c_glColor3fv(X).
+
+% Sets the current color.
+glColor3i(Red,Green,Blue):-
+	c_glColor3i(Red,Green,Blue).
+
+% Sets the current color.
+glColor3iv(X):-
+	c_glColor3iv(X).
+
+% Sets the current color.
+glColor3s(Red,Green,Blue):-
+	c_glColor3s(Red,Green,Blue).
+
+% Sets the current color.
+glColor3sv(X):-
+	c_glColor3sv(X).
+
+% Sets the current color.
+glColor4dv(X):-
+	c_glColor4dv(X).
 
 % Sets the current color.
 glColor4f(Red,Green,Blue,Alpha):-
@@ -99,6 +142,10 @@ glColor4f(Red,Green,Blue,Alpha):-
 	float(Blue),
 	float(Alpha),
 	c_glColor4f(Red,Green,Blue,Alpha).
+
+% Sets the current color.
+glColor4fv(X):-
+	c_glColor4fv(X).
 
 % Sets the current color.
 glColor4ub(Red,Green,Blue,Alpha):-
@@ -111,6 +158,10 @@ glColorMask(Red,Green,Blue,Alpha):-
 % Cause a material color to track the current color
 glColorMaterial(Face, Mode):-
 	c_glColorMaterial(Face,Mode).
+
+% Copy pixels into a color table
+glCopyColorTable(Target, Format, X, Y, Width):-
+    c_glCopyColorTable(Target, Format, X, Y, Width).
 
 % Copy pixels in the frame buffer
 glCopyPixels(X, Y, Width, Height, Type):-
@@ -477,14 +528,42 @@ glTranslatef(X,Y,Z):-
 	c_glTranslatef(X,Y,Z).
 
 % Specify a vertex
+glVertex2d(X,Y):-
+	float(X),
+	float(Y),
+	c_glVertex2d(X,Y).
+
+% Specify a vertex
+glVertex2dv(X):-
+	c_glVertex2dv(X).
+
+% Specify a vertex
 glVertex2f(X,Y):-
 	float(X),
 	float(Y),
 	c_glVertex2f(X,Y).
 
 % Specify a vertex
+glVertex2fv(X):-
+	c_glVertex2fv(X).
+
+% Specify a vertex
 glVertex2i(X,Y):-
 	c_glVertex2i(X,Y).
+
+% Specify a vertex
+glVertex2iv(X):-
+	c_glVertex2iv(X).
+
+% Specify a vertex
+glVertex2s(X,Y):-
+	float(X),
+	float(Y),
+	c_glVertex2s(X,Y).
+
+% Specify a vertex
+glVertex2sv(X):-
+	c_glVertex2sv(X).
 
 % Specify a vertex
 glVertex3d(X,Y,Z):-
@@ -494,6 +573,10 @@ glVertex3d(X,Y,Z):-
 	c_glVertex3d(X,Y,Z).
 
 % Specify a vertex
+glVertex3dv(X):-
+	c_glVertex3dv(X).
+
+% Specify a vertex
 glVertex3f(X,Y,Z):-
 	float(X),
 	float(Y),
@@ -501,8 +584,69 @@ glVertex3f(X,Y,Z):-
 	c_glVertex3f(X,Y,Z).
 
 % Specify a vertex
+glVertex3fv(X):-
+	c_glVertex3fv(X).
+
+% Specify a vertex
 glVertex3i(X,Y,Z):-
 	c_glVertex3i(X,Y,Z).
+
+% Specify a vertex
+glVertex3iv(X):-
+	c_glVertex3iv(X).
+
+% Specify a vertex
+glVertex3s(X,Y,Z):-
+	c_glVertex3s(X,Y,Z).
+
+% Specify a vertex
+glVertex3sv(X):-
+	c_glVertex3sv(X).
+
+% Specify a vertex
+glVertex4d(X,Y,Z,W):-
+	float(X),
+	float(Y),
+	float(Z),
+	float(W),
+	c_glVertex4d(X,Y,Z,W).
+
+% Specify a vertex
+glVertex4dv(X):-
+	c_glVertex4dv(X).
+
+% Specify a vertex
+glVertex4f(X,Y,Z,W):-
+	float(X),
+	float(Y),
+	float(Z),
+	float(W),
+	c_glVertex4f(X,Y,Z,W).
+
+% Specify a vertex
+glVertex4fv(X):-
+	c_glVertex4fv(X).
+
+% Specify a vertex
+glVertex4i(X,Y,Z,W):-
+	c_glVertex4i(X,Y,Z,W).
+
+% Specify a vertex
+glVertex4iv(X):-
+	c_glVertex4iv(X).
+
+% Specify a vertex
+glVertex4s(X,Y,Z,W):-
+	c_glVertex4s(X,Y,Z,W).
+
+% Specify a vertex
+glVertex4sv(X):-
+	c_glVertex4sv(X).
+
+
+% Define an array of vertex data
+glVertexPointer(Size, Type, Stride, Pointer):-
+    c_glVertexPointer(Size, Type, Stride, Pointer).
 
 % Set the viewport
 glViewport(X,Y,W,H):-
