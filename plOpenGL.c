@@ -110,7 +110,9 @@ foreign_t c_glColor3i(term_t Red, term_t Green, term_t Blue);
 foreign_t c_glColor3iv(term_t V);
 foreign_t c_glColor3s(term_t Red, term_t Green, term_t Blue);
 foreign_t c_glColor3sv(term_t V);
+foreign_t c_glColor4dv(term_t V);
 foreign_t c_glColor4f(term_t Red, term_t Green, term_t Blue, term_t Alpha);
+foreign_t c_glColor4fv(term_t V);
 foreign_t c_glColor4ub(term_t Red, term_t Green, term_t Blue, term_t Alpha);
 foreign_t c_glColorMask(term_t Red, term_t Green, term_t Blue, term_t Alpha);
 foreign_t c_glColorMaterial(term_t Face, term_t Mode);
@@ -318,7 +320,9 @@ install_t install() {
   PL_register_foreign("c_glColor3iv",1,c_glColor3iv,PL_FA_NOTRACE);
   PL_register_foreign("c_glColor3s",3,c_glColor3s,PL_FA_NOTRACE);
   PL_register_foreign("c_glColor3sv",1,c_glColor3sv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glColor4dv",1,c_glColor4dv,PL_FA_NOTRACE);
   PL_register_foreign("c_glColor4f",4,c_glColor4f,PL_FA_NOTRACE);
+  PL_register_foreign("c_glColor4fv",1,c_glColor4fv,PL_FA_NOTRACE);
   PL_register_foreign("c_glColor4ub",4,c_glColor4ub,PL_FA_NOTRACE);
   PL_register_foreign("c_glColorMask",4,c_glColorMask,PL_FA_NOTRACE);
   PL_register_foreign("c_glColorMaterial",2,c_glColorMaterial,PL_FA_NOTRACE);
@@ -1435,6 +1439,43 @@ foreign_t c_glColor3sv(term_t PL_V) {
 }
 
 /***************************************
+ * Name:    c_glColor4dv
+ * Desc:    Set the current color
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glColor4dv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+
+  int num, count;
+  GLdouble *v;
+  
+  num = 4;
+  count = 0;
+  v = malloc(num * sizeof(GLfloat));
+  
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_FLOAT) )
+      v[count] = (atof(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+
+  glColor4dv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
  * Name:    c_glColor4f
  * Desc:    Set the current color
  * Params:  -
@@ -1449,6 +1490,43 @@ foreign_t c_glColor4f(term_t PL_Red, term_t PL_Green, term_t PL_Blue, term_t PL_
      !PL_get_float(PL_Alpha,&alpha))
     return FALSE;
   glColor4f((float)red,(float)green,(float)blue,(float)alpha);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glColor4fv
+ * Desc:    Set the current color
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glColor4fv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+
+  int num, count;
+  GLfloat *v;
+  
+  num = 4;
+  count = 0;
+  v = malloc(num * sizeof(GLfloat));
+  
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_FLOAT) )
+      v[count] = (atof(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+
+  glColor4fv(v);
+
+  free(v);
+  return PL_get_nil(list);
 
   PL_succeed;
 }
