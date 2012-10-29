@@ -17,13 +17,13 @@
 	<GLUT/glut.h>
 	<unistd.h>
 
-1330870548 c:\program files (x86)\pl\include\swi-prolog.h
+1330866948 c:\program files (x86)\pl\include\swi-prolog.h
 	<stdarg.h>
 	<stdlib.h>
 	<stddef.h>
 	<inttypes.h>
 
-1341674889 source:c:\users\jan-t\devel\prolog\libraries\plopengl\plopengl.c
+1351517284 source:c:\users\jan-t\devel\prolog\libraries\plopengl\plopengl.c
 	<SWI-Prolog.h>
 	<stdio.h>
 	<stdlib.h>
@@ -41,4 +41,10 @@
 	<OpenGL/glu.h>
 	<GLUT/glut.h>
 	<unistd.h>
+
+1351156254 c:\program files (x86)\swipl\include\swi-prolog.h
+	<stdarg.h>
+	<stdlib.h>
+	<stddef.h>
+	<inttypes.h>
 

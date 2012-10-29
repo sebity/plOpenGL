@@ -32,13 +32,13 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-shared" />
-			<Add directory="C:\Program Files (x86)\pl\include" />
+			<Add directory="C:\Program Files (x86)\swipl\include" />
 		</Compiler>
 		<Linker>
 			<Add library="opengl32" />
 			<Add library="glu32" />
 			<Add library="glut32" />
-			<Add library="C:\Program Files (x86)\pl\lib\swipl.lib" />
+			<Add library="C:\Program Files (x86)\swipl\lib\libswipl.dll.a" />
 			<Add directory="C:\Program Files (x86)\pl\include" />
 		</Linker>
 		<Unit filename="..\plOpenGL.c">
