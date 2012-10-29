@@ -1196,11 +1196,11 @@ foreign_t c_glColor3bv(term_t PL_V) {
 
   int num, count;
   GLbyte *v;
-  
+
   num = 3;
   count = 0;
   v = malloc(num * sizeof(GLint));
-  
+
   while( PL_get_list(list, head, list) ) {
     char *s;
 
@@ -1250,11 +1250,11 @@ foreign_t c_glColor3dv(term_t PL_V) {
 
   int num, count;
   GLdouble *v;
-  
+
   num = 3;
   count = 0;
   v = malloc(num * sizeof(GLfloat));
-  
+
   while( PL_get_list(list, head, list) ) {
     char *s;
 
@@ -1305,11 +1305,11 @@ foreign_t c_glColor3fv(term_t PL_V) {
 
   int num, count;
   GLfloat *v;
-  
+
   num = 3;
   count = 0;
   v = malloc(num * sizeof(GLfloat));
-  
+
   while( PL_get_list(list, head, list) ) {
     char *s;
 
@@ -1360,11 +1360,11 @@ foreign_t c_glColor3iv(term_t PL_V) {
 
   int num, count;
   GLint *v;
-  
+
   num = 3;
   count = 0;
   v = malloc(num * sizeof(GLint));
-  
+
   while( PL_get_list(list, head, list) ) {
     char *s;
 
@@ -1414,11 +1414,11 @@ foreign_t c_glColor3sv(term_t PL_V) {
 
   int num, count;
   GLshort *v;
-  
+
   num = 3;
   count = 0;
   v = malloc(num * sizeof(GLint));
-  
+
   while( PL_get_list(list, head, list) ) {
     char *s;
 
@@ -1450,11 +1450,11 @@ foreign_t c_glColor4dv(term_t PL_V) {
 
   int num, count;
   GLdouble *v;
-  
+
   num = 4;
   count = 0;
   v = malloc(num * sizeof(GLfloat));
-  
+
   while( PL_get_list(list, head, list) ) {
     char *s;
 
@@ -1506,11 +1506,11 @@ foreign_t c_glColor4fv(term_t PL_V) {
 
   int num, count;
   GLfloat *v;
-  
+
   num = 4;
   count = 0;
   v = malloc(num * sizeof(GLfloat));
-  
+
   while( PL_get_list(list, head, list) ) {
     char *s;
 
@@ -1602,8 +1602,10 @@ foreign_t c_glCopyColorTable(term_t PL_Target, term_t PL_Format, term_t PL_X, te
      !PL_get_integer(PL_Y,&y) ||
      !PL_get_integer(PL_Width,&width))
     return FALSE;
-  glCopyColorTable((GLenum)target,(GLenum)format,(GLint)x,(GLint)y,(GLsizei)width);
 
+  /*
+  glCopyColorTable((GLenum)target,(GLenum)format,(GLint)x,(GLint)y,(GLsizei)width);
+    */
   PL_succeed;
 }
 
@@ -3371,11 +3373,11 @@ foreign_t c_glVertex2dv(term_t PL_V) {
 
   int num, count;
   GLdouble *v;
-  
+
   num = 2;
   count = 0;
   v = malloc(num * sizeof(GLfloat));
-  
+
   while( PL_get_list(list, head, list) ) {
     char *s;
 
@@ -3423,11 +3425,11 @@ foreign_t c_glVertex2fv(term_t PL_V) {
 
   int num, count;
   GLfloat *v;
-  
+
   num = 2;
   count = 0;
   v = malloc(num * sizeof(GLfloat));
-  
+
   while( PL_get_list(list, head, list) ) {
     char *s;
 
@@ -3474,11 +3476,11 @@ foreign_t c_glVertex2iv(term_t PL_V) {
 
   int num, count;
   GLint *v;
-  
+
   num = 2;
   count = 0;
   v = malloc(num * sizeof(GLint));
-  
+
   while( PL_get_list(list, head, list) ) {
     char *s;
 
@@ -3525,11 +3527,11 @@ foreign_t c_glVertex2sv(term_t PL_V) {
 
   int num, count;
   GLshort *v;
-  
+
   num = 2;
   count = 0;
   v = malloc(num * sizeof(GLint));
-  
+
   while( PL_get_list(list, head, list) ) {
     char *s;
 
@@ -3577,11 +3579,11 @@ foreign_t c_glVertex3dv(term_t PL_V) {
 
   int num, count;
   GLdouble *v;
-  
+
   num = 3;
   count = 0;
   v = malloc(num * sizeof(GLfloat));
-  
+
   while( PL_get_list(list, head, list) ) {
     char *s;
 
@@ -3629,11 +3631,11 @@ foreign_t c_glVertex3fv(term_t PL_V) {
 
   int num, count;
   GLfloat *v;
-  
+
   num = 3;
   count = 0;
   v = malloc(num * sizeof(GLfloat));
-  
+
   while( PL_get_list(list, head, list) ) {
     char *s;
 
@@ -3681,11 +3683,11 @@ foreign_t c_glVertex3iv(term_t PL_V) {
 
   int num, count;
   GLint *v;
-  
+
   num = 3;
   count = 0;
   v = malloc(num * sizeof(GLint));
-  
+
   while( PL_get_list(list, head, list) ) {
     char *s;
 
@@ -3734,11 +3736,11 @@ foreign_t c_glVertex3sv(term_t PL_V) {
 
   int num, count;
   GLshort *v;
-  
+
   num = 3;
   count = 0;
   v = malloc(num * sizeof(GLint));
-  
+
   while( PL_get_list(list, head, list) ) {
     char *s;
 
@@ -3788,11 +3790,11 @@ foreign_t c_glVertex4dv(term_t PL_V) {
 
   int num, count;
   GLdouble *v;
-  
+
   num = 4;
   count = 0;
   v = malloc(num * sizeof(GLfloat));
-  
+
   while( PL_get_list(list, head, list) ) {
     char *s;
 
@@ -3842,11 +3844,11 @@ foreign_t c_glVertex4fv(term_t PL_V) {
 
   int num, count;
   GLfloat *v;
-  
+
   num = 4;
   count = 0;
   v = malloc(num * sizeof(GLfloat));
-  
+
   while( PL_get_list(list, head, list) ) {
     char *s;
 
@@ -3896,11 +3898,11 @@ foreign_t c_glVertex4iv(term_t PL_V) {
 
   int num, count;
   GLint *v;
-  
+
   num = 4;
   count = 0;
   v = malloc(num * sizeof(GLint));
-  
+
   while( PL_get_list(list, head, list) ) {
     char *s;
 
@@ -3950,11 +3952,11 @@ foreign_t c_glVertex4sv(term_t PL_V) {
 
   int num, count;
   GLshort *v;
-  
+
   num = 4;
   count = 0;
   v = malloc(num * sizeof(GLint));
-  
+
   while( PL_get_list(list, head, list) ) {
     char *s;
 
@@ -4184,7 +4186,7 @@ foreign_t c_glutGet(term_t PL_State, term_t PL_Answer) {
 
   if (!PL_get_integer(PL_State,&state))
     return FALSE;
-  
+
   answer = glutGet((GLenum)state);
 
   rval = PL_unify_integer(PL_Answer, answer);
