@@ -1603,9 +1603,12 @@ foreign_t c_glCopyColorTable(term_t PL_Target, term_t PL_Format, term_t PL_X, te
      !PL_get_integer(PL_Width,&width))
     return FALSE;
 
-  /*
+  #ifdef WIN32
+  PFNGLCOPYCOLORTABLEPROC glCopyColorTable = (PFNGLCOPYCOLORTABLEPROC)wglGetProcAddress("glCopyColorTable");
+  #endif
+
   glCopyColorTable((GLenum)target,(GLenum)format,(GLint)x,(GLint)y,(GLsizei)width);
-    */
+
   PL_succeed;
 }
 
