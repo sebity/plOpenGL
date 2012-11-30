@@ -691,11 +691,11 @@ foreign_t c_sleep(term_t PL_S) {
  */
 int c_imageLoad(char *filename, Image *image) {
   FILE *file;
-  unsigned long size;                 /* size of the image in bytes. */
-  unsigned long i;                    /* standard counter. */
-  unsigned short int planes;          /* number of planes in image (must be 1) */
-  unsigned short int bpp;             /* number of bits per pixel (must be 24) */
-  char temp;                          /* temporary color storage for bgr-rgb conversion. */
+  GLuint size;                      /* size of the image in bytes. */
+  GLuint i;                         /* standard counter. */
+  unsigned short int planes;        /* number of planes in image (must be 1) */
+  unsigned short int bpp;           /* number of bits per pixel (must be 24) */
+  char temp;                        /* temporary color storage for bgr-rgb conversion. */
 
   /* make sure the file is there. */
   if ((file = fopen(filename, "rb"))==NULL) {
