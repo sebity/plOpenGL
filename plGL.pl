@@ -482,6 +482,14 @@ glStencilMask(Mask):-
 glStencilOp(Fail, ZFail, ZPass):-
 	c_glStencilOp(Fail, ZFail, ZPass).
 
+glTexCoord1d(S):-
+	float(S),
+	c_glTexCoord1d(S).
+
+glTexCoord1f(S):-
+	float(S),
+	c_glTexCoord1f(S).
+
 glTexCoord2d(S,T):-
 	float(S),
 	float(T),

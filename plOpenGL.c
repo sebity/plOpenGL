@@ -197,6 +197,8 @@ foreign_t c_glShadeModel(term_t Mode);
 foreign_t c_glStencilFunc(term_t Func, term_t Ref, term_t Mask);
 foreign_t c_glStencilMask(term_t Mask);
 foreign_t c_glStencilOp(term_t Fail, term_t zFail, term_t zPass);
+foreign_t c_glTexCoord1d(term_t S);
+foreign_t c_glTexCoord1f(term_t S);
 foreign_t c_glTexCoord2d(term_t S, term_t T);
 foreign_t c_glTexCoord2f(term_t S, term_t T);
 foreign_t c_glTexImage1D(term_t Target, term_t Level, term_t Internal, term_t Width,
@@ -403,6 +405,8 @@ install_t install() {
   PL_register_foreign("c_glStencilMask",1,c_glStencilMask,PL_FA_NOTRACE);
   PL_register_foreign("c_glStencilFunc",3,c_glStencilFunc,PL_FA_NOTRACE);
   PL_register_foreign("c_glStencilOp",3,c_glStencilOp,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord1d",1,c_glTexCoord1d,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord1f",1,c_glTexCoord1f,PL_FA_NOTRACE);
   PL_register_foreign("c_glTexCoord2d",2,c_glTexCoord2d,PL_FA_NOTRACE);
   PL_register_foreign("c_glTexCoord2f",2,c_glTexCoord2f,PL_FA_NOTRACE);
   PL_register_foreign("c_glTexImage1D",8,c_glTexImage1D,PL_FA_NOTRACE);
@@ -3073,6 +3077,38 @@ foreign_t c_glStencilOp(term_t PL_Fail, term_t PL_zFail, term_t PL_zPass) {
     return FALSE;
 
   glStencilFunc((GLenum)fail, (GLenum)zfail, (GLenum)zpass);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glTexCoord1d
+ * Params:
+ * Returns:
+ */
+foreign_t c_glTexCoord1d(term_t PL_S) {
+  GLdouble s;
+
+  if(!PL_get_float(PL_S,&s))
+    return FALSE;
+
+  glTexCoord1d((GLdouble)s);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glTexCoord1f
+ * Params:
+ * Returns:
+ */
+foreign_t c_glTexCoord1f(term_t PL_S) {
+  GLdouble s;
+
+  if(!PL_get_float(PL_S,&s))
+    return FALSE;
+
+  glTexCoord1f((GLfloat)s);
 
   PL_succeed;
 }
