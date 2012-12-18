@@ -433,6 +433,15 @@ glRasterPos2fv(V):-
 glRasterPos2i(X,Y):-
     c_glRasterPos2i(X,Y).
 
+glRasterPos2iv(V):-
+    c_glRasterPos2iv(V).
+
+glRasterPos2s(X,Y):-
+    c_glRasterPos2s(X,Y).
+
+glRasterPos2sv(V):-
+    c_glRasterPos2sv(V).
+
 % Select a color buffer source for pixels
 glReadBuffer(Mode):-
     c_glReadBuffer(Mode).
