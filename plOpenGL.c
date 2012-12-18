@@ -191,6 +191,22 @@ foreign_t c_glRasterPos2i(term_t X, term_t Y);
 foreign_t c_glRasterPos2iv(term_t V);
 foreign_t c_glRasterPos2s(term_t X, term_t Y);
 foreign_t c_glRasterPos2sv(term_t V);
+foreign_t c_glRasterPos3d(term_t X, term_t Y, term_t Z);
+foreign_t c_glRasterPos3dv(term_t V);
+foreign_t c_glRasterPos3f(term_t X, term_t Y, term_t Z);
+foreign_t c_glRasterPos3fv(term_t V);
+foreign_t c_glRasterPos3i(term_t X, term_t Y, term_t Z);
+foreign_t c_glRasterPos3iv(term_t V);
+foreign_t c_glRasterPos3s(term_t X, term_t Y, term_t Z);
+foreign_t c_glRasterPos3sv(term_t V);
+foreign_t c_glRasterPos4d(term_t X, term_t Y, term_t Z, term_t W);
+foreign_t c_glRasterPos4dv(term_t V);
+foreign_t c_glRasterPos4f(term_t X, term_t Y, term_t Z, term_t W);
+foreign_t c_glRasterPos4fv(term_t V);
+foreign_t c_glRasterPos4i(term_t X, term_t Y, term_t Z, term_t W);
+foreign_t c_glRasterPos4iv(term_t V);
+foreign_t c_glRasterPos4s(term_t X, term_t Y, term_t Z, term_t W);
+foreign_t c_glRasterPos4sv(term_t V);
 foreign_t c_glReadBuffer(term_t Mode);
 foreign_t c_glRectf(term_t X1, term_t Y1, term_t X2, term_t Y2);
 foreign_t c_glRenderMode(term_t Mode);
@@ -406,6 +422,22 @@ install_t install() {
   PL_register_foreign("c_glRasterPos2iv",1,c_glRasterPos2iv,PL_FA_NOTRACE);
   PL_register_foreign("c_glRasterPos2s",2,c_glRasterPos2s,PL_FA_NOTRACE);
   PL_register_foreign("c_glRasterPos2sv",1,c_glRasterPos2sv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glRasterPos3d",3,c_glRasterPos3d,PL_FA_NOTRACE);
+  PL_register_foreign("c_glRasterPos3dv",1,c_glRasterPos3dv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glRasterPos3f",3,c_glRasterPos3f,PL_FA_NOTRACE);
+  PL_register_foreign("c_glRasterPos3fv",1,c_glRasterPos3fv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glRasterPos3i",3,c_glRasterPos3i,PL_FA_NOTRACE);
+  PL_register_foreign("c_glRasterPos3iv",1,c_glRasterPos3iv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glRasterPos3s",3,c_glRasterPos3s,PL_FA_NOTRACE);
+  PL_register_foreign("c_glRasterPos3sv",1,c_glRasterPos3sv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glRasterPos4d",4,c_glRasterPos4d,PL_FA_NOTRACE);
+  PL_register_foreign("c_glRasterPos4dv",1,c_glRasterPos4dv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glRasterPos4f",4,c_glRasterPos4f,PL_FA_NOTRACE);
+  PL_register_foreign("c_glRasterPos4fv",1,c_glRasterPos4fv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glRasterPos4i",4,c_glRasterPos4i,PL_FA_NOTRACE);
+  PL_register_foreign("c_glRasterPos4iv",1,c_glRasterPos4iv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glRasterPos4s",4,c_glRasterPos4s,PL_FA_NOTRACE);
+  PL_register_foreign("c_glRasterPos4sv",1,c_glRasterPos4sv,PL_FA_NOTRACE);
   PL_register_foreign("c_glReadBuffer",4,c_glReadBuffer,PL_FA_NOTRACE);
   PL_register_foreign("c_glRectf",4,c_glRectf,PL_FA_NOTRACE);
   PL_register_foreign("c_glRenderMode",1,c_glRenderMode,PL_FA_NOTRACE);
@@ -3067,6 +3099,436 @@ foreign_t c_glRasterPos2sv(term_t PL_V) {
 
   PL_succeed;
 }
+
+
+/***************************************
+ * Name: c_glRasterPos3d
+ * Params:
+ * Returns:
+ */
+foreign_t c_glRasterPos3d(term_t PL_X, term_t PL_Y, term_t PL_Z) {
+  GLdouble x,y,z;
+
+  if(!PL_get_float(PL_X,&x) ||
+     !PL_get_float(PL_Y,&y) ||
+     !PL_get_float(PL_Z,&z))
+    return FALSE;
+
+  glRasterPos3d((GLdouble)x, (GLdouble)y, (GLdouble)z);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glRasterPos3dv
+ * Params:
+ * Returns:
+ */
+foreign_t c_glRasterPos3dv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+    
+  int num, count;
+  GLdouble *v;
+
+  num = 3;
+  count = 0;
+  v = malloc(num * sizeof(GLdouble));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_FLOAT) )
+      v[count] = (atof(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glRasterPos3dv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glRasterPos3f
+ * Params:
+ * Returns:
+ */
+foreign_t c_glRasterPos3f(term_t PL_X, term_t PL_Y, term_t PL_Z) {
+  GLdouble x,y,z;
+
+  if(!PL_get_float(PL_X,&x) ||
+     !PL_get_float(PL_Y,&y) ||
+     !PL_get_float(PL_Z,&z))
+    return FALSE;
+
+  glRasterPos3f((GLfloat)x, (GLfloat)y, (GLfloat)z);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glRasterPos3fv
+ * Params:
+ * Returns:
+ */
+foreign_t c_glRasterPos3fv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+    
+  int num, count;
+  GLfloat *v;
+
+  num = 3;
+  count = 0;
+  v = malloc(num * sizeof(GLfloat));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_FLOAT) )
+      v[count] = (atof(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glRasterPos3fv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glRasterPos3i
+ * Params:
+ * Returns:
+ */
+foreign_t c_glRasterPos3i(term_t PL_X, term_t PL_Y, term_t PL_Z) {
+  int x,y,z;
+
+  if(!PL_get_integer(PL_X,&x) ||
+     !PL_get_integer(PL_Y,&y) ||
+     !PL_get_integer(PL_Z,&z))
+    return FALSE;
+
+  glRasterPos3i(x,y,z);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glRasterPos3iv
+ * Params:
+ * Returns:
+ */
+foreign_t c_glRasterPos3iv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+    
+  int num, count;
+  GLint *v;
+
+  num = 3;
+  count = 0;
+  v = malloc(num * sizeof(GLint));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_INTEGER) )
+      v[count] = (atoi(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glRasterPos3iv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glRasterPos3s
+ * Params:
+ * Returns:
+ */
+foreign_t c_glRasterPos3s(term_t PL_X, term_t PL_Y, term_t PL_Z) {
+  int x,y,z;
+
+  if(!PL_get_integer(PL_X,&x) ||
+     !PL_get_integer(PL_Y,&y) ||
+     !PL_get_integer(PL_Z,&z))
+    return FALSE;
+
+  glRasterPos3s((GLshort)x,(GLshort)y,(GLshort)z);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glRasterPos3sv
+ * Params:
+ * Returns:
+ */
+foreign_t c_glRasterPos3sv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+    
+  int num, count;
+  GLshort *v;
+
+  num = 3;
+  count = 0;
+  v = malloc(num * sizeof(GLint));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_INTEGER) )
+      v[count] = (atoi(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glRasterPos3sv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glRasterPos4d
+ * Params:
+ * Returns:
+ */
+foreign_t c_glRasterPos4d(term_t PL_X, term_t PL_Y, term_t PL_Z, term_t PL_W) {
+  GLdouble x,y,z,w;
+
+  if(!PL_get_float(PL_X,&x) ||
+     !PL_get_float(PL_Y,&y) ||
+     !PL_get_float(PL_Z,&z) ||
+     !PL_get_float(PL_W,&w))
+    return FALSE;
+
+  glRasterPos4d((GLdouble)x, (GLdouble)y, (GLdouble)z, (GLdouble)w);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glRasterPos4dv
+ * Params:
+ * Returns:
+ */
+foreign_t c_glRasterPos4dv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+    
+  int num, count;
+  GLdouble *v;
+
+  num = 4;
+  count = 0;
+  v = malloc(num * sizeof(GLdouble));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_FLOAT) )
+      v[count] = (atof(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glRasterPos4dv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glRasterPos4f
+ * Params:
+ * Returns:
+ */
+foreign_t c_glRasterPos4f(term_t PL_X, term_t PL_Y, term_t PL_Z, term_t PL_W) {
+  GLdouble x,y,z,w;
+
+  if(!PL_get_float(PL_X,&x) ||
+     !PL_get_float(PL_Y,&y) ||
+     !PL_get_float(PL_Z,&z) ||
+     !PL_get_float(PL_W,&w))
+    return FALSE;
+
+  glRasterPos4f((GLfloat)x, (GLfloat)y, (GLfloat)z, (GLfloat)w);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glRasterPos4fv
+ * Params:
+ * Returns:
+ */
+foreign_t c_glRasterPos4fv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+    
+  int num, count;
+  GLfloat *v;
+
+  num = 4;
+  count = 0;
+  v = malloc(num * sizeof(GLfloat));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_FLOAT) )
+      v[count] = (atof(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glRasterPos4fv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glRasterPos4i
+ * Params:
+ * Returns:
+ */
+foreign_t c_glRasterPos4i(term_t PL_X, term_t PL_Y, term_t PL_Z, term_t PL_W) {
+  int x,y,z,w;
+
+  if(!PL_get_integer(PL_X,&x) ||
+     !PL_get_integer(PL_Y,&y) ||
+     !PL_get_integer(PL_Z,&z) ||
+     !PL_get_integer(PL_W,&w))
+    return FALSE;
+
+  glRasterPos4i(x,y,z,w);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glRasterPos4iv
+ * Params:
+ * Returns:
+ */
+foreign_t c_glRasterPos4iv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+    
+  int num, count;
+  GLint *v;
+
+  num = 4;
+  count = 0;
+  v = malloc(num * sizeof(GLint));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_INTEGER) )
+      v[count] = (atoi(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glRasterPos4iv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glRasterPos4s
+ * Params:
+ * Returns:
+ */
+foreign_t c_glRasterPos4s(term_t PL_X, term_t PL_Y, term_t PL_Z, term_t PL_W) {
+  int x,y,z,w;
+
+  if(!PL_get_integer(PL_X,&x) ||
+     !PL_get_integer(PL_Y,&y) ||
+     !PL_get_integer(PL_Z,&z) ||
+     !PL_get_integer(PL_W,&w))
+    return FALSE;
+
+  glRasterPos4s((GLshort)x, (GLshort)y, (GLshort)z, (GLshort)w);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glRasterPos4sv
+ * Params:
+ * Returns:
+ */
+foreign_t c_glRasterPos4sv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+    
+  int num, count;
+  GLshort *v;
+
+  num = 4;
+  count = 0;
+  v = malloc(num * sizeof(GLint));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_INTEGER) )
+      v[count] = (atoi(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glRasterPos4sv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
 
 
 /***************************************

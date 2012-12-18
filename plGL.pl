@@ -442,6 +442,68 @@ glRasterPos2s(X,Y):-
 glRasterPos2sv(V):-
     c_glRasterPos2sv(V).
 
+glRasterPos3d(X,Y,Z):-
+    float(X),
+    float(Y),
+    float(Z),
+    c_glRasterPos3d(X,Y,Z).
+
+glRasterPos3dv(V):-
+    c_glRasterPos3dv(V).
+
+glRasterPos3f(X,Y,Z):-
+    float(X),
+    float(Y),
+    float(Z),
+    c_glRasterPos3f(X,Y,Z).
+
+glRasterPos3fv(V):-
+    c_glRasterPos3fv(V).
+
+glRasterPos3i(X,Y,Z):-
+    c_glRasterPos3i(X,Y,Z).
+
+glRasterPos3iv(V):-
+    c_glRasterPos3iv(V).
+
+glRasterPos3s(X,Y,Z):-
+    c_glRasterPos3s(X,Y,Z).
+
+glRasterPos3sv(V):-
+    c_glRasterPos3sv(V).
+
+glRasterPos4d(X,Y,Z,W):-
+    float(X),
+    float(Y),
+    float(Z),
+    float(W),
+    c_glRasterPos4d(X,Y,Z,W).
+
+glRasterPos4dv(V):-
+    c_glRasterPos4dv(V).
+
+glRasterPos4f(X,Y,Z,W):-
+    float(X),
+    float(Y),
+    float(Z),
+    float(W),
+    c_glRasterPos4f(X,Y,Z,W).
+
+glRasterPos4fv(V):-
+    c_glRasterPos4fv(V).
+
+glRasterPos4i(X,Y,Z,W):-
+    c_glRasterPos4i(X,Y,Z,W).
+
+glRasterPos4iv(V):-
+    c_glRasterPos4iv(V).
+
+glRasterPos4s(X,Y,Z,W):-
+    c_glRasterPos4s(X,Y,Z,W).
+
+glRasterPos4sv(V):-
+    c_glRasterPos4sv(V).
+
 % Select a color buffer source for pixels
 glReadBuffer(Mode):-
     c_glReadBuffer(Mode).
