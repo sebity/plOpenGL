@@ -414,6 +414,16 @@ glPushMatrix:-
 glPushName(Name):-
     c_glPushName(Name).
 
+glRasterPos2d(X,Y):-
+    float(X),
+    float(Y),
+    c_glRasterPos2d(X,Y).
+
+glRasterPos2f(X,Y):-
+    float(X),
+    float(Y),
+    c_glRasterPos2f(X,Y).
+
 glRasterPos2i(X,Y):-
     c_glRasterPos2i(X,Y).
 

@@ -183,6 +183,8 @@ foreign_t c_glPushAttrib(term_t Mask);
 foreign_t c_glPushClientAttrib(term_t Mask);
 foreign_t c_glPushMatrix(void);
 foreign_t c_glPushName(term_t Name);
+foreign_t c_glRasterPos2d(term_t X, term_t Y);
+foreign_t c_glRasterPos2f(term_t X, term_t Y);
 foreign_t c_glRasterPos2i(term_t X, term_t Y);
 foreign_t c_glReadBuffer(term_t Mode);
 foreign_t c_glRectf(term_t X1, term_t Y1, term_t X2, term_t Y2);
@@ -391,6 +393,8 @@ install_t install() {
   PL_register_foreign("c_glPushClientAttrib",1,c_glPushClientAttrib,PL_FA_NOTRACE);
   PL_register_foreign("c_glPushMatrix",0,c_glPushMatrix,PL_FA_NOTRACE);
   PL_register_foreign("c_glPushName",1,c_glPushName,PL_FA_NOTRACE);
+  PL_register_foreign("c_glRasterPos2d",2,c_glRasterPos2d,PL_FA_NOTRACE);
+  PL_register_foreign("c_glRasterPos2f",2,c_glRasterPos2f,PL_FA_NOTRACE);
   PL_register_foreign("c_glRasterPos2i",2,c_glRasterPos2i,PL_FA_NOTRACE);
   PL_register_foreign("c_glReadBuffer",4,c_glReadBuffer,PL_FA_NOTRACE);
   PL_register_foreign("c_glRectf",4,c_glRectf,PL_FA_NOTRACE);
@@ -2832,6 +2836,40 @@ foreign_t c_glPushName(term_t PL_Name) {
     return FALSE;
 
   glPushName((GLuint)name);
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glRasterPos2d
+ * Params:
+ * Returns:
+ */
+foreign_t c_glRasterPos2d(term_t PL_X, term_t PL_Y) {
+  GLdouble x,y;
+
+  if(!PL_get_float(PL_X,&x) ||
+     !PL_get_float(PL_Y,&y))
+    return FALSE;
+
+  glRasterPos2d((GLdouble)x, (GLdouble)y);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glRasterPos2f
+ * Params:
+ * Returns:
+ */
+foreign_t c_glRasterPos2f(term_t PL_X, term_t PL_Y) {
+  GLdouble x,y;
+
+  if(!PL_get_float(PL_X,&x) ||
+     !PL_get_float(PL_Y,&y))
+    return FALSE;
+
+  glRasterPos2f((GLfloat)x, (GLfloat)y);
+
   PL_succeed;
 }
 
