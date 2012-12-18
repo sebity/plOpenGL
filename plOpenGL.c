@@ -184,7 +184,9 @@ foreign_t c_glPushClientAttrib(term_t Mask);
 foreign_t c_glPushMatrix(void);
 foreign_t c_glPushName(term_t Name);
 foreign_t c_glRasterPos2d(term_t X, term_t Y);
+foreign_t c_glRasterPos2dv(term_t V);
 foreign_t c_glRasterPos2f(term_t X, term_t Y);
+foreign_t c_glRasterPos2fv(term_t V);
 foreign_t c_glRasterPos2i(term_t X, term_t Y);
 foreign_t c_glReadBuffer(term_t Mode);
 foreign_t c_glRectf(term_t X1, term_t Y1, term_t X2, term_t Y2);
@@ -394,7 +396,9 @@ install_t install() {
   PL_register_foreign("c_glPushMatrix",0,c_glPushMatrix,PL_FA_NOTRACE);
   PL_register_foreign("c_glPushName",1,c_glPushName,PL_FA_NOTRACE);
   PL_register_foreign("c_glRasterPos2d",2,c_glRasterPos2d,PL_FA_NOTRACE);
+  PL_register_foreign("c_glRasterPos2dv",1,c_glRasterPos2dv,PL_FA_NOTRACE);
   PL_register_foreign("c_glRasterPos2f",2,c_glRasterPos2f,PL_FA_NOTRACE);
+  PL_register_foreign("c_glRasterPos2fv",1,c_glRasterPos2fv,PL_FA_NOTRACE);
   PL_register_foreign("c_glRasterPos2i",2,c_glRasterPos2i,PL_FA_NOTRACE);
   PL_register_foreign("c_glReadBuffer",4,c_glReadBuffer,PL_FA_NOTRACE);
   PL_register_foreign("c_glRectf",4,c_glRectf,PL_FA_NOTRACE);
@@ -500,7 +504,6 @@ void c_display(void) {
   qid_t query_handle;
   static predicate_t p;
   static term_t display_predicate;
-  int rc;
 
   if(!display_predicate)
     display_predicate= PL_new_term_refs(1);
@@ -509,7 +512,8 @@ void c_display(void) {
     p = PL_predicate("display",0,"user");
 
   query_handle = PL_open_query(NULL,PL_Q_NORMAL,p,display_predicate);
-  rc = PL_next_solution(query_handle);
+  if(PL_next_solution(query_handle)) {
+  }
 
   PL_cut_query(query_handle);
 }
@@ -523,7 +527,6 @@ void c_idle(void) {
   qid_t query_handle;
   static predicate_t p;
   static term_t idle_predicate;
-  int rc;
 
 /*
   char *string;
@@ -542,7 +545,8 @@ void c_idle(void) {
     idle_predicate = PL_new_term_refs(1);
 
   query_handle = PL_open_query(NULL,PL_Q_NORMAL,p,idle_predicate);
-  rc = PL_next_solution(query_handle);
+  if(PL_next_solution(query_handle)) {
+  }
   PL_cut_query(query_handle);
 }
 
@@ -556,8 +560,6 @@ void c_keyboard(unsigned char PL_Key, int PL_X, int PL_Y) {
   qid_t query_handle;
   static predicate_t p;
   static term_t keyboard_predicate;
-  int a,b,c;
-  int rc;
 
 /*
   printf("K=%d\n",PL_Key);
@@ -571,12 +573,19 @@ void c_keyboard(unsigned char PL_Key, int PL_X, int PL_Y) {
   if(!keyboard_predicate)
     keyboard_predicate= PL_new_term_refs(3);
 
-  a = PL_put_integer(keyboard_predicate,PL_Key);
-  b = PL_put_integer(keyboard_predicate+1,PL_X);
-  c = PL_put_integer(keyboard_predicate+2,PL_Y);
+  if(PL_put_integer(keyboard_predicate,PL_Key)) {
+    /* printf("keyboard_predicate: %d\n", PL_Key); */ 
+  }
+  if(PL_put_integer(keyboard_predicate+1,PL_X)) {
+    /* printf("keyboard_predicate+1: %d\n", PL_Key); */
+  }
+  if(PL_put_integer(keyboard_predicate+2,PL_Y)) {
+    /* printf("keyboard_predicate+2: %d\n", PL_Key); */
+  }
 
   query_handle = PL_open_query(NULL,PL_Q_NORMAL,p,keyboard_predicate);
-  rc = PL_next_solution(query_handle);
+  if(PL_next_solution(query_handle)) {
+  }
   PL_cut_query(query_handle);
 }
 
@@ -589,8 +598,6 @@ void c_motion(int PL_X, int PL_Y) {
   qid_t query_handle;
   static predicate_t p;
   static term_t motion_predicate;
-  int a,b;
-  int rc;
 
   /*
   printf("X=%d\n",PL_X);
@@ -603,11 +610,15 @@ void c_motion(int PL_X, int PL_Y) {
   if(!motion_predicate)
     motion_predicate= PL_new_term_refs(2);
 
-  a = PL_put_integer(motion_predicate,PL_X);
-  b = PL_put_integer(motion_predicate+1,PL_Y);
+  if(PL_put_integer(motion_predicate,PL_X)) {
+  }
+  if(PL_put_integer(motion_predicate+1,PL_Y)) {
+  }
 
   query_handle = PL_open_query(NULL,PL_Q_NORMAL,p,motion_predicate);
-  rc = PL_next_solution(query_handle);
+  if(PL_next_solution(query_handle)) {
+
+  }
   PL_cut_query(query_handle);
 }
 
@@ -621,8 +632,6 @@ void c_mouse(int PL_Button, int PL_State, int PL_X, int PL_Y) {
   qid_t query_handle;
   static predicate_t p;
   static term_t mouse_predicate;
-  int a,b,c,d;
-  int rc;
 
   /*
   printf("B=%d\n",PL_Button);
@@ -637,13 +646,19 @@ void c_mouse(int PL_Button, int PL_State, int PL_X, int PL_Y) {
   if(!mouse_predicate)
     mouse_predicate= PL_new_term_refs(4);
 
-  a = PL_put_integer(mouse_predicate,PL_Button);
-  b = PL_put_integer(mouse_predicate+1,PL_State);
-  c = PL_put_integer(mouse_predicate+2,PL_X);
-  d = PL_put_integer(mouse_predicate+3,PL_Y);
+  if(PL_put_integer(mouse_predicate,PL_Button)) {
+  }
+  if(PL_put_integer(mouse_predicate+1,PL_State)) {
+  }
+  if(PL_put_integer(mouse_predicate+2,PL_X)) {
+  }
+  if(PL_put_integer(mouse_predicate+3,PL_Y)) {
+  }
 
   query_handle = PL_open_query(NULL,PL_Q_NORMAL,p,mouse_predicate);
-  rc = PL_next_solution(query_handle);
+  if(PL_next_solution(query_handle)) {
+
+  }
   PL_cut_query(query_handle);
 }
 
@@ -657,7 +672,6 @@ void c_reshape(int PL_W, int PL_H) {
   qid_t query_handle;
   static predicate_t p;
   static term_t reshape_predicate;
-  int rc;
 
   /*
     printf("w=%d\n",PL_W);
@@ -671,7 +685,8 @@ void c_reshape(int PL_W, int PL_H) {
     p = PL_predicate("reshape",0,"user");
 
   query_handle = PL_open_query(NULL,PL_Q_NORMAL,p,reshape_predicate);
-  rc = PL_next_solution(query_handle);
+  if(PL_next_solution(query_handle)) {
+  }
   PL_cut_query(query_handle);
 }
 
@@ -2857,6 +2872,41 @@ foreign_t c_glRasterPos2d(term_t PL_X, term_t PL_Y) {
 }
 
 /***************************************
+ * Name: c_glRasterPos2dv
+ * Params:
+ * Returns:
+ */
+foreign_t c_glRasterPos2dv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+    
+  int num, count;
+  GLdouble *v;
+
+  num = 2;
+  count = 0;
+  v = malloc(num * sizeof(GLdouble));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_FLOAT) )
+      v[count] = (atof(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glRasterPos2dv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
  * Name: c_glRasterPos2f
  * Params:
  * Returns:
@@ -2869,6 +2919,41 @@ foreign_t c_glRasterPos2f(term_t PL_X, term_t PL_Y) {
     return FALSE;
 
   glRasterPos2f((GLfloat)x, (GLfloat)y);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glRasterPos2fv
+ * Params:
+ * Returns:
+ */
+foreign_t c_glRasterPos2fv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+    
+  int num, count;
+  GLfloat *v;
+
+  num = 2;
+  count = 0;
+  v = malloc(num * sizeof(GLfloat));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_FLOAT) )
+      v[count] = (atof(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glRasterPos2fv(v);
+
+  free(v);
+  return PL_get_nil(list);
 
   PL_succeed;
 }

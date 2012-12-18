@@ -419,10 +419,16 @@ glRasterPos2d(X,Y):-
     float(Y),
     c_glRasterPos2d(X,Y).
 
+glRasterPos2dv(V):-
+    c_glRasterPos2dv(V).
+
 glRasterPos2f(X,Y):-
     float(X),
     float(Y),
     c_glRasterPos2f(X,Y).
+
+glRasterPos2fv(V):-
+    c_glRasterPos2fv(V).
 
 glRasterPos2i(X,Y):-
     c_glRasterPos2i(X,Y).
