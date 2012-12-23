@@ -341,6 +341,9 @@ glLineWidth(Width) :-
 glLoadIdentity:-
 	c_glLoadIdentity.
 
+glLogicOp(Opcode) :-
+        c_glLogicOp(Opcode).
+
 % Load a name onto the name stack
 glLoadName(Name):-
     c_glLoadName(Name).
@@ -375,14 +378,14 @@ glOrtho(Left,Right,Top,Bottom,Near,Far):-
 	c_glOrtho(Left,Right,Top,Bottom,Near,Far).
 
 glPixelStorei(Mode,Param) :-
-    c_glPixelStorei(Mode,Param).
+        c_glPixelStorei(Mode,Param).
 
 glPointSize(Size):-
 	float(Size),
 	c_glPointSize(Size).
 
 glPolygonMode(Face, Mode):-
-    c_glPolygonMode(Face, Mode).
+        c_glPolygonMode(Face, Mode).
 
 % Set the scale and units used to calculate depth values
 glPolygonOffset(Factor, Units):-
