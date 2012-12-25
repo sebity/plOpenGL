@@ -224,21 +224,37 @@ foreign_t c_glStencilFunc(term_t Func, term_t Ref, term_t Mask);
 foreign_t c_glStencilMask(term_t Mask);
 foreign_t c_glStencilOp(term_t Fail, term_t zFail, term_t zPass);
 foreign_t c_glTexCoord1d(term_t S);
+foreign_t c_glTexCoord1dv(term_t V);
 foreign_t c_glTexCoord1f(term_t S);
+foreign_t c_glTexCoord1fv(term_t V);
 foreign_t c_glTexCoord1i(term_t S);
+foreign_t c_glTexCoord1iv(term_t V);
 foreign_t c_glTexCoord1s(term_t S);
+foreign_t c_glTexCoord1sv(term_t V);
 foreign_t c_glTexCoord2d(term_t S, term_t T);
+foreign_t c_glTexCoord2dv(term_t V);
 foreign_t c_glTexCoord2f(term_t S, term_t T);
+foreign_t c_glTexCoord2fv(term_t V);
 foreign_t c_glTexCoord2i(term_t S, term_t T);
+foreign_t c_glTexCoord2iv(term_t V);
 foreign_t c_glTexCoord2s(term_t S, term_t T);
+foreign_t c_glTexCoord2sv(term_t V);
 foreign_t c_glTexCoord3d(term_t S, term_t T, term_t R);
+foreign_t c_glTexCoord3dv(term_t V);
 foreign_t c_glTexCoord3f(term_t S, term_t T, term_t R);
+foreign_t c_glTexCoord3fv(term_t V);
 foreign_t c_glTexCoord3i(term_t S, term_t T, term_t R);
+foreign_t c_glTexCoord3iv(term_t V);
 foreign_t c_glTexCoord3s(term_t S, term_t T, term_t R);
+foreign_t c_glTexCoord3sv(term_t V);
 foreign_t c_glTexCoord4d(term_t S, term_t T, term_t R, term_t Q);
+foreign_t c_glTexCoord4dv(term_t V);
 foreign_t c_glTexCoord4f(term_t S, term_t T, term_t R, term_t Q);
+foreign_t c_glTexCoord4fv(term_t V);
 foreign_t c_glTexCoord4i(term_t S, term_t T, term_t R, term_t Q);
+foreign_t c_glTexCoord4iv(term_t V);
 foreign_t c_glTexCoord4s(term_t S, term_t T, term_t R, term_t Q);
+foreign_t c_glTexCoord4sv(term_t V);
 foreign_t c_glTexImage1D(term_t Target, term_t Level, term_t Internal, term_t Width,
                          term_t Border, term_t Format, term_t Type, term_t Texels);
 foreign_t c_glTexImage2D(term_t Target, term_t Level, term_t Internal, term_t Width, term_t Height,
@@ -470,21 +486,37 @@ install_t install() {
   PL_register_foreign("c_glStencilFunc",3,c_glStencilFunc,PL_FA_NOTRACE);
   PL_register_foreign("c_glStencilOp",3,c_glStencilOp,PL_FA_NOTRACE);
   PL_register_foreign("c_glTexCoord1d",1,c_glTexCoord1d,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord1dv",1,c_glTexCoord1dv,PL_FA_NOTRACE);
   PL_register_foreign("c_glTexCoord1f",1,c_glTexCoord1f,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord1fv",1,c_glTexCoord1fv,PL_FA_NOTRACE);
   PL_register_foreign("c_glTexCoord1i",1,c_glTexCoord1i,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord1iv",1,c_glTexCoord1iv,PL_FA_NOTRACE);
   PL_register_foreign("c_glTexCoord1s",1,c_glTexCoord1s,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord1sv",1,c_glTexCoord1sv,PL_FA_NOTRACE);
   PL_register_foreign("c_glTexCoord2d",2,c_glTexCoord2d,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord2dv",1,c_glTexCoord2dv,PL_FA_NOTRACE);
   PL_register_foreign("c_glTexCoord2f",2,c_glTexCoord2f,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord2fv",1,c_glTexCoord2fv,PL_FA_NOTRACE);
   PL_register_foreign("c_glTexCoord2i",2,c_glTexCoord2i,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord2iv",1,c_glTexCoord2iv,PL_FA_NOTRACE);
   PL_register_foreign("c_glTexCoord2s",2,c_glTexCoord2s,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord2sv",1,c_glTexCoord2sv,PL_FA_NOTRACE);
   PL_register_foreign("c_glTexCoord3d",3,c_glTexCoord3d,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord3dv",1,c_glTexCoord3dv,PL_FA_NOTRACE);
   PL_register_foreign("c_glTexCoord3f",3,c_glTexCoord3f,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord3fv",1,c_glTexCoord3fv,PL_FA_NOTRACE);
   PL_register_foreign("c_glTexCoord3i",3,c_glTexCoord3i,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord3iv",1,c_glTexCoord3iv,PL_FA_NOTRACE);
   PL_register_foreign("c_glTexCoord3s",3,c_glTexCoord3s,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord3sv",1,c_glTexCoord3sv,PL_FA_NOTRACE);
   PL_register_foreign("c_glTexCoord4d",4,c_glTexCoord4d,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord4dv",1,c_glTexCoord4dv,PL_FA_NOTRACE);
   PL_register_foreign("c_glTexCoord4f",4,c_glTexCoord4f,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord4fv",1,c_glTexCoord4fv,PL_FA_NOTRACE);
   PL_register_foreign("c_glTexCoord4i",4,c_glTexCoord4i,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord4iv",1,c_glTexCoord4iv,PL_FA_NOTRACE);
   PL_register_foreign("c_glTexCoord4s",4,c_glTexCoord4s,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord4sv",1,c_glTexCoord4sv,PL_FA_NOTRACE);
   PL_register_foreign("c_glTexImage1D",8,c_glTexImage1D,PL_FA_NOTRACE);
   PL_register_foreign("c_glTexImage2D",9,c_glTexImage2D,PL_FA_NOTRACE);
   PL_register_foreign("c_glTexImage3D",10,c_glTexImage3D,PL_FA_NOTRACE);
@@ -3853,6 +3885,42 @@ foreign_t c_glTexCoord1d(term_t PL_S) {
 }
 
 /***************************************
+ * Name:    c_glTexCoord1dv
+ * Desc:    Set the current texture coordinates
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glTexCoord1dv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+
+  int num, count;
+  GLdouble *v;
+
+  num = 1;
+  count = 0;
+  v = malloc(num * sizeof(GLfloat));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_FLOAT) )
+      v[count] = (atof(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glTexCoord1dv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
  * Name: c_glTexCoord1f
  * Params:
  * Returns:
@@ -3864,6 +3932,42 @@ foreign_t c_glTexCoord1f(term_t PL_S) {
     return FALSE;
 
   glTexCoord1f((GLfloat)s);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glTexCoord1fv
+ * Desc:    Set the current texture coordinates
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glTexCoord1fv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+
+  int num, count;
+  float *v;
+
+  num = 1;
+  count = 0;
+  v = malloc(num * sizeof(GLfloat));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_FLOAT) )
+      v[count] = (atof(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glTexCoord1fv(v);
+
+  free(v);
+  return PL_get_nil(list);
 
   PL_succeed;
 }
@@ -3885,6 +3989,42 @@ foreign_t c_glTexCoord1i(term_t PL_S) {
 }
 
 /***************************************
+ * Name:    c_glTexCoord1iv
+ * Desc:    Set the current texture coordinates
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glTexCoord1iv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+
+  int num, count;
+  GLint *v;
+
+  num = 1;
+  count = 0;
+  v = malloc(num * sizeof(GLint));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_INTEGER) )
+      v[count] = (atoi(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glTexCoord1iv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
  * Name: c_glTexCoord1s
  * Params:
  * Returns:
@@ -3896,6 +4036,42 @@ foreign_t c_glTexCoord1s(term_t PL_S) {
     return FALSE;
 
   glTexCoord1s((GLshort)s);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glTexCoord1sv
+ * Desc:    Set the current texture coordinates
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glTexCoord1sv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+
+  int num, count;
+  GLshort *v;
+
+  num = 1;
+  count = 0;
+  v = malloc(num * sizeof(GLint));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_INTEGER) )
+      v[count] = (atoi(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glTexCoord1sv(v);
+
+  free(v);
+  return PL_get_nil(list);
 
   PL_succeed;
 }
@@ -3918,6 +4094,42 @@ foreign_t c_glTexCoord2d(term_t PL_S, term_t PL_T) {
 }
 
 /***************************************
+ * Name:    c_glTexCoord2dv
+ * Desc:    Set the current texture coordinates
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glTexCoord2dv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+
+  int num, count;
+  GLdouble *v;
+
+  num = 2;
+  count = 0;
+  v = malloc(num * sizeof(GLfloat));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_FLOAT) )
+      v[count] = (atof(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glTexCoord2dv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
  * Name: c_glTexCoord2f
  * Params:
  * Returns:
@@ -3930,6 +4142,42 @@ foreign_t c_glTexCoord2f(term_t PL_S, term_t PL_T) {
     return FALSE;
 
   glTexCoord2f((float)s,(float)t);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glTexCoord2fv
+ * Desc:    Set the current texture coordinates
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glTexCoord2fv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+
+  int num, count;
+  float *v;
+
+  num = 2;
+  count = 0;
+  v = malloc(num * sizeof(GLfloat));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_FLOAT) )
+      v[count] = (atof(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glTexCoord2fv(v);
+
+  free(v);
+  return PL_get_nil(list);
 
   PL_succeed;
 }
@@ -3952,6 +4200,42 @@ foreign_t c_glTexCoord2i(term_t PL_S, term_t PL_T) {
 }
 
 /***************************************
+ * Name:    c_glTexCoord2iv
+ * Desc:    Set the current texture coordinates
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glTexCoord2iv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+
+  int num, count;
+  GLint *v;
+
+  num = 2;
+  count = 0;
+  v = malloc(num * sizeof(GLint));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_INTEGER) )
+      v[count] = (atoi(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glTexCoord2iv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
  * Name: c_glTexCoord2s
  * Params:
  * Returns:
@@ -3964,6 +4248,42 @@ foreign_t c_glTexCoord2s(term_t PL_S, term_t PL_T) {
     return FALSE;
 
   glTexCoord2s((GLshort)s,(GLshort)t);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glTexCoord2sv
+ * Desc:    Set the current texture coordinates
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glTexCoord2sv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+
+  int num, count;
+  GLshort *v;
+
+  num = 2;
+  count = 0;
+  v = malloc(num * sizeof(GLint));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_INTEGER) )
+      v[count] = (atoi(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glTexCoord2sv(v);
+
+  free(v);
+  return PL_get_nil(list);
 
   PL_succeed;
 }
@@ -3987,6 +4307,42 @@ foreign_t c_glTexCoord3d(term_t PL_S, term_t PL_T, term_t PL_R) {
 }
 
 /***************************************
+ * Name:    c_glTexCoord3dv
+ * Desc:    Set the current texture coordinates
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glTexCoord3dv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+
+  int num, count;
+  GLdouble *v;
+
+  num = 3;
+  count = 0;
+  v = malloc(num * sizeof(GLfloat));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_FLOAT) )
+      v[count] = (atof(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glTexCoord3dv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
  * Name: c_glTexCoord3f
  * Params:
  * Returns:
@@ -4000,6 +4356,42 @@ foreign_t c_glTexCoord3f(term_t PL_S, term_t PL_T, term_t PL_R) {
     return FALSE;
 
   glTexCoord3f((GLfloat)s,(GLfloat)t, (GLfloat)r);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glTexCoord3fv
+ * Desc:    Set the current texture coordinates
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glTexCoord3fv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+
+  int num, count;
+  float *v;
+
+  num = 3;
+  count = 0;
+  v = malloc(num * sizeof(GLfloat));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_FLOAT) )
+      v[count] = (atof(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glTexCoord3fv(v);
+
+  free(v);
+  return PL_get_nil(list);
 
   PL_succeed;
 }
@@ -4023,6 +4415,42 @@ foreign_t c_glTexCoord3i(term_t PL_S, term_t PL_T, term_t PL_R) {
 }
 
 /***************************************
+ * Name:    c_glTexCoord3iv
+ * Desc:    Set the current texture coordinates
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glTexCoord3iv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+
+  int num, count;
+  GLint *v;
+
+  num = 3;
+  count = 0;
+  v = malloc(num * sizeof(GLint));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_INTEGER) )
+      v[count] = (atoi(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glTexCoord3iv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
  * Name: c_glTexCoord3s
  * Params:
  * Returns:
@@ -4036,6 +4464,42 @@ foreign_t c_glTexCoord3s(term_t PL_S, term_t PL_T, term_t PL_R) {
     return FALSE;
 
   glTexCoord3s((GLshort)s,(GLshort)t,(GLshort)r);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glTexCoord3sv
+ * Desc:    Set the current texture coordinates
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glTexCoord3sv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+
+  int num, count;
+  GLshort *v;
+
+  num = 3;
+  count = 0;
+  v = malloc(num * sizeof(GLint));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_INTEGER) )
+      v[count] = (atoi(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glTexCoord3sv(v);
+
+  free(v);
+  return PL_get_nil(list);
 
   PL_succeed;
 }
@@ -4060,6 +4524,42 @@ foreign_t c_glTexCoord4d(term_t PL_S, term_t PL_T, term_t PL_R, term_t PL_Q) {
 }
 
 /***************************************
+ * Name:    c_glTexCoord4dv
+ * Desc:    Set the current texture coordinates
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glTexCoord4dv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+
+  int num, count;
+  GLdouble *v;
+
+  num = 4;
+  count = 0;
+  v = malloc(num * sizeof(GLfloat));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_FLOAT) )
+      v[count] = (atof(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glTexCoord4dv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
  * Name: c_glTexCoord4f
  * Params:
  * Returns:
@@ -4074,6 +4574,42 @@ foreign_t c_glTexCoord4f(term_t PL_S, term_t PL_T, term_t PL_R, term_t PL_Q) {
     return FALSE;
 
   glTexCoord4f((GLfloat)s,(GLfloat)t, (GLfloat)r,(GLfloat)q);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glTexCoord4fv
+ * Desc:    Set the current texture coordinates
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glTexCoord4fv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+
+  int num, count;
+  float *v;
+
+  num = 4;
+  count = 0;
+  v = malloc(num * sizeof(GLfloat));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_FLOAT) )
+      v[count] = (atof(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glTexCoord4fv(v);
+
+  free(v);
+  return PL_get_nil(list);
 
   PL_succeed;
 }
@@ -4098,6 +4634,42 @@ foreign_t c_glTexCoord4i(term_t PL_S, term_t PL_T, term_t PL_R, term_t PL_Q) {
 }
 
 /***************************************
+ * Name:    c_glTexCoord4iv
+ * Desc:    Set the current texture coordinates
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glTexCoord4iv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+
+  int num, count;
+  GLint *v;
+
+  num = 4;
+  count = 0;
+  v = malloc(num * sizeof(GLint));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_INTEGER) )
+      v[count] = (atoi(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glTexCoord4iv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
  * Name: c_glTexCoord4s
  * Params:
  * Returns:
@@ -4116,7 +4688,41 @@ foreign_t c_glTexCoord4s(term_t PL_S, term_t PL_T, term_t PL_R, term_t PL_Q) {
   PL_succeed;
 }
 
+/***************************************
+ * Name:    c_glTexCoord4sv
+ * Desc:    Set the current texture coordinates
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glTexCoord4sv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
 
+  int num, count;
+  GLshort *v;
+
+  num = 4;
+  count = 0;
+  v = malloc(num * sizeof(GLint));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_INTEGER) )
+      v[count] = (atoi(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glTexCoord4sv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
 
 /***************************************
  * Name:    c_glTexImage1D

@@ -580,31 +580,55 @@ glTexCoord1d(S):-
 	float(S),
 	c_glTexCoord1d(S).
 
+glTexCoord1dv(V):-
+	c_glTexCoord1dv(V).
+
 glTexCoord1f(S):-
 	float(S),
 	c_glTexCoord1f(S).
 
+glTexCoord1fv(V):-
+	c_glTexCoord1fv(V).
+
 glTexCoord1i(S):-
 	c_glTexCoord1i(S).
 
+glTexCoord1iv(V):-
+	c_glTexCoord1iv(V).
+
 glTexCoord1s(S):-
 	c_glTexCoord1s(S).
+
+glTexCoord1sv(V):-
+	c_glTexCoord1sv(V).
 
 glTexCoord2d(S,T):-
 	float(S),
 	float(T),
 	c_glTexCoord2d(S,T).
 
+glTexCoord2dv(V):-
+	c_glTexCoord2dv(V).
+
 glTexCoord2f(S,T):-
 	float(S),
 	float(T),
 	c_glTexCoord2f(S,T).
 
+glTexCoord2fv(V):-
+	c_glTexCoord2fv(V).
+
 glTexCoord2i(S,T):-
 	c_glTexCoord2i(S,T).
 
+glTexCoord2iv(V):-
+	c_glTexCoord2iv(V).
+
 glTexCoord2s(S,T):-
 	c_glTexCoord2s(S,T).
+
+glTexCoord2sv(V):-
+	c_glTexCoord2sv(V).
 
 glTexCoord3d(S,T,R):-
 	float(S),
@@ -612,17 +636,29 @@ glTexCoord3d(S,T,R):-
         float(R),
 	c_glTexCoord3d(S,T,R).
 
+glTexCoord3dv(V):-
+	c_glTexCoord3dv(V).
+
 glTexCoord3f(S,T,R):-
 	float(S),
 	float(T),
         float(R),
 	c_glTexCoord3f(S,T,R).
 
+glTexCoord3fv(V):-
+	c_glTexCoord3fv(V).
+
 glTexCoord3i(S,T,R):-
 	c_glTexCoord3i(S,T,R).
 
+glTexCoord3iv(V):-
+	c_glTexCoord3iv(V).
+
 glTexCoord3s(S,T,R):-
 	c_glTexCoord3s(S,T,R).
+
+glTexCoord3sv(V):-
+	c_glTexCoord3sv(V).
 
 glTexCoord4d(S,T,R,Q):-
 	float(S),
@@ -631,6 +667,9 @@ glTexCoord4d(S,T,R,Q):-
         float(Q),
 	c_glTexCoord4d(S,T,R,Q).
 
+glTexCoord4dv(V):-
+	c_glTexCoord4dv(V).
+
 glTexCoord4f(S,T,R,Q):-
 	float(S),
 	float(T),
@@ -638,11 +677,20 @@ glTexCoord4f(S,T,R,Q):-
         float(Q),
 	c_glTexCoord4f(S,T,R,Q).
 
+glTexCoord4fv(V):-
+	c_glTexCoord4fv(V).
+
 glTexCoord4i(S,T,R,Q):-
 	c_glTexCoord4i(S,T,R,Q).
 
+glTexCoord4iv(V):-
+	c_glTexCoord4iv(V).
+
 glTexCoord4s(S,T,R,Q):-
 	c_glTexCoord4s(S,T,R,Q).
+
+glTexCoord4sv(V):-
+	c_glTexCoord4sv(V).
 
 glTexImage1D(Target,Level,Internal,Width,Border,Format,Type,Texels):-
 	c_glTexImage1D(Target,Level,Internal,Width,Border,Format,Type,Texels).
