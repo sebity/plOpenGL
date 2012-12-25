@@ -318,6 +318,10 @@ glHint(Target,Hint):-
 glIndexi(Index):-
     c_glIndexi(Index).
 
+glIndexf(Index):-
+    float(Index),
+    c_glIndexf(Index).
+
 glIndexMask(Mask):-
     c_glIndexMask(Mask).
 
@@ -580,6 +584,12 @@ glTexCoord1f(S):-
 	float(S),
 	c_glTexCoord1f(S).
 
+glTexCoord1i(S):-
+	c_glTexCoord1i(S).
+
+glTexCoord1s(S):-
+	c_glTexCoord1s(S).
+
 glTexCoord2d(S,T):-
 	float(S),
 	float(T),
@@ -589,6 +599,30 @@ glTexCoord2f(S,T):-
 	float(S),
 	float(T),
 	c_glTexCoord2f(S,T).
+
+glTexCoord2i(S,T):-
+	c_glTexCoord2i(S,T).
+
+glTexCoord2s(S,T):-
+	c_glTexCoord2s(S,T).
+
+glTexCoord3d(S,T,R):-
+	float(S),
+	float(T),
+        float(R),
+	c_glTexCoord3d(S,T,R).
+
+glTexCoord3f(S,T,R):-
+	float(S),
+	float(T),
+        float(R),
+	c_glTexCoord3f(S,T,R).
+
+glTexCoord3i(S,T,R):-
+	c_glTexCoord3i(S,T,R).
+
+glTexCoord3s(S,T,R):-
+	c_glTexCoord3s(S,T,R).
 
 glTexImage1D(Target,Level,Internal,Width,Border,Format,Type,Texels):-
 	c_glTexImage1D(Target,Level,Internal,Width,Border,Format,Type,Texels).

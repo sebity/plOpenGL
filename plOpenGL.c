@@ -157,7 +157,9 @@ foreign_t c_glGetLightiv(term_t Light, term_t PName, term_t Params);
 foreign_t c_glGetMaterialfv(term_t Light, term_t PName, term_t Params);
 foreign_t c_glGetMaterialiv(term_t Light, term_t PName, term_t Params);
 foreign_t c_glHint(term_t Target, term_t Hint);
+foreign_t c_glIndexd(term_t Index);
 foreign_t c_glIndexi(term_t Index);
+foreign_t c_glIndexf(term_t Index);
 foreign_t c_glIndexMask(term_t Mask);
 foreign_t c_glLightfv(term_t Face, term_t PName, term_t Params, term_t Num);
 foreign_t c_glLightModelfv(term_t PName, term_t Params, term_t Num);
@@ -223,8 +225,16 @@ foreign_t c_glStencilMask(term_t Mask);
 foreign_t c_glStencilOp(term_t Fail, term_t zFail, term_t zPass);
 foreign_t c_glTexCoord1d(term_t S);
 foreign_t c_glTexCoord1f(term_t S);
+foreign_t c_glTexCoord1i(term_t S);
+foreign_t c_glTexCoord1s(term_t S);
 foreign_t c_glTexCoord2d(term_t S, term_t T);
 foreign_t c_glTexCoord2f(term_t S, term_t T);
+foreign_t c_glTexCoord2i(term_t S, term_t T);
+foreign_t c_glTexCoord2s(term_t S, term_t T);
+foreign_t c_glTexCoord3d(term_t S, term_t T, term_t R);
+foreign_t c_glTexCoord3f(term_t S, term_t T, term_t R);
+foreign_t c_glTexCoord3i(term_t S, term_t T, term_t R);
+foreign_t c_glTexCoord3s(term_t S, term_t T, term_t R);
 foreign_t c_glTexImage1D(term_t Target, term_t Level, term_t Internal, term_t Width,
                          term_t Border, term_t Format, term_t Type, term_t Texels);
 foreign_t c_glTexImage2D(term_t Target, term_t Level, term_t Internal, term_t Width, term_t Height,
@@ -389,7 +399,9 @@ install_t install() {
   PL_register_foreign("c_glGetMaterialfv",3,c_glGetMaterialfv,PL_FA_NOTRACE);
   PL_register_foreign("c_glGetMaterialiv",3,c_glGetMaterialiv,PL_FA_NOTRACE);
   PL_register_foreign("c_glHint",2,c_glHint,PL_FA_NOTRACE);
+  PL_register_foreign("c_glIndexd",1,c_glIndexd,PL_FA_NOTRACE);
   PL_register_foreign("c_glIndexi",1,c_glIndexi,PL_FA_NOTRACE);
+  PL_register_foreign("c_glIndexf",1,c_glIndexf,PL_FA_NOTRACE);
   PL_register_foreign("c_glIndexMask",1,c_glIndexMask,PL_FA_NOTRACE);
   PL_register_foreign("c_glLightfv",4,c_glLightfv,PL_FA_NOTRACE);
   PL_register_foreign("c_glLightModelfv",3,c_glLightModelfv,PL_FA_NOTRACE);
@@ -455,8 +467,16 @@ install_t install() {
   PL_register_foreign("c_glStencilOp",3,c_glStencilOp,PL_FA_NOTRACE);
   PL_register_foreign("c_glTexCoord1d",1,c_glTexCoord1d,PL_FA_NOTRACE);
   PL_register_foreign("c_glTexCoord1f",1,c_glTexCoord1f,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord1i",1,c_glTexCoord1i,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord1s",1,c_glTexCoord1s,PL_FA_NOTRACE);
   PL_register_foreign("c_glTexCoord2d",2,c_glTexCoord2d,PL_FA_NOTRACE);
   PL_register_foreign("c_glTexCoord2f",2,c_glTexCoord2f,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord2i",2,c_glTexCoord2i,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord2s",2,c_glTexCoord2s,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord3d",3,c_glTexCoord3d,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord3f",3,c_glTexCoord3f,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord3i",3,c_glTexCoord3i,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord3s",3,c_glTexCoord3s,PL_FA_NOTRACE);
   PL_register_foreign("c_glTexImage1D",8,c_glTexImage1D,PL_FA_NOTRACE);
   PL_register_foreign("c_glTexImage2D",9,c_glTexImage2D,PL_FA_NOTRACE);
   PL_register_foreign("c_glTexImage3D",10,c_glTexImage3D,PL_FA_NOTRACE);
@@ -2411,6 +2431,21 @@ foreign_t c_glHint(term_t PL_Target, term_t PL_Hint) {
 }
 
 /***************************************
+ * Name: c_glIndexd
+ * Params:
+ * Returns:
+ */
+foreign_t c_glIndexd(term_t PL_Index) {
+  double index;
+
+  if(!PL_get_float(PL_Index,&index))
+    return FALSE;
+
+  glIndexd((GLdouble)index);
+  PL_succeed;
+}
+
+/***************************************
  * Name: c_glIndexi
  * Params:
  * Returns:
@@ -2422,6 +2457,21 @@ foreign_t c_glIndexi(term_t PL_Index) {
     return FALSE;
 
   glIndexi(index);
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glIndexf
+ * Params:
+ * Returns:
+ */
+foreign_t c_glIndexf(term_t PL_Index) {
+  double index;
+
+  if(!PL_get_float(PL_Index,&index))
+    return FALSE;
+
+  glIndexf((GLfloat)index);
   PL_succeed;
 }
 
@@ -3811,6 +3861,38 @@ foreign_t c_glTexCoord1f(term_t PL_S) {
 }
 
 /***************************************
+ * Name: c_glTexCoord1i
+ * Params:
+ * Returns:
+ */
+foreign_t c_glTexCoord1i(term_t PL_S) {
+  GLint s;
+
+  if(!PL_get_integer(PL_S,&s))
+    return FALSE;
+
+  glTexCoord1i((GLint)s);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glTexCoord1s
+ * Params:
+ * Returns:
+ */
+foreign_t c_glTexCoord1s(term_t PL_S) {
+  GLint s;
+
+  if(!PL_get_integer(PL_S,&s))
+    return FALSE;
+
+  glTexCoord1s((GLshort)s);
+
+  PL_succeed;
+}
+
+/***************************************
  * Name: c_glTexCoord2d
  * Params:
  * Returns:
@@ -3843,6 +3925,116 @@ foreign_t c_glTexCoord2f(term_t PL_S, term_t PL_T) {
 
   PL_succeed;
 }
+
+/***************************************
+ * Name: c_glTexCoord2i
+ * Params:
+ * Returns:
+ */
+foreign_t c_glTexCoord2i(term_t PL_S, term_t PL_T) {
+  GLint s,t;
+
+  if(!PL_get_integer(PL_S,&s) ||
+     !PL_get_integer(PL_T,&t))
+    return FALSE;
+
+  glTexCoord2i((GLint)s,(GLint)t);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glTexCoord2s
+ * Params:
+ * Returns:
+ */
+foreign_t c_glTexCoord2s(term_t PL_S, term_t PL_T) {
+  GLint s,t;
+
+  if(!PL_get_integer(PL_S,&s) ||
+     !PL_get_integer(PL_T,&t))
+    return FALSE;
+
+  glTexCoord2s((GLshort)s,(GLshort)t);
+
+  PL_succeed;
+}
+
+
+/***************************************
+ * Name: c_glTexCoord3f
+ * Params:
+ * Returns:
+ */
+foreign_t c_glTexCoord3f(term_t PL_S, term_t PL_T, term_t PL_R) {
+  GLdouble s,t,r;
+
+  if(!PL_get_float(PL_S,&s) ||
+     !PL_get_float(PL_T,&t) ||
+     !PL_get_float(PL_R,&r))
+    return FALSE;
+
+  glTexCoord3f((GLfloat)s,(GLfloat)t, (GLfloat)r);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glTexCoord3d
+ * Params:
+ * Returns:
+ */
+foreign_t c_glTexCoord3d(term_t PL_S, term_t PL_T, term_t PL_R) {
+  GLdouble s,t,r;
+
+  if(!PL_get_float(PL_S,&s) ||
+     !PL_get_float(PL_T,&t) ||
+     !PL_get_float(PL_R,&r))
+    return FALSE;
+
+  glTexCoord3d((GLdouble)s,(GLdouble)t,(GLdouble)r);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glTexCoord3i
+ * Params:
+ * Returns:
+ */
+foreign_t c_glTexCoord3i(term_t PL_S, term_t PL_T, term_t PL_R) {
+  GLint s,t,r;
+
+  if(!PL_get_integer(PL_S,&s) ||
+     !PL_get_integer(PL_T,&t) ||
+     !PL_get_integer(PL_R,&r))
+    return FALSE;
+
+  glTexCoord3i((GLint)s,(GLint)t,(GLint)r);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glTexCoord3s
+ * Params:
+ * Returns:
+ */
+foreign_t c_glTexCoord3s(term_t PL_S, term_t PL_T, term_t PL_R) {
+  GLint s,t,r;
+
+  if(!PL_get_integer(PL_S,&s) ||
+     !PL_get_integer(PL_T,&t) ||
+     !PL_get_integer(PL_R,&r))
+    return FALSE;
+
+  glTexCoord3s((GLshort)s,(GLshort)t,(GLshort)r);
+
+  PL_succeed;
+}
+
+
+
 
 /***************************************
  * Name:    c_glTexImage1D
