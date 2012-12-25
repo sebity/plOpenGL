@@ -157,7 +157,9 @@ foreign_t c_glGetLightiv(term_t Light, term_t PName, term_t Params);
 foreign_t c_glGetMaterialfv(term_t Light, term_t PName, term_t Params);
 foreign_t c_glGetMaterialiv(term_t Light, term_t PName, term_t Params);
 foreign_t c_glHint(term_t Target, term_t Hint);
+foreign_t c_glIndexd(term_t Index);
 foreign_t c_glIndexi(term_t Index);
+foreign_t c_glIndexf(term_t Index);
 foreign_t c_glIndexMask(term_t Mask);
 foreign_t c_glLightfv(term_t Face, term_t PName, term_t Params, term_t Num);
 foreign_t c_glLightModelfv(term_t PName, term_t Params, term_t Num);
@@ -165,6 +167,7 @@ foreign_t c_glLineStipple(term_t Factor, term_t Pattern);
 foreign_t c_glLineWidth(term_t Width);
 foreign_t c_glLoadIdentity(void);
 foreign_t c_glLoadName(term_t Name);
+foreign_t c_glLogicOp(term_t Opcode);
 foreign_t c_glMaterialfv(term_t Face, term_t PName, term_t Params, term_t Num);
 foreign_t c_glMatrixMode(term_t Mode);
 foreign_t c_glMinmax(term_t Target, term_t InternalFormat, term_t Sink);
@@ -183,7 +186,30 @@ foreign_t c_glPushAttrib(term_t Mask);
 foreign_t c_glPushClientAttrib(term_t Mask);
 foreign_t c_glPushMatrix(void);
 foreign_t c_glPushName(term_t Name);
+foreign_t c_glRasterPos2d(term_t X, term_t Y);
+foreign_t c_glRasterPos2dv(term_t V);
+foreign_t c_glRasterPos2f(term_t X, term_t Y);
+foreign_t c_glRasterPos2fv(term_t V);
 foreign_t c_glRasterPos2i(term_t X, term_t Y);
+foreign_t c_glRasterPos2iv(term_t V);
+foreign_t c_glRasterPos2s(term_t X, term_t Y);
+foreign_t c_glRasterPos2sv(term_t V);
+foreign_t c_glRasterPos3d(term_t X, term_t Y, term_t Z);
+foreign_t c_glRasterPos3dv(term_t V);
+foreign_t c_glRasterPos3f(term_t X, term_t Y, term_t Z);
+foreign_t c_glRasterPos3fv(term_t V);
+foreign_t c_glRasterPos3i(term_t X, term_t Y, term_t Z);
+foreign_t c_glRasterPos3iv(term_t V);
+foreign_t c_glRasterPos3s(term_t X, term_t Y, term_t Z);
+foreign_t c_glRasterPos3sv(term_t V);
+foreign_t c_glRasterPos4d(term_t X, term_t Y, term_t Z, term_t W);
+foreign_t c_glRasterPos4dv(term_t V);
+foreign_t c_glRasterPos4f(term_t X, term_t Y, term_t Z, term_t W);
+foreign_t c_glRasterPos4fv(term_t V);
+foreign_t c_glRasterPos4i(term_t X, term_t Y, term_t Z, term_t W);
+foreign_t c_glRasterPos4iv(term_t V);
+foreign_t c_glRasterPos4s(term_t X, term_t Y, term_t Z, term_t W);
+foreign_t c_glRasterPos4sv(term_t V);
 foreign_t c_glReadBuffer(term_t Mode);
 foreign_t c_glRectf(term_t X1, term_t Y1, term_t X2, term_t Y2);
 foreign_t c_glRenderMode(term_t Mode);
@@ -197,8 +223,38 @@ foreign_t c_glShadeModel(term_t Mode);
 foreign_t c_glStencilFunc(term_t Func, term_t Ref, term_t Mask);
 foreign_t c_glStencilMask(term_t Mask);
 foreign_t c_glStencilOp(term_t Fail, term_t zFail, term_t zPass);
+foreign_t c_glTexCoord1d(term_t S);
+foreign_t c_glTexCoord1dv(term_t V);
+foreign_t c_glTexCoord1f(term_t S);
+foreign_t c_glTexCoord1fv(term_t V);
+foreign_t c_glTexCoord1i(term_t S);
+foreign_t c_glTexCoord1iv(term_t V);
+foreign_t c_glTexCoord1s(term_t S);
+foreign_t c_glTexCoord1sv(term_t V);
 foreign_t c_glTexCoord2d(term_t S, term_t T);
+foreign_t c_glTexCoord2dv(term_t V);
 foreign_t c_glTexCoord2f(term_t S, term_t T);
+foreign_t c_glTexCoord2fv(term_t V);
+foreign_t c_glTexCoord2i(term_t S, term_t T);
+foreign_t c_glTexCoord2iv(term_t V);
+foreign_t c_glTexCoord2s(term_t S, term_t T);
+foreign_t c_glTexCoord2sv(term_t V);
+foreign_t c_glTexCoord3d(term_t S, term_t T, term_t R);
+foreign_t c_glTexCoord3dv(term_t V);
+foreign_t c_glTexCoord3f(term_t S, term_t T, term_t R);
+foreign_t c_glTexCoord3fv(term_t V);
+foreign_t c_glTexCoord3i(term_t S, term_t T, term_t R);
+foreign_t c_glTexCoord3iv(term_t V);
+foreign_t c_glTexCoord3s(term_t S, term_t T, term_t R);
+foreign_t c_glTexCoord3sv(term_t V);
+foreign_t c_glTexCoord4d(term_t S, term_t T, term_t R, term_t Q);
+foreign_t c_glTexCoord4dv(term_t V);
+foreign_t c_glTexCoord4f(term_t S, term_t T, term_t R, term_t Q);
+foreign_t c_glTexCoord4fv(term_t V);
+foreign_t c_glTexCoord4i(term_t S, term_t T, term_t R, term_t Q);
+foreign_t c_glTexCoord4iv(term_t V);
+foreign_t c_glTexCoord4s(term_t S, term_t T, term_t R, term_t Q);
+foreign_t c_glTexCoord4sv(term_t V);
 foreign_t c_glTexImage1D(term_t Target, term_t Level, term_t Internal, term_t Width,
                          term_t Border, term_t Format, term_t Type, term_t Texels);
 foreign_t c_glTexImage2D(term_t Target, term_t Level, term_t Internal, term_t Width, term_t Height,
@@ -363,7 +419,9 @@ install_t install() {
   PL_register_foreign("c_glGetMaterialfv",3,c_glGetMaterialfv,PL_FA_NOTRACE);
   PL_register_foreign("c_glGetMaterialiv",3,c_glGetMaterialiv,PL_FA_NOTRACE);
   PL_register_foreign("c_glHint",2,c_glHint,PL_FA_NOTRACE);
+  PL_register_foreign("c_glIndexd",1,c_glIndexd,PL_FA_NOTRACE);
   PL_register_foreign("c_glIndexi",1,c_glIndexi,PL_FA_NOTRACE);
+  PL_register_foreign("c_glIndexf",1,c_glIndexf,PL_FA_NOTRACE);
   PL_register_foreign("c_glIndexMask",1,c_glIndexMask,PL_FA_NOTRACE);
   PL_register_foreign("c_glLightfv",4,c_glLightfv,PL_FA_NOTRACE);
   PL_register_foreign("c_glLightModelfv",3,c_glLightModelfv,PL_FA_NOTRACE);
@@ -371,6 +429,7 @@ install_t install() {
   PL_register_foreign("c_glLineWidth",1,c_glLineWidth,PL_FA_NOTRACE);
   PL_register_foreign("c_glLoadIdentity",0,c_glLoadIdentity,PL_FA_NOTRACE);
   PL_register_foreign("c_glLoadName",1,c_glLoadName,PL_FA_NOTRACE);
+  PL_register_foreign("c_glLogicOp",1,c_glLogicOp,PL_FA_NOTRACE);
   PL_register_foreign("c_glMaterialfv",4,c_glMaterialfv,PL_FA_NOTRACE);
   PL_register_foreign("c_glMatrixMode",1,c_glMatrixMode,PL_FA_NOTRACE);
   PL_register_foreign("c_glMinmax",3,c_glMinmax,PL_FA_NOTRACE);
@@ -389,7 +448,30 @@ install_t install() {
   PL_register_foreign("c_glPushClientAttrib",1,c_glPushClientAttrib,PL_FA_NOTRACE);
   PL_register_foreign("c_glPushMatrix",0,c_glPushMatrix,PL_FA_NOTRACE);
   PL_register_foreign("c_glPushName",1,c_glPushName,PL_FA_NOTRACE);
+  PL_register_foreign("c_glRasterPos2d",2,c_glRasterPos2d,PL_FA_NOTRACE);
+  PL_register_foreign("c_glRasterPos2dv",1,c_glRasterPos2dv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glRasterPos2f",2,c_glRasterPos2f,PL_FA_NOTRACE);
+  PL_register_foreign("c_glRasterPos2fv",1,c_glRasterPos2fv,PL_FA_NOTRACE);
   PL_register_foreign("c_glRasterPos2i",2,c_glRasterPos2i,PL_FA_NOTRACE);
+  PL_register_foreign("c_glRasterPos2iv",1,c_glRasterPos2iv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glRasterPos2s",2,c_glRasterPos2s,PL_FA_NOTRACE);
+  PL_register_foreign("c_glRasterPos2sv",1,c_glRasterPos2sv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glRasterPos3d",3,c_glRasterPos3d,PL_FA_NOTRACE);
+  PL_register_foreign("c_glRasterPos3dv",1,c_glRasterPos3dv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glRasterPos3f",3,c_glRasterPos3f,PL_FA_NOTRACE);
+  PL_register_foreign("c_glRasterPos3fv",1,c_glRasterPos3fv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glRasterPos3i",3,c_glRasterPos3i,PL_FA_NOTRACE);
+  PL_register_foreign("c_glRasterPos3iv",1,c_glRasterPos3iv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glRasterPos3s",3,c_glRasterPos3s,PL_FA_NOTRACE);
+  PL_register_foreign("c_glRasterPos3sv",1,c_glRasterPos3sv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glRasterPos4d",4,c_glRasterPos4d,PL_FA_NOTRACE);
+  PL_register_foreign("c_glRasterPos4dv",1,c_glRasterPos4dv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glRasterPos4f",4,c_glRasterPos4f,PL_FA_NOTRACE);
+  PL_register_foreign("c_glRasterPos4fv",1,c_glRasterPos4fv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glRasterPos4i",4,c_glRasterPos4i,PL_FA_NOTRACE);
+  PL_register_foreign("c_glRasterPos4iv",1,c_glRasterPos4iv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glRasterPos4s",4,c_glRasterPos4s,PL_FA_NOTRACE);
+  PL_register_foreign("c_glRasterPos4sv",1,c_glRasterPos4sv,PL_FA_NOTRACE);
   PL_register_foreign("c_glReadBuffer",4,c_glReadBuffer,PL_FA_NOTRACE);
   PL_register_foreign("c_glRectf",4,c_glRectf,PL_FA_NOTRACE);
   PL_register_foreign("c_glRenderMode",1,c_glRenderMode,PL_FA_NOTRACE);
@@ -403,8 +485,38 @@ install_t install() {
   PL_register_foreign("c_glStencilMask",1,c_glStencilMask,PL_FA_NOTRACE);
   PL_register_foreign("c_glStencilFunc",3,c_glStencilFunc,PL_FA_NOTRACE);
   PL_register_foreign("c_glStencilOp",3,c_glStencilOp,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord1d",1,c_glTexCoord1d,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord1dv",1,c_glTexCoord1dv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord1f",1,c_glTexCoord1f,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord1fv",1,c_glTexCoord1fv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord1i",1,c_glTexCoord1i,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord1iv",1,c_glTexCoord1iv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord1s",1,c_glTexCoord1s,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord1sv",1,c_glTexCoord1sv,PL_FA_NOTRACE);
   PL_register_foreign("c_glTexCoord2d",2,c_glTexCoord2d,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord2dv",1,c_glTexCoord2dv,PL_FA_NOTRACE);
   PL_register_foreign("c_glTexCoord2f",2,c_glTexCoord2f,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord2fv",1,c_glTexCoord2fv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord2i",2,c_glTexCoord2i,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord2iv",1,c_glTexCoord2iv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord2s",2,c_glTexCoord2s,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord2sv",1,c_glTexCoord2sv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord3d",3,c_glTexCoord3d,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord3dv",1,c_glTexCoord3dv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord3f",3,c_glTexCoord3f,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord3fv",1,c_glTexCoord3fv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord3i",3,c_glTexCoord3i,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord3iv",1,c_glTexCoord3iv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord3s",3,c_glTexCoord3s,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord3sv",1,c_glTexCoord3sv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord4d",4,c_glTexCoord4d,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord4dv",1,c_glTexCoord4dv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord4f",4,c_glTexCoord4f,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord4fv",1,c_glTexCoord4fv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord4i",4,c_glTexCoord4i,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord4iv",1,c_glTexCoord4iv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord4s",4,c_glTexCoord4s,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord4sv",1,c_glTexCoord4sv,PL_FA_NOTRACE);
   PL_register_foreign("c_glTexImage1D",8,c_glTexImage1D,PL_FA_NOTRACE);
   PL_register_foreign("c_glTexImage2D",9,c_glTexImage2D,PL_FA_NOTRACE);
   PL_register_foreign("c_glTexImage3D",10,c_glTexImage3D,PL_FA_NOTRACE);
@@ -492,7 +604,6 @@ void c_display(void) {
   qid_t query_handle;
   static predicate_t p;
   static term_t display_predicate;
-  int rc;
 
   if(!display_predicate)
     display_predicate= PL_new_term_refs(1);
@@ -501,7 +612,8 @@ void c_display(void) {
     p = PL_predicate("display",0,"user");
 
   query_handle = PL_open_query(NULL,PL_Q_NORMAL,p,display_predicate);
-  rc = PL_next_solution(query_handle);
+  if(PL_next_solution(query_handle)) {
+  }
 
   PL_cut_query(query_handle);
 }
@@ -515,7 +627,6 @@ void c_idle(void) {
   qid_t query_handle;
   static predicate_t p;
   static term_t idle_predicate;
-  int rc;
 
 /*
   char *string;
@@ -534,7 +645,8 @@ void c_idle(void) {
     idle_predicate = PL_new_term_refs(1);
 
   query_handle = PL_open_query(NULL,PL_Q_NORMAL,p,idle_predicate);
-  rc = PL_next_solution(query_handle);
+  if(PL_next_solution(query_handle)) {
+  }
   PL_cut_query(query_handle);
 }
 
@@ -548,8 +660,6 @@ void c_keyboard(unsigned char PL_Key, int PL_X, int PL_Y) {
   qid_t query_handle;
   static predicate_t p;
   static term_t keyboard_predicate;
-  int a,b,c;
-  int rc;
 
 /*
   printf("K=%d\n",PL_Key);
@@ -563,12 +673,19 @@ void c_keyboard(unsigned char PL_Key, int PL_X, int PL_Y) {
   if(!keyboard_predicate)
     keyboard_predicate= PL_new_term_refs(3);
 
-  a = PL_put_integer(keyboard_predicate,PL_Key);
-  b = PL_put_integer(keyboard_predicate+1,PL_X);
-  c = PL_put_integer(keyboard_predicate+2,PL_Y);
+  if(PL_put_integer(keyboard_predicate,PL_Key)) {
+    /* printf("keyboard_predicate: %d\n", PL_Key); */ 
+  }
+  if(PL_put_integer(keyboard_predicate+1,PL_X)) {
+    /* printf("keyboard_predicate+1: %d\n", PL_Key); */
+  }
+  if(PL_put_integer(keyboard_predicate+2,PL_Y)) {
+    /* printf("keyboard_predicate+2: %d\n", PL_Key); */
+  }
 
   query_handle = PL_open_query(NULL,PL_Q_NORMAL,p,keyboard_predicate);
-  rc = PL_next_solution(query_handle);
+  if(PL_next_solution(query_handle)) {
+  }
   PL_cut_query(query_handle);
 }
 
@@ -581,8 +698,6 @@ void c_motion(int PL_X, int PL_Y) {
   qid_t query_handle;
   static predicate_t p;
   static term_t motion_predicate;
-  int a,b;
-  int rc;
 
   /*
   printf("X=%d\n",PL_X);
@@ -595,11 +710,15 @@ void c_motion(int PL_X, int PL_Y) {
   if(!motion_predicate)
     motion_predicate= PL_new_term_refs(2);
 
-  a = PL_put_integer(motion_predicate,PL_X);
-  b = PL_put_integer(motion_predicate+1,PL_Y);
+  if(PL_put_integer(motion_predicate,PL_X)) {
+  }
+  if(PL_put_integer(motion_predicate+1,PL_Y)) {
+  }
 
   query_handle = PL_open_query(NULL,PL_Q_NORMAL,p,motion_predicate);
-  rc = PL_next_solution(query_handle);
+  if(PL_next_solution(query_handle)) {
+
+  }
   PL_cut_query(query_handle);
 }
 
@@ -613,8 +732,6 @@ void c_mouse(int PL_Button, int PL_State, int PL_X, int PL_Y) {
   qid_t query_handle;
   static predicate_t p;
   static term_t mouse_predicate;
-  int a,b,c,d;
-  int rc;
 
   /*
   printf("B=%d\n",PL_Button);
@@ -629,13 +746,19 @@ void c_mouse(int PL_Button, int PL_State, int PL_X, int PL_Y) {
   if(!mouse_predicate)
     mouse_predicate= PL_new_term_refs(4);
 
-  a = PL_put_integer(mouse_predicate,PL_Button);
-  b = PL_put_integer(mouse_predicate+1,PL_State);
-  c = PL_put_integer(mouse_predicate+2,PL_X);
-  d = PL_put_integer(mouse_predicate+3,PL_Y);
+  if(PL_put_integer(mouse_predicate,PL_Button)) {
+  }
+  if(PL_put_integer(mouse_predicate+1,PL_State)) {
+  }
+  if(PL_put_integer(mouse_predicate+2,PL_X)) {
+  }
+  if(PL_put_integer(mouse_predicate+3,PL_Y)) {
+  }
 
   query_handle = PL_open_query(NULL,PL_Q_NORMAL,p,mouse_predicate);
-  rc = PL_next_solution(query_handle);
+  if(PL_next_solution(query_handle)) {
+
+  }
   PL_cut_query(query_handle);
 }
 
@@ -649,7 +772,6 @@ void c_reshape(int PL_W, int PL_H) {
   qid_t query_handle;
   static predicate_t p;
   static term_t reshape_predicate;
-  int rc;
 
   /*
     printf("w=%d\n",PL_W);
@@ -663,7 +785,8 @@ void c_reshape(int PL_W, int PL_H) {
     p = PL_predicate("reshape",0,"user");
 
   query_handle = PL_open_query(NULL,PL_Q_NORMAL,p,reshape_predicate);
-  rc = PL_next_solution(query_handle);
+  if(PL_next_solution(query_handle)) {
+  }
   PL_cut_query(query_handle);
 }
 
@@ -2348,6 +2471,21 @@ foreign_t c_glHint(term_t PL_Target, term_t PL_Hint) {
 }
 
 /***************************************
+ * Name: c_glIndexd
+ * Params:
+ * Returns:
+ */
+foreign_t c_glIndexd(term_t PL_Index) {
+  double index;
+
+  if(!PL_get_float(PL_Index,&index))
+    return FALSE;
+
+  glIndexd((GLdouble)index);
+  PL_succeed;
+}
+
+/***************************************
  * Name: c_glIndexi
  * Params:
  * Returns:
@@ -2359,6 +2497,21 @@ foreign_t c_glIndexi(term_t PL_Index) {
     return FALSE;
 
   glIndexi(index);
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glIndexf
+ * Params:
+ * Returns:
+ */
+foreign_t c_glIndexf(term_t PL_Index) {
+  double index;
+
+  if(!PL_get_float(PL_Index,&index))
+    return FALSE;
+
+  glIndexf((GLfloat)index);
   PL_succeed;
 }
 
@@ -2519,6 +2672,22 @@ foreign_t c_glLoadName(term_t PL_Name) {
     return FALSE;
 
   glLoadName((GLuint)name);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glLogicOp
+ * Params:
+ * Returns:
+ */
+foreign_t c_glLogicOp(term_t PL_Opcode) {
+  int opcode;
+
+  if(!PL_get_integer(PL_Opcode,&opcode))
+    return FALSE;
+
+  glLogicOp((GLenum)opcode);
 
   PL_succeed;
 }
@@ -2832,6 +3001,110 @@ foreign_t c_glPushName(term_t PL_Name) {
 }
 
 /***************************************
+ * Name: c_glRasterPos2d
+ * Params:
+ * Returns:
+ */
+foreign_t c_glRasterPos2d(term_t PL_X, term_t PL_Y) {
+  GLdouble x,y;
+
+  if(!PL_get_float(PL_X,&x) ||
+     !PL_get_float(PL_Y,&y))
+    return FALSE;
+
+  glRasterPos2d((GLdouble)x, (GLdouble)y);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glRasterPos2dv
+ * Params:
+ * Returns:
+ */
+foreign_t c_glRasterPos2dv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+    
+  int num, count;
+  GLdouble *v;
+
+  num = 2;
+  count = 0;
+  v = malloc(num * sizeof(GLdouble));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_FLOAT) )
+      v[count] = (atof(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glRasterPos2dv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glRasterPos2f
+ * Params:
+ * Returns:
+ */
+foreign_t c_glRasterPos2f(term_t PL_X, term_t PL_Y) {
+  GLdouble x,y;
+
+  if(!PL_get_float(PL_X,&x) ||
+     !PL_get_float(PL_Y,&y))
+    return FALSE;
+
+  glRasterPos2f((GLfloat)x, (GLfloat)y);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glRasterPos2fv
+ * Params:
+ * Returns:
+ */
+foreign_t c_glRasterPos2fv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+    
+  int num, count;
+  GLfloat *v;
+
+  num = 2;
+  count = 0;
+  v = malloc(num * sizeof(GLfloat));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_FLOAT) )
+      v[count] = (atof(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glRasterPos2fv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
  * Name: c_glRasterPos2i
  * Params:
  * Returns:
@@ -2847,6 +3120,524 @@ foreign_t c_glRasterPos2i(term_t PL_X, term_t PL_Y) {
 
   PL_succeed;
 }
+
+/***************************************
+ * Name: c_glRasterPos2iv
+ * Params:
+ * Returns:
+ */
+foreign_t c_glRasterPos2iv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+    
+  int num, count;
+  GLint *v;
+
+  num = 2;
+  count = 0;
+  v = malloc(num * sizeof(GLint));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_INTEGER) )
+      v[count] = (atoi(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glRasterPos2iv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glRasterPos2s
+ * Params:
+ * Returns:
+ */
+foreign_t c_glRasterPos2s(term_t PL_X, term_t PL_Y) {
+  int x,y;
+
+  if(!PL_get_integer(PL_X,&x) ||
+     !PL_get_integer(PL_Y,&y))
+    return FALSE;
+
+  glRasterPos2s((GLshort)x,(GLshort)y);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glRasterPos2sv
+ * Params:
+ * Returns:
+ */
+foreign_t c_glRasterPos2sv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+    
+  int num, count;
+  GLshort *v;
+
+  num = 2;
+  count = 0;
+  v = malloc(num * sizeof(GLint));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_INTEGER) )
+      v[count] = (atoi(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glRasterPos2sv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+
+/***************************************
+ * Name: c_glRasterPos3d
+ * Params:
+ * Returns:
+ */
+foreign_t c_glRasterPos3d(term_t PL_X, term_t PL_Y, term_t PL_Z) {
+  GLdouble x,y,z;
+
+  if(!PL_get_float(PL_X,&x) ||
+     !PL_get_float(PL_Y,&y) ||
+     !PL_get_float(PL_Z,&z))
+    return FALSE;
+
+  glRasterPos3d((GLdouble)x, (GLdouble)y, (GLdouble)z);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glRasterPos3dv
+ * Params:
+ * Returns:
+ */
+foreign_t c_glRasterPos3dv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+    
+  int num, count;
+  GLdouble *v;
+
+  num = 3;
+  count = 0;
+  v = malloc(num * sizeof(GLdouble));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_FLOAT) )
+      v[count] = (atof(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glRasterPos3dv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glRasterPos3f
+ * Params:
+ * Returns:
+ */
+foreign_t c_glRasterPos3f(term_t PL_X, term_t PL_Y, term_t PL_Z) {
+  GLdouble x,y,z;
+
+  if(!PL_get_float(PL_X,&x) ||
+     !PL_get_float(PL_Y,&y) ||
+     !PL_get_float(PL_Z,&z))
+    return FALSE;
+
+  glRasterPos3f((GLfloat)x, (GLfloat)y, (GLfloat)z);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glRasterPos3fv
+ * Params:
+ * Returns:
+ */
+foreign_t c_glRasterPos3fv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+    
+  int num, count;
+  GLfloat *v;
+
+  num = 3;
+  count = 0;
+  v = malloc(num * sizeof(GLfloat));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_FLOAT) )
+      v[count] = (atof(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glRasterPos3fv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glRasterPos3i
+ * Params:
+ * Returns:
+ */
+foreign_t c_glRasterPos3i(term_t PL_X, term_t PL_Y, term_t PL_Z) {
+  int x,y,z;
+
+  if(!PL_get_integer(PL_X,&x) ||
+     !PL_get_integer(PL_Y,&y) ||
+     !PL_get_integer(PL_Z,&z))
+    return FALSE;
+
+  glRasterPos3i(x,y,z);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glRasterPos3iv
+ * Params:
+ * Returns:
+ */
+foreign_t c_glRasterPos3iv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+    
+  int num, count;
+  GLint *v;
+
+  num = 3;
+  count = 0;
+  v = malloc(num * sizeof(GLint));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_INTEGER) )
+      v[count] = (atoi(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glRasterPos3iv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glRasterPos3s
+ * Params:
+ * Returns:
+ */
+foreign_t c_glRasterPos3s(term_t PL_X, term_t PL_Y, term_t PL_Z) {
+  int x,y,z;
+
+  if(!PL_get_integer(PL_X,&x) ||
+     !PL_get_integer(PL_Y,&y) ||
+     !PL_get_integer(PL_Z,&z))
+    return FALSE;
+
+  glRasterPos3s((GLshort)x,(GLshort)y,(GLshort)z);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glRasterPos3sv
+ * Params:
+ * Returns:
+ */
+foreign_t c_glRasterPos3sv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+    
+  int num, count;
+  GLshort *v;
+
+  num = 3;
+  count = 0;
+  v = malloc(num * sizeof(GLint));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_INTEGER) )
+      v[count] = (atoi(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glRasterPos3sv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glRasterPos4d
+ * Params:
+ * Returns:
+ */
+foreign_t c_glRasterPos4d(term_t PL_X, term_t PL_Y, term_t PL_Z, term_t PL_W) {
+  GLdouble x,y,z,w;
+
+  if(!PL_get_float(PL_X,&x) ||
+     !PL_get_float(PL_Y,&y) ||
+     !PL_get_float(PL_Z,&z) ||
+     !PL_get_float(PL_W,&w))
+    return FALSE;
+
+  glRasterPos4d((GLdouble)x, (GLdouble)y, (GLdouble)z, (GLdouble)w);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glRasterPos4dv
+ * Params:
+ * Returns:
+ */
+foreign_t c_glRasterPos4dv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+    
+  int num, count;
+  GLdouble *v;
+
+  num = 4;
+  count = 0;
+  v = malloc(num * sizeof(GLdouble));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_FLOAT) )
+      v[count] = (atof(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glRasterPos4dv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glRasterPos4f
+ * Params:
+ * Returns:
+ */
+foreign_t c_glRasterPos4f(term_t PL_X, term_t PL_Y, term_t PL_Z, term_t PL_W) {
+  GLdouble x,y,z,w;
+
+  if(!PL_get_float(PL_X,&x) ||
+     !PL_get_float(PL_Y,&y) ||
+     !PL_get_float(PL_Z,&z) ||
+     !PL_get_float(PL_W,&w))
+    return FALSE;
+
+  glRasterPos4f((GLfloat)x, (GLfloat)y, (GLfloat)z, (GLfloat)w);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glRasterPos4fv
+ * Params:
+ * Returns:
+ */
+foreign_t c_glRasterPos4fv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+    
+  int num, count;
+  GLfloat *v;
+
+  num = 4;
+  count = 0;
+  v = malloc(num * sizeof(GLfloat));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_FLOAT) )
+      v[count] = (atof(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glRasterPos4fv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glRasterPos4i
+ * Params:
+ * Returns:
+ */
+foreign_t c_glRasterPos4i(term_t PL_X, term_t PL_Y, term_t PL_Z, term_t PL_W) {
+  int x,y,z,w;
+
+  if(!PL_get_integer(PL_X,&x) ||
+     !PL_get_integer(PL_Y,&y) ||
+     !PL_get_integer(PL_Z,&z) ||
+     !PL_get_integer(PL_W,&w))
+    return FALSE;
+
+  glRasterPos4i(x,y,z,w);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glRasterPos4iv
+ * Params:
+ * Returns:
+ */
+foreign_t c_glRasterPos4iv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+    
+  int num, count;
+  GLint *v;
+
+  num = 4;
+  count = 0;
+  v = malloc(num * sizeof(GLint));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_INTEGER) )
+      v[count] = (atoi(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glRasterPos4iv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glRasterPos4s
+ * Params:
+ * Returns:
+ */
+foreign_t c_glRasterPos4s(term_t PL_X, term_t PL_Y, term_t PL_Z, term_t PL_W) {
+  int x,y,z,w;
+
+  if(!PL_get_integer(PL_X,&x) ||
+     !PL_get_integer(PL_Y,&y) ||
+     !PL_get_integer(PL_Z,&z) ||
+     !PL_get_integer(PL_W,&w))
+    return FALSE;
+
+  glRasterPos4s((GLshort)x, (GLshort)y, (GLshort)z, (GLshort)w);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glRasterPos4sv
+ * Params:
+ * Returns:
+ */
+foreign_t c_glRasterPos4sv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+    
+  int num, count;
+  GLshort *v;
+
+  num = 4;
+  count = 0;
+  v = malloc(num * sizeof(GLint));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_INTEGER) )
+      v[count] = (atoi(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glRasterPos4sv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+
 
 /***************************************
  * Name: c_glReadBuffer
@@ -3078,6 +3869,214 @@ foreign_t c_glStencilOp(term_t PL_Fail, term_t PL_zFail, term_t PL_zPass) {
 }
 
 /***************************************
+ * Name: c_glTexCoord1d
+ * Params:
+ * Returns:
+ */
+foreign_t c_glTexCoord1d(term_t PL_S) {
+  GLdouble s;
+
+  if(!PL_get_float(PL_S,&s))
+    return FALSE;
+
+  glTexCoord1d((GLdouble)s);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glTexCoord1dv
+ * Desc:    Set the current texture coordinates
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glTexCoord1dv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+
+  int num, count;
+  GLdouble *v;
+
+  num = 1;
+  count = 0;
+  v = malloc(num * sizeof(GLfloat));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_FLOAT) )
+      v[count] = (atof(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glTexCoord1dv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glTexCoord1f
+ * Params:
+ * Returns:
+ */
+foreign_t c_glTexCoord1f(term_t PL_S) {
+  GLdouble s;
+
+  if(!PL_get_float(PL_S,&s))
+    return FALSE;
+
+  glTexCoord1f((GLfloat)s);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glTexCoord1fv
+ * Desc:    Set the current texture coordinates
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glTexCoord1fv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+
+  int num, count;
+  float *v;
+
+  num = 1;
+  count = 0;
+  v = malloc(num * sizeof(GLfloat));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_FLOAT) )
+      v[count] = (atof(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glTexCoord1fv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glTexCoord1i
+ * Params:
+ * Returns:
+ */
+foreign_t c_glTexCoord1i(term_t PL_S) {
+  GLint s;
+
+  if(!PL_get_integer(PL_S,&s))
+    return FALSE;
+
+  glTexCoord1i((GLint)s);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glTexCoord1iv
+ * Desc:    Set the current texture coordinates
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glTexCoord1iv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+
+  int num, count;
+  GLint *v;
+
+  num = 1;
+  count = 0;
+  v = malloc(num * sizeof(GLint));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_INTEGER) )
+      v[count] = (atoi(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glTexCoord1iv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glTexCoord1s
+ * Params:
+ * Returns:
+ */
+foreign_t c_glTexCoord1s(term_t PL_S) {
+  GLint s;
+
+  if(!PL_get_integer(PL_S,&s))
+    return FALSE;
+
+  glTexCoord1s((GLshort)s);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glTexCoord1sv
+ * Desc:    Set the current texture coordinates
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glTexCoord1sv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+
+  int num, count;
+  GLshort *v;
+
+  num = 1;
+  count = 0;
+  v = malloc(num * sizeof(GLint));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_INTEGER) )
+      v[count] = (atoi(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glTexCoord1sv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
  * Name: c_glTexCoord2d
  * Params:
  * Returns:
@@ -3095,6 +4094,42 @@ foreign_t c_glTexCoord2d(term_t PL_S, term_t PL_T) {
 }
 
 /***************************************
+ * Name:    c_glTexCoord2dv
+ * Desc:    Set the current texture coordinates
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glTexCoord2dv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+
+  int num, count;
+  GLdouble *v;
+
+  num = 2;
+  count = 0;
+  v = malloc(num * sizeof(GLfloat));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_FLOAT) )
+      v[count] = (atof(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glTexCoord2dv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
  * Name: c_glTexCoord2f
  * Params:
  * Returns:
@@ -3107,6 +4142,584 @@ foreign_t c_glTexCoord2f(term_t PL_S, term_t PL_T) {
     return FALSE;
 
   glTexCoord2f((float)s,(float)t);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glTexCoord2fv
+ * Desc:    Set the current texture coordinates
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glTexCoord2fv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+
+  int num, count;
+  float *v;
+
+  num = 2;
+  count = 0;
+  v = malloc(num * sizeof(GLfloat));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_FLOAT) )
+      v[count] = (atof(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glTexCoord2fv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glTexCoord2i
+ * Params:
+ * Returns:
+ */
+foreign_t c_glTexCoord2i(term_t PL_S, term_t PL_T) {
+  GLint s,t;
+
+  if(!PL_get_integer(PL_S,&s) ||
+     !PL_get_integer(PL_T,&t))
+    return FALSE;
+
+  glTexCoord2i((GLint)s,(GLint)t);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glTexCoord2iv
+ * Desc:    Set the current texture coordinates
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glTexCoord2iv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+
+  int num, count;
+  GLint *v;
+
+  num = 2;
+  count = 0;
+  v = malloc(num * sizeof(GLint));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_INTEGER) )
+      v[count] = (atoi(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glTexCoord2iv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glTexCoord2s
+ * Params:
+ * Returns:
+ */
+foreign_t c_glTexCoord2s(term_t PL_S, term_t PL_T) {
+  GLint s,t;
+
+  if(!PL_get_integer(PL_S,&s) ||
+     !PL_get_integer(PL_T,&t))
+    return FALSE;
+
+  glTexCoord2s((GLshort)s,(GLshort)t);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glTexCoord2sv
+ * Desc:    Set the current texture coordinates
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glTexCoord2sv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+
+  int num, count;
+  GLshort *v;
+
+  num = 2;
+  count = 0;
+  v = malloc(num * sizeof(GLint));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_INTEGER) )
+      v[count] = (atoi(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glTexCoord2sv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glTexCoord3d
+ * Params:
+ * Returns:
+ */
+foreign_t c_glTexCoord3d(term_t PL_S, term_t PL_T, term_t PL_R) {
+  GLdouble s,t,r;
+
+  if(!PL_get_float(PL_S,&s) ||
+     !PL_get_float(PL_T,&t) ||
+     !PL_get_float(PL_R,&r))
+    return FALSE;
+
+  glTexCoord3d((GLdouble)s,(GLdouble)t,(GLdouble)r);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glTexCoord3dv
+ * Desc:    Set the current texture coordinates
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glTexCoord3dv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+
+  int num, count;
+  GLdouble *v;
+
+  num = 3;
+  count = 0;
+  v = malloc(num * sizeof(GLfloat));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_FLOAT) )
+      v[count] = (atof(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glTexCoord3dv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glTexCoord3f
+ * Params:
+ * Returns:
+ */
+foreign_t c_glTexCoord3f(term_t PL_S, term_t PL_T, term_t PL_R) {
+  GLdouble s,t,r;
+
+  if(!PL_get_float(PL_S,&s) ||
+     !PL_get_float(PL_T,&t) ||
+     !PL_get_float(PL_R,&r))
+    return FALSE;
+
+  glTexCoord3f((GLfloat)s,(GLfloat)t, (GLfloat)r);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glTexCoord3fv
+ * Desc:    Set the current texture coordinates
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glTexCoord3fv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+
+  int num, count;
+  float *v;
+
+  num = 3;
+  count = 0;
+  v = malloc(num * sizeof(GLfloat));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_FLOAT) )
+      v[count] = (atof(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glTexCoord3fv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glTexCoord3i
+ * Params:
+ * Returns:
+ */
+foreign_t c_glTexCoord3i(term_t PL_S, term_t PL_T, term_t PL_R) {
+  GLint s,t,r;
+
+  if(!PL_get_integer(PL_S,&s) ||
+     !PL_get_integer(PL_T,&t) ||
+     !PL_get_integer(PL_R,&r))
+    return FALSE;
+
+  glTexCoord3i((GLint)s,(GLint)t,(GLint)r);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glTexCoord3iv
+ * Desc:    Set the current texture coordinates
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glTexCoord3iv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+
+  int num, count;
+  GLint *v;
+
+  num = 3;
+  count = 0;
+  v = malloc(num * sizeof(GLint));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_INTEGER) )
+      v[count] = (atoi(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glTexCoord3iv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glTexCoord3s
+ * Params:
+ * Returns:
+ */
+foreign_t c_glTexCoord3s(term_t PL_S, term_t PL_T, term_t PL_R) {
+  GLint s,t,r;
+
+  if(!PL_get_integer(PL_S,&s) ||
+     !PL_get_integer(PL_T,&t) ||
+     !PL_get_integer(PL_R,&r))
+    return FALSE;
+
+  glTexCoord3s((GLshort)s,(GLshort)t,(GLshort)r);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glTexCoord3sv
+ * Desc:    Set the current texture coordinates
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glTexCoord3sv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+
+  int num, count;
+  GLshort *v;
+
+  num = 3;
+  count = 0;
+  v = malloc(num * sizeof(GLint));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_INTEGER) )
+      v[count] = (atoi(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glTexCoord3sv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glTexCoord4d
+ * Params:
+ * Returns:
+ */
+foreign_t c_glTexCoord4d(term_t PL_S, term_t PL_T, term_t PL_R, term_t PL_Q) {
+  GLdouble s,t,r,q;
+
+  if(!PL_get_float(PL_S,&s) ||
+     !PL_get_float(PL_T,&t) ||
+     !PL_get_float(PL_R,&r) ||
+     !PL_get_float(PL_Q,&q))
+    return FALSE;
+
+  glTexCoord4d((GLdouble)s,(GLdouble)t,(GLdouble)r,(GLdouble)q);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glTexCoord4dv
+ * Desc:    Set the current texture coordinates
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glTexCoord4dv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+
+  int num, count;
+  GLdouble *v;
+
+  num = 4;
+  count = 0;
+  v = malloc(num * sizeof(GLfloat));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_FLOAT) )
+      v[count] = (atof(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glTexCoord4dv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glTexCoord4f
+ * Params:
+ * Returns:
+ */
+foreign_t c_glTexCoord4f(term_t PL_S, term_t PL_T, term_t PL_R, term_t PL_Q) {
+  GLdouble s,t,r,q;
+
+  if(!PL_get_float(PL_S,&s) ||
+     !PL_get_float(PL_T,&t) ||
+     !PL_get_float(PL_R,&r) ||
+     !PL_get_float(PL_Q,&q))
+    return FALSE;
+
+  glTexCoord4f((GLfloat)s,(GLfloat)t, (GLfloat)r,(GLfloat)q);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glTexCoord4fv
+ * Desc:    Set the current texture coordinates
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glTexCoord4fv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+
+  int num, count;
+  float *v;
+
+  num = 4;
+  count = 0;
+  v = malloc(num * sizeof(GLfloat));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_FLOAT) )
+      v[count] = (atof(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glTexCoord4fv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glTexCoord4i
+ * Params:
+ * Returns:
+ */
+foreign_t c_glTexCoord4i(term_t PL_S, term_t PL_T, term_t PL_R, term_t PL_Q) {
+  GLint s,t,r,q;
+
+  if(!PL_get_integer(PL_S,&s) ||
+     !PL_get_integer(PL_T,&t) ||
+     !PL_get_integer(PL_R,&r) ||
+     !PL_get_integer(PL_Q,&q))
+    return FALSE;
+
+  glTexCoord4i((GLint)s,(GLint)t,(GLint)r,(GLint)q);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glTexCoord4iv
+ * Desc:    Set the current texture coordinates
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glTexCoord4iv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+
+  int num, count;
+  GLint *v;
+
+  num = 4;
+  count = 0;
+  v = malloc(num * sizeof(GLint));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_INTEGER) )
+      v[count] = (atoi(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glTexCoord4iv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glTexCoord4s
+ * Params:
+ * Returns:
+ */
+foreign_t c_glTexCoord4s(term_t PL_S, term_t PL_T, term_t PL_R, term_t PL_Q) {
+  GLint s,t,r,q;
+
+  if(!PL_get_integer(PL_S,&s) ||
+     !PL_get_integer(PL_T,&t) ||
+     !PL_get_integer(PL_R,&r) ||
+     !PL_get_integer(PL_Q,&q))
+    return FALSE;
+
+  glTexCoord4s((GLshort)s,(GLshort)t,(GLshort)r,(GLshort)q);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glTexCoord4sv
+ * Desc:    Set the current texture coordinates
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glTexCoord4sv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+
+  int num, count;
+  GLshort *v;
+
+  num = 4;
+  count = 0;
+  v = malloc(num * sizeof(GLint));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_INTEGER) )
+      v[count] = (atoi(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glTexCoord4sv(v);
+
+  free(v);
+  return PL_get_nil(list);
 
   PL_succeed;
 }

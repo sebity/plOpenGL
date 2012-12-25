@@ -318,6 +318,10 @@ glHint(Target,Hint):-
 glIndexi(Index):-
     c_glIndexi(Index).
 
+glIndexf(Index):-
+    float(Index),
+    c_glIndexf(Index).
+
 glIndexMask(Mask):-
     c_glIndexMask(Mask).
 
@@ -340,6 +344,9 @@ glLineWidth(Width) :-
 
 glLoadIdentity:-
 	c_glLoadIdentity.
+
+glLogicOp(Opcode) :-
+        c_glLogicOp(Opcode).
 
 % Load a name onto the name stack
 glLoadName(Name):-
@@ -375,14 +382,14 @@ glOrtho(Left,Right,Top,Bottom,Near,Far):-
 	c_glOrtho(Left,Right,Top,Bottom,Near,Far).
 
 glPixelStorei(Mode,Param) :-
-    c_glPixelStorei(Mode,Param).
+        c_glPixelStorei(Mode,Param).
 
 glPointSize(Size):-
 	float(Size),
 	c_glPointSize(Size).
 
 glPolygonMode(Face, Mode):-
-    c_glPolygonMode(Face, Mode).
+        c_glPolygonMode(Face, Mode).
 
 % Set the scale and units used to calculate depth values
 glPolygonOffset(Factor, Units):-
@@ -414,8 +421,95 @@ glPushMatrix:-
 glPushName(Name):-
     c_glPushName(Name).
 
+glRasterPos2d(X,Y):-
+    float(X),
+    float(Y),
+    c_glRasterPos2d(X,Y).
+
+glRasterPos2dv(V):-
+    c_glRasterPos2dv(V).
+
+glRasterPos2f(X,Y):-
+    float(X),
+    float(Y),
+    c_glRasterPos2f(X,Y).
+
+glRasterPos2fv(V):-
+    c_glRasterPos2fv(V).
+
 glRasterPos2i(X,Y):-
     c_glRasterPos2i(X,Y).
+
+glRasterPos2iv(V):-
+    c_glRasterPos2iv(V).
+
+glRasterPos2s(X,Y):-
+    c_glRasterPos2s(X,Y).
+
+glRasterPos2sv(V):-
+    c_glRasterPos2sv(V).
+
+glRasterPos3d(X,Y,Z):-
+    float(X),
+    float(Y),
+    float(Z),
+    c_glRasterPos3d(X,Y,Z).
+
+glRasterPos3dv(V):-
+    c_glRasterPos3dv(V).
+
+glRasterPos3f(X,Y,Z):-
+    float(X),
+    float(Y),
+    float(Z),
+    c_glRasterPos3f(X,Y,Z).
+
+glRasterPos3fv(V):-
+    c_glRasterPos3fv(V).
+
+glRasterPos3i(X,Y,Z):-
+    c_glRasterPos3i(X,Y,Z).
+
+glRasterPos3iv(V):-
+    c_glRasterPos3iv(V).
+
+glRasterPos3s(X,Y,Z):-
+    c_glRasterPos3s(X,Y,Z).
+
+glRasterPos3sv(V):-
+    c_glRasterPos3sv(V).
+
+glRasterPos4d(X,Y,Z,W):-
+    float(X),
+    float(Y),
+    float(Z),
+    float(W),
+    c_glRasterPos4d(X,Y,Z,W).
+
+glRasterPos4dv(V):-
+    c_glRasterPos4dv(V).
+
+glRasterPos4f(X,Y,Z,W):-
+    float(X),
+    float(Y),
+    float(Z),
+    float(W),
+    c_glRasterPos4f(X,Y,Z,W).
+
+glRasterPos4fv(V):-
+    c_glRasterPos4fv(V).
+
+glRasterPos4i(X,Y,Z,W):-
+    c_glRasterPos4i(X,Y,Z,W).
+
+glRasterPos4iv(V):-
+    c_glRasterPos4iv(V).
+
+glRasterPos4s(X,Y,Z,W):-
+    c_glRasterPos4s(X,Y,Z,W).
+
+glRasterPos4sv(V):-
+    c_glRasterPos4sv(V).
 
 % Select a color buffer source for pixels
 glReadBuffer(Mode):-
@@ -482,15 +576,121 @@ glStencilMask(Mask):-
 glStencilOp(Fail, ZFail, ZPass):-
 	c_glStencilOp(Fail, ZFail, ZPass).
 
+glTexCoord1d(S):-
+	float(S),
+	c_glTexCoord1d(S).
+
+glTexCoord1dv(V):-
+	c_glTexCoord1dv(V).
+
+glTexCoord1f(S):-
+	float(S),
+	c_glTexCoord1f(S).
+
+glTexCoord1fv(V):-
+	c_glTexCoord1fv(V).
+
+glTexCoord1i(S):-
+	c_glTexCoord1i(S).
+
+glTexCoord1iv(V):-
+	c_glTexCoord1iv(V).
+
+glTexCoord1s(S):-
+	c_glTexCoord1s(S).
+
+glTexCoord1sv(V):-
+	c_glTexCoord1sv(V).
+
 glTexCoord2d(S,T):-
 	float(S),
 	float(T),
 	c_glTexCoord2d(S,T).
 
+glTexCoord2dv(V):-
+	c_glTexCoord2dv(V).
+
 glTexCoord2f(S,T):-
 	float(S),
 	float(T),
 	c_glTexCoord2f(S,T).
+
+glTexCoord2fv(V):-
+	c_glTexCoord2fv(V).
+
+glTexCoord2i(S,T):-
+	c_glTexCoord2i(S,T).
+
+glTexCoord2iv(V):-
+	c_glTexCoord2iv(V).
+
+glTexCoord2s(S,T):-
+	c_glTexCoord2s(S,T).
+
+glTexCoord2sv(V):-
+	c_glTexCoord2sv(V).
+
+glTexCoord3d(S,T,R):-
+	float(S),
+	float(T),
+        float(R),
+	c_glTexCoord3d(S,T,R).
+
+glTexCoord3dv(V):-
+	c_glTexCoord3dv(V).
+
+glTexCoord3f(S,T,R):-
+	float(S),
+	float(T),
+        float(R),
+	c_glTexCoord3f(S,T,R).
+
+glTexCoord3fv(V):-
+	c_glTexCoord3fv(V).
+
+glTexCoord3i(S,T,R):-
+	c_glTexCoord3i(S,T,R).
+
+glTexCoord3iv(V):-
+	c_glTexCoord3iv(V).
+
+glTexCoord3s(S,T,R):-
+	c_glTexCoord3s(S,T,R).
+
+glTexCoord3sv(V):-
+	c_glTexCoord3sv(V).
+
+glTexCoord4d(S,T,R,Q):-
+	float(S),
+	float(T),
+        float(R),
+        float(Q),
+	c_glTexCoord4d(S,T,R,Q).
+
+glTexCoord4dv(V):-
+	c_glTexCoord4dv(V).
+
+glTexCoord4f(S,T,R,Q):-
+	float(S),
+	float(T),
+        float(R),
+        float(Q),
+	c_glTexCoord4f(S,T,R,Q).
+
+glTexCoord4fv(V):-
+	c_glTexCoord4fv(V).
+
+glTexCoord4i(S,T,R,Q):-
+	c_glTexCoord4i(S,T,R,Q).
+
+glTexCoord4iv(V):-
+	c_glTexCoord4iv(V).
+
+glTexCoord4s(S,T,R,Q):-
+	c_glTexCoord4s(S,T,R,Q).
+
+glTexCoord4sv(V):-
+	c_glTexCoord4sv(V).
 
 glTexImage1D(Target,Level,Internal,Width,Border,Format,Type,Texels):-
 	c_glTexImage1D(Target,Level,Internal,Width,Border,Format,Type,Texels).
