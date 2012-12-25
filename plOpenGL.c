@@ -235,6 +235,10 @@ foreign_t c_glTexCoord3d(term_t S, term_t T, term_t R);
 foreign_t c_glTexCoord3f(term_t S, term_t T, term_t R);
 foreign_t c_glTexCoord3i(term_t S, term_t T, term_t R);
 foreign_t c_glTexCoord3s(term_t S, term_t T, term_t R);
+foreign_t c_glTexCoord4d(term_t S, term_t T, term_t R, term_t Q);
+foreign_t c_glTexCoord4f(term_t S, term_t T, term_t R, term_t Q);
+foreign_t c_glTexCoord4i(term_t S, term_t T, term_t R, term_t Q);
+foreign_t c_glTexCoord4s(term_t S, term_t T, term_t R, term_t Q);
 foreign_t c_glTexImage1D(term_t Target, term_t Level, term_t Internal, term_t Width,
                          term_t Border, term_t Format, term_t Type, term_t Texels);
 foreign_t c_glTexImage2D(term_t Target, term_t Level, term_t Internal, term_t Width, term_t Height,
@@ -477,6 +481,10 @@ install_t install() {
   PL_register_foreign("c_glTexCoord3f",3,c_glTexCoord3f,PL_FA_NOTRACE);
   PL_register_foreign("c_glTexCoord3i",3,c_glTexCoord3i,PL_FA_NOTRACE);
   PL_register_foreign("c_glTexCoord3s",3,c_glTexCoord3s,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord4d",4,c_glTexCoord4d,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord4f",4,c_glTexCoord4f,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord4i",4,c_glTexCoord4i,PL_FA_NOTRACE);
+  PL_register_foreign("c_glTexCoord4s",4,c_glTexCoord4s,PL_FA_NOTRACE);
   PL_register_foreign("c_glTexImage1D",8,c_glTexImage1D,PL_FA_NOTRACE);
   PL_register_foreign("c_glTexImage2D",9,c_glTexImage2D,PL_FA_NOTRACE);
   PL_register_foreign("c_glTexImage3D",10,c_glTexImage3D,PL_FA_NOTRACE);
@@ -3960,6 +3968,23 @@ foreign_t c_glTexCoord2s(term_t PL_S, term_t PL_T) {
   PL_succeed;
 }
 
+/***************************************
+ * Name: c_glTexCoord3d
+ * Params:
+ * Returns:
+ */
+foreign_t c_glTexCoord3d(term_t PL_S, term_t PL_T, term_t PL_R) {
+  GLdouble s,t,r;
+
+  if(!PL_get_float(PL_S,&s) ||
+     !PL_get_float(PL_T,&t) ||
+     !PL_get_float(PL_R,&r))
+    return FALSE;
+
+  glTexCoord3d((GLdouble)s,(GLdouble)t,(GLdouble)r);
+
+  PL_succeed;
+}
 
 /***************************************
  * Name: c_glTexCoord3f
@@ -3975,24 +4000,6 @@ foreign_t c_glTexCoord3f(term_t PL_S, term_t PL_T, term_t PL_R) {
     return FALSE;
 
   glTexCoord3f((GLfloat)s,(GLfloat)t, (GLfloat)r);
-
-  PL_succeed;
-}
-
-/***************************************
- * Name: c_glTexCoord3d
- * Params:
- * Returns:
- */
-foreign_t c_glTexCoord3d(term_t PL_S, term_t PL_T, term_t PL_R) {
-  GLdouble s,t,r;
-
-  if(!PL_get_float(PL_S,&s) ||
-     !PL_get_float(PL_T,&t) ||
-     !PL_get_float(PL_R,&r))
-    return FALSE;
-
-  glTexCoord3d((GLdouble)s,(GLdouble)t,(GLdouble)r);
 
   PL_succeed;
 }
@@ -4033,6 +4040,81 @@ foreign_t c_glTexCoord3s(term_t PL_S, term_t PL_T, term_t PL_R) {
   PL_succeed;
 }
 
+/***************************************
+ * Name: c_glTexCoord4d
+ * Params:
+ * Returns:
+ */
+foreign_t c_glTexCoord4d(term_t PL_S, term_t PL_T, term_t PL_R, term_t PL_Q) {
+  GLdouble s,t,r,q;
+
+  if(!PL_get_float(PL_S,&s) ||
+     !PL_get_float(PL_T,&t) ||
+     !PL_get_float(PL_R,&r) ||
+     !PL_get_float(PL_Q,&q))
+    return FALSE;
+
+  glTexCoord4d((GLdouble)s,(GLdouble)t,(GLdouble)r,(GLdouble)q);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glTexCoord4f
+ * Params:
+ * Returns:
+ */
+foreign_t c_glTexCoord4f(term_t PL_S, term_t PL_T, term_t PL_R, term_t PL_Q) {
+  GLdouble s,t,r,q;
+
+  if(!PL_get_float(PL_S,&s) ||
+     !PL_get_float(PL_T,&t) ||
+     !PL_get_float(PL_R,&r) ||
+     !PL_get_float(PL_Q,&q))
+    return FALSE;
+
+  glTexCoord4f((GLfloat)s,(GLfloat)t, (GLfloat)r,(GLfloat)q);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glTexCoord4i
+ * Params:
+ * Returns:
+ */
+foreign_t c_glTexCoord4i(term_t PL_S, term_t PL_T, term_t PL_R, term_t PL_Q) {
+  GLint s,t,r,q;
+
+  if(!PL_get_integer(PL_S,&s) ||
+     !PL_get_integer(PL_T,&t) ||
+     !PL_get_integer(PL_R,&r) ||
+     !PL_get_integer(PL_Q,&q))
+    return FALSE;
+
+  glTexCoord4i((GLint)s,(GLint)t,(GLint)r,(GLint)q);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glTexCoord4s
+ * Params:
+ * Returns:
+ */
+foreign_t c_glTexCoord4s(term_t PL_S, term_t PL_T, term_t PL_R, term_t PL_Q) {
+  GLint s,t,r,q;
+
+  if(!PL_get_integer(PL_S,&s) ||
+     !PL_get_integer(PL_T,&t) ||
+     !PL_get_integer(PL_R,&r) ||
+     !PL_get_integer(PL_Q,&q))
+    return FALSE;
+
+  glTexCoord4s((GLshort)s,(GLshort)t,(GLshort)r,(GLshort)q);
+
+  PL_succeed;
+}
 
 
 

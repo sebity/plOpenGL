@@ -624,6 +624,26 @@ glTexCoord3i(S,T,R):-
 glTexCoord3s(S,T,R):-
 	c_glTexCoord3s(S,T,R).
 
+glTexCoord4d(S,T,R,Q):-
+	float(S),
+	float(T),
+        float(R),
+        float(Q),
+	c_glTexCoord4d(S,T,R,Q).
+
+glTexCoord4f(S,T,R,Q):-
+	float(S),
+	float(T),
+        float(R),
+        float(Q),
+	c_glTexCoord4f(S,T,R,Q).
+
+glTexCoord4i(S,T,R,Q):-
+	c_glTexCoord4i(S,T,R,Q).
+
+glTexCoord4s(S,T,R,Q):-
+	c_glTexCoord4s(S,T,R,Q).
+
 glTexImage1D(Target,Level,Internal,Width,Border,Format,Type,Texels):-
 	c_glTexImage1D(Target,Level,Internal,Width,Border,Format,Type,Texels).
 
