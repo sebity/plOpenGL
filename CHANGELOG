@@ -1,6 +1,26 @@
 plOpenGL CHANGELOG
 =================================================
 
+0.4.1
+=====
+    * Add: glIndexd, glIndexf
+    * Add: glLogicOp
+    * Add: glRasterPos2d, glRasterPos2f, glRasterPos2s
+    * Add: glRasterPos2dv, glRasterPos2fv, glRasterPos2iv, glRasterPos2sv
+    * Add: glRasterPos3d, glRasterPos3f, glRasterPos3i, glRasterPos3s
+    * Add: glRasterPos3dv, glRasterPos3fv, glRasterPos3iv, glRasterPos3sv
+    * Add: glRasterPos4d, glRasterPos4f, glRasterPos4i, glRasterPos4s
+    * Add: glRasterPos4dv, glRasterPos4fv, glRasterPos4iv, glRasterPos4sv
+    * Add: glTexCoord1d, glTexCoord1f, glTexCoord1i, glTexCoord1s
+    * Add: glTexCoord2i, glTexCoord2s
+    * Add: glTexCoord3d, glTexCoord3f
+    * Add: glTexCoord4d, glTexCoord4f, glTexCoord4i, glTexCoord4s
+    * Add: glTexCoord1dv, glTexCoord1fv, glTexCoord1iv, glTexCoord1sv
+    * Add: glTexCoord2dv, glTexCoord2fv, glTexCoord2iv, glTexCoord2sv
+    * Add: glTexCoord3dv, glTexCoord3fv, glTexCoord3iv, glTexCoord3sv
+    * Add: glTexCoord4dv, glTexCoord4fv, glTexCoord4iv, glTexCoord4sv
+
+
 0.4.0
 =====
     * Add: glColor3b, glColor3i, glColor3s
@@ -10,7 +30,7 @@ plOpenGL CHANGELOG
     * Add: glVertexPointer
     * Add: glVertex2d, glVertex2s
     * Add: glVertex4d, glVertex4f, glVertex4i, glVertex4s
-    * Add: glVertex2dv, glVertex2fv, glVertex2iv, glVertex2sv 
+    * Add: glVertex2dv, glVertex2fv, glVertex2iv, glVertex2sv
     * Add: glVertex3dv, glVertex3fv, glVertex3iv, glVertex3sv
     * Add: glVertex4dv, glVertex4fv, glVertex4iv, glVertex4sv
 
@@ -30,7 +50,7 @@ plOpenGL CHANGELOG
 0.3.1
 =====
     * Add: OS Preprocessor Directive for glMinmax and glResetMinmax
-    * Update: variable names for glDepthRange 
+    * Update: variable names for glDepthRange
 
 0.3.0
 =====
