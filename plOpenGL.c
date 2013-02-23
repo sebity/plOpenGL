@@ -140,6 +140,7 @@ foreign_t c_glEnable(term_t Mode);
 foreign_t c_glEnableClientState(term_t Cap);
 foreign_t c_glEnd(void);
 foreign_t c_glEndList(void);
+foreign_t c_glEvalCoord1d(term_t U);
 foreign_t c_glEvalMesh1(term_t Mode, term_t I1, term_t I2);
 foreign_t c_glEvalMesh2(term_t Mode, term_t I1, term_t I2, term_t J1, term_t J2);
 foreign_t c_glEvalPoint1(term_t I);
@@ -402,6 +403,7 @@ install_t install() {
   PL_register_foreign("c_glEnableClientState",1,c_glEnableClientState,PL_FA_NOTRACE);
   PL_register_foreign("c_glEnd",0,c_glEnd,PL_FA_NOTRACE);
   PL_register_foreign("c_glEndList",0,c_glEndList,PL_FA_NOTRACE);
+  PL_register_foreign("c_glEvalCoord1d",1,c_glEvalCoord1d,PL_FA_NOTRACE);
   PL_register_foreign("c_glEvalMesh1",3,c_glEvalMesh1,PL_FA_NOTRACE);
   PL_register_foreign("c_glEvalMesh2",5,c_glEvalMesh2,PL_FA_NOTRACE);
   PL_register_foreign("c_glEvalPoint1",1,c_glEvalPoint1,PL_FA_NOTRACE);
@@ -2069,6 +2071,21 @@ foreign_t c_glEnd(void) {
  */
 foreign_t c_glEndList(void) {
   glEndList();
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glEvalCoord1d
+ * Params:
+ * Returns:
+ */
+foreign_t c_glEvalCoord1d(term_t PL_U) {
+  GLdouble u;
+
+  if(!PL_get_float(PL_U, &u))
+    return FALSE;
+
+  glEvalCoord1d((GLdouble)u);
   PL_succeed;
 }
 
