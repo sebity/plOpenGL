@@ -141,6 +141,13 @@ foreign_t c_glEnableClientState(term_t Cap);
 foreign_t c_glEnd(void);
 foreign_t c_glEndList(void);
 foreign_t c_glEvalCoord1d(term_t U);
+foreign_t c_glEvalCoord1dv(term_t U);
+foreign_t c_glEvalCoord1f(term_t U);
+foreign_t c_glEvalCoord1fv(term_t U);
+foreign_t c_glEvalCoord2d(term_t U, term_t V);
+foreign_t c_glEvalCoord2dv(term_t U);
+foreign_t c_glEvalCoord2f(term_t U, term_t V);
+foreign_t c_glEvalCoord2fv(term_t U);
 foreign_t c_glEvalMesh1(term_t Mode, term_t I1, term_t I2);
 foreign_t c_glEvalMesh2(term_t Mode, term_t I1, term_t I2, term_t J1, term_t J2);
 foreign_t c_glEvalPoint1(term_t I);
@@ -404,6 +411,13 @@ install_t install() {
   PL_register_foreign("c_glEnd",0,c_glEnd,PL_FA_NOTRACE);
   PL_register_foreign("c_glEndList",0,c_glEndList,PL_FA_NOTRACE);
   PL_register_foreign("c_glEvalCoord1d",1,c_glEvalCoord1d,PL_FA_NOTRACE);
+  PL_register_foreign("c_glEvalCoord1dv",1,c_glEvalCoord1dv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glEvalCoord1f",1,c_glEvalCoord1f,PL_FA_NOTRACE);
+  PL_register_foreign("c_glEvalCoord1fv",1,c_glEvalCoord1fv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glEvalCoord2d",2,c_glEvalCoord2d,PL_FA_NOTRACE);
+  PL_register_foreign("c_glEvalCoord2dv",1,c_glEvalCoord2dv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glEvalCoord2f",2,c_glEvalCoord2f,PL_FA_NOTRACE);
+  PL_register_foreign("c_glEvalCoord2fv",1,c_glEvalCoord2fv,PL_FA_NOTRACE);
   PL_register_foreign("c_glEvalMesh1",3,c_glEvalMesh1,PL_FA_NOTRACE);
   PL_register_foreign("c_glEvalMesh2",5,c_glEvalMesh2,PL_FA_NOTRACE);
   PL_register_foreign("c_glEvalPoint1",1,c_glEvalPoint1,PL_FA_NOTRACE);
@@ -2086,6 +2100,197 @@ foreign_t c_glEvalCoord1d(term_t PL_U) {
     return FALSE;
 
   glEvalCoord1d((GLdouble)u);
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glEvalCoord1dv
+ * Desc:    
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glEvalCoord1dv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+
+  int num, count;
+  GLdouble *v;
+
+  num = 1;
+  count = 0;
+  v = malloc(num * sizeof(GLdouble));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_FLOAT) )
+      v[count] = (atof(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glEvalCoord1dv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glEvalCoord1f
+ * Params:
+ * Returns:
+ */
+foreign_t c_glEvalCoord1f(term_t PL_U) {
+  GLdouble u;
+
+  if(!PL_get_float(PL_U, &u))
+    return FALSE;
+
+  glEvalCoord1f((GLfloat)u);
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glEvalCoord1fv
+ * Desc:    
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glEvalCoord1fv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+
+  int num, count;
+  GLfloat *v;
+
+  num = 1;
+  count = 0;
+  v = malloc(num * sizeof(GLfloat));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_FLOAT) )
+      v[count] = (atof(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glEvalCoord1fv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glEvalCoord2d
+ * Params:
+ * Returns:
+ */
+foreign_t c_glEvalCoord2d(term_t PL_U, term_t PL_V) {
+  GLdouble u,v;
+
+  if(!PL_get_float(PL_U, &u) ||
+     !PL_get_float(PL_V, &v))
+    return FALSE;
+
+  glEvalCoord2d((GLdouble)u, (GLdouble)v);
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glEvalCoord2dv
+ * Desc:    
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glEvalCoord2dv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+
+  int num, count;
+  GLdouble *v;
+
+  num = 2;
+  count = 0;
+  v = malloc(num * sizeof(GLdouble));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_FLOAT) )
+      v[count] = (atof(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glEvalCoord2dv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glEvalCoord2f
+ * Params:
+ * Returns:
+ */
+foreign_t c_glEvalCoord2f(term_t PL_U, term_t PL_V) {
+  GLdouble u,v;
+
+  if(!PL_get_float(PL_U, &u) ||
+     !PL_get_float(PL_V, &v))
+    return FALSE;
+
+  glEvalCoord2f((GLfloat)u, (GLfloat)v);
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glEvalCoord2fv
+ * Desc:    
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glEvalCoord2fv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+
+  int num, count;
+  GLfloat *v;
+
+  num = 2;
+  count = 0;
+  v = malloc(num * sizeof(GLfloat));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_FLOAT) )
+      v[count] = (atof(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glEvalCoord2fv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
   PL_succeed;
 }
 
@@ -3916,7 +4121,7 @@ foreign_t c_glTexCoord1dv(term_t PL_V) {
 
   num = 1;
   count = 0;
-  v = malloc(num * sizeof(GLfloat));
+  v = malloc(num * sizeof(GLdouble));
 
   while( PL_get_list(list, head, list) ) {
     char *s;
