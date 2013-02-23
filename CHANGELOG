@@ -1,6 +1,14 @@
 plOpenGL CHANGELOG
 =================================================
 
+0.4.2
+=====
+    * Add: glEvalCoord1d, glEvalCoord1f
+    * Add: glEvalCoord2d, glEvalCoord2f
+    * Add: glEvalCoord1dv, glEvalCoord1fv
+    * Add: glEvalCoord2dv, glEvalCoord2fv 
+    * Add: Particles Example
+
 0.4.1
 =====
     * Add: glIndexd, glIndexf
