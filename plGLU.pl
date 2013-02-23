@@ -1,14 +1,21 @@
+:- module(plGLU,
+	  [
+	   gluBuild2DMipmaps/7,
+	   gluLookAt/9,
+	   gluOrtho2D/4,
+	   gluPerspective/4
+	  ]).
+
 /** <module> GLU Interface
 
 This module is the glu extension of the Prolog OpenGL Interface
-(plOpengL) written by Jan Tatham.
+(plOpengL)
 
   @author Jan Tatham
   @license LGPL 2.1
 */
 
-/** gluBuild2DMaps(+Target, +Internal, +Width, +Height, +Format,
-                   +Type, +Texels).
+/** gluBuild2DMipmaps(+Target, +Internal, +Width, +Height, +Format, +Type, +Texels).
 
 Builds a two-dimensional mipmap
 */
@@ -16,8 +23,7 @@ gluBuild2DMipmaps(Target,Internal,Width,Height,Format,Type,Texels):-
 	c_gluBuild2DMipmaps(Target,Internal,Width,Height,Format,Type,Texels).
 
 
-/** gluLootAt(+EyeX, +EyeY, +EyeZ, +CenterX, +CenterY, +CenterZ, +UpX, +UpY,
-	      +UpZ).
+/** gluLookAt(+EyeX, +EyeY, +EyeZ, +CenterX, +CenterY, +CenterZ, +UpX, +UpY, +UpZ).
 
 Defines a viewing transformation.
 */
