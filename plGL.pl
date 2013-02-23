@@ -1,34 +1,124 @@
-% gl Predicates
+/** <module> OpenGL Header
 
-eq(X,X).
+This module is the opengl extension of the Prolog OpenGL Interface
+(plOpengL) written by Jan Tatham.
 
-% Operates on the accumulation buffer.
+ @author   Jan Tatham
+ @version  0.5.0
+ @license  LGPL
+*/
+
+%%	glAccum(+Operation, +Value).
+%Operates on the accumulation buffer.
+%
+% * Operation
+%   Specifies the accumulation buffer operation. Symbolic
+%   constants *|kGL_LOAD, kGL_ACCUM, kGL_MULT, kGL_ADD,|* and
+%   *kGL_RETURN* are accepted.
+%
+% * Value
+%   Specifies a floating-point value used in the accumulation
+%   buffer operation. The Operation parameter determines how Value is
+%   used.
+%
 glAccum(Operation,Value):-
 	float(Value),
 	c_glAccum(Operation,Value).
 
+%%	glActiveTextureARB(+Texture).
 % Specify which texture unit is active.
+%
+% * Texture
+%   Specifies which texture unit to make active.
+%
 glActiveTextureARB(Texture):-
 	c_glActiveTextureARB(Texture).
 
+%%	glAlphaFunc(+Func, +Ref).
 % Specify the alpha test function.
+%
+% * Func
+%   Specifies the alpha comparison function. Symbolic constants
+%   *|kGL_NEVER, kGL_LESS, kGL_EQUAL, kGL_LEQUAL, kGL_GREATER,
+%   kGL_NOTEQUAL, kGL_GEQUAL,|* and *kGL_ALWAYS* are accepted. The
+%   default function is *kGL_ALWAYS*.
+%
+% * Ref
+%   Specifies the reference value to which incoming alpha values are
+%   compared. This value is clamped to the range 0 (zero) through 1
+%   (one), where 0 represents the lowest possible alpha value, and 1 the
+%   highest possible value. The default reference is 0.
+%
 glAlphaFunc(Func, Ref):-
 	float(Ref),
 	c_glAlphaFunc(Func, Ref).
 
+%%	glArrayElement(+Index).
 % Render a vertex using the specified vertex array element.
+%
+%  * Index
+%    Specifies an index into the enabled vertex data arrays.
+%
 glArrayElement(Index):-
 	c_glArrayElement(Index).
 
+%%	glBegin(+Mode).
 % Delimits the vertices of a primitive or group of like primitives.
+%
+% * Mode
+%   Specifies the primitive or primitives that will be created from
+%   vertices presented between glBegin and the subsequent glEnd. Ten
+%   symbolic constants are accepted: *|kGL_POINTS, kGL_LINES,
+%   kGL_LINE_STRIP, kGL_LINE_LOOP, kGL_TRIANGLES, kGL_TRIANGLE_STRIP,
+%   kGL_TRIANGLE_FAN, kGL_QUADS, kGL_QUAD_STRIP,|* and *kGL_POLYGON*.
+%
 glBegin(Mode):-
 	c_glBegin(Mode).
 
+%%	glBindTexture(+Target, +Texture).
 % Binds a named texture to a texturing target.
+%
+%  * Target
+%    Specifies the target to which the texture is bound.
+%    Must be either *|kGL_TEXTURE_1D, kGL_TEXTURE_2D, kGL_TEXTURE_3D,|*
+%    or *kGL_TEXTURE_3D_EXT*.
+%
+% * Texture
+%   Specifies the name of a texture.
+%
 glBindTexture(Target,Texture):-
 	c_glBindTexture(Target,Texture).
 
+%%	glBitmap(+W, +H, +X1, +Y1, +X2, +Y2, +Bitmap).
 % Draws a Bitmap
+%
+% * W
+%   Specifies the pixel width of the bitmap image.
+%
+% * H
+%   Specifies the pixel height of the bitmap image.
+%
+% * X1
+%   Specifies the location of the x origin in the bitmap image. The x
+%   origin is measured from the lower left corner of the bitmap, with
+%   right and up being the positive axes.
+%
+% * Y1
+%   Specifies the location of the y origin in the bitmap image. The y
+%   origin is measured from the lower left corner of the bitmap, with
+%   right and up being the positive axes.
+%
+% * X2
+%   Specifies the x offset to be added to the current raster position
+%   after the bitmap is drawn.
+%
+% * Y2
+%   Specifies the y offset to be added to the current raster position
+%   after the bitmap is drawn.
+%
+% * Bitmap
+%   Specifies the address of the bitmap image.
+%
 glBitmap(W,H,X1,Y1,X2,Y2,Bitmap):-
 	size(Bitmap,N),
 	float(X1),
@@ -37,20 +127,76 @@ glBitmap(W,H,X1,Y1,X2,Y2,Bitmap):-
 	float(Y2),
 	c_glBitmap(W,H,X1,Y1,X2,Y2,Bitmap,N).
 
+%%	glBlendFunc(+SFactor, +DFactor).
 % Specifies pixel arithmetic.
+%
+% * SFactor
+%   Specifies how the RGBA source-blending factors are computed.
+%   *|kGL_ONE, kGL_DST_COLOR, kGL_ONE_MINUS_DST_COLOR, kGL_SRC_ALPHA,
+%   kGL_ONE_MINUS_SRC_ALPHA, kGL_DST_ALPHA, kGL_ONE_MINUS_DST_ALPHA,
+%   kGL_CONSTANT_COLOR, kGL_CONSTANT_COLOR_EXT,
+%   kGL_ONE_MINUS_CONSTANT_COLOR, kGL_ONE_MINUS_CONSTANT_COLOR_EXT,
+%   kGL_CONSTANT_ALPHA, kGL_CONSTANT_ALPHA_EXT,
+%   kGL_ONE_MINUS_CONSTANT_ALPHA, kGL_ONE_MINUS_CONSTANT_ALPHA_EXT, and
+%   kGL_SRC_ALPHA_SATURATE|*.
+%   These symbolic constants are defined in the Description section. The
+%   initial value is *kGL_ONE*.
+%
+% * DFactor
+%   Specifies how the RGBA destination-blending factors are computed.
+%   Twelve symbolic constants are accepted: *|kGL_ZERO, kGL_ONE,
+%   kGL_SRC_COLOR, kGL_ONE_MINUS_SRC_COLOR, kGL_SRC_ALPHA,
+%   kGL_ONE_MINUS_SRC_ALPHA, kGL_DST_ALPHA , kGL_ONE_MINUS_DST_ALPHA,
+%   kGL_CONSTANT_COLOR, kGL_CONSTANT_COLOR_EXT,
+%   kGL_ONE_MINUS_CONSTANT_COLOR, kGL_ONE_MINUS_CONSTANT_COLOR_EXT,
+%   kGL_CONSTANT_ALPHA, kGL_CONSTANT_ALPHA_EXT,
+%   kGL_ONE_MINUS_CONSTANT_ALPHA, and
+%   kGL_ONE_MINUS_CONSTANT_ALPHA_EXT|*.
+%   These symbolic constants are defined in the Description section. The
+%   initial value is *kGL_ZERO*.
+%
 glBlendFunc(SFactor,DFactor):-
 	c_glBlendFunc(SFactor,DFactor).
 
+%%	glCallList(+OptionList).
 % Execute a display list
+%
+% * OptionList
+%   Specifies the integer name of the display list to be executed.
+%
 glCallList(OptionList) :-
 	c_glCallList(OptionList).
 
+%%      glClear(+OptionList).
 % Clear buffers to preset values
+% * OptionList
+% Bitwise OR of masks that indicate the buffers to be cleared. The four
+% masks are *|kGL_COLOR_BUFFER_BIT, kGL_DEPTH_BUFFER_BIT,
+% kGL_ACCUM_BUFFER_BIT,|* and *kGL_STENCIL_BUFFER_BIT*.
+%
 glClear(OptionList):-
 	Applied_options is OptionList,
 	c_glClear(Applied_options).
 
+%%	glClearAccum(+R, +G, +B, +A).
 % Specify clear values for the accumulation buffer
+%
+% * R
+%   Specifies the red value used when the accumulation buffer is
+%   cleared. The default value is 0 (zero).
+%
+% * G
+%   Specifies the green value used when the accumulation buffer is
+%   cleared. The default value is 0.
+%
+% * B
+%   Specifies the blue value used when the accumulation buffer is
+%   cleared. The default value is 0.
+%
+% * A
+%   Specifies the alpha value used when the accumulation buffer is
+%   cleared. The default value is 0.
+%
 glClearAccum(R,G,B,A) :-
 	float(R),
 	float(G),
@@ -58,7 +204,25 @@ glClearAccum(R,G,B,A) :-
 	float(A),
 	c_glClearAccum(R,G,B,A).
 
+%%	glClearColor(+R, +G, +B, +A)
 % Specify clear values for the color buffers
+%
+% * R
+%   Specifies the red value used when the accumulation buffer is
+%   cleared. The default value is 0 (zero).
+%
+% * G
+%   Specifies the green value used when the accumulation buffer is
+%   cleared. The default value is 0.
+%
+% * B
+%   Specifies the blue value used when the accumulation buffer is
+%   cleared. The default value is 0.
+%
+% * A
+%   Specifies the alpha value used when the accumulation buffer is
+%   cleared. The default value is 0.
+%
 glClearColor(R,G,B,A) :-
 	float(R),
 	float(G),
@@ -883,7 +1047,7 @@ glViewport(X,Y,W,H):-
 	c_glViewport(X,Y,W,H).
 
 
-
+eq(X,X).
 
 
 
