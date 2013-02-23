@@ -245,6 +245,32 @@ glEvalCoord1d(U) :-
     float(U),
     c_glEvalCoord1d(U).
 
+glEvalCoord1dv(U) :-
+    c_glEvalCoord1dv(U).
+
+glEvalCoord1f(U) :-
+    float(U),
+    c_glEvalCoord1f(U).
+
+glEvalCoord1fv(U) :-
+    c_glEvalCoord1fv(U).
+
+glEvalCoord2d(U,V) :-
+    float(U),
+    float(V),
+    c_glEvalCoord2d(U,V).
+
+glEvalCoord2dv(U) :-
+    c_glEvalCoord2dv(U).
+
+glEvalCoord2f(U,V) :-
+    float(U),
+    float(V),
+    c_glEvalCoord2f(U,V).
+
+glEvalCoord2fv(U) :-
+    c_glEvalCoord2fv(U).
+
 % Compute a one- or two-dimensional grid of points or lines
 glEvalMesh1(Mode,I1,I2) :-
     c_glEvalMesh1(Mode,I1,I2).
