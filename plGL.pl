@@ -241,6 +241,10 @@ glEnd:-
 glEndList :-
 	c_glEndList.
 
+glEvalCoord1d(U) :-
+    float(U),
+    c_glEvalCoord1d(U).
+
 % Compute a one- or two-dimensional grid of points or lines
 glEvalMesh1(Mode,I1,I2) :-
     c_glEvalMesh1(Mode,I1,I2).
