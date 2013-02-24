@@ -1,7 +1,41 @@
+:- module(plGLUT,
+	  [
+	   glutCreateWindow/1,
+	   glutDestroyWindow/0,
+	   glutDisplayFunc/0,
+	   glutFullScreen/0,
+	   glutGet/2,
+	   glutDisplayFunc/1,
+	   glutIdleFunc/1,
+	   glutInit/0,
+	   glutInitDisplayMode/1,
+	   glutInitWindowPosition/2,
+	   glutInitWindowSize/2,
+	   glutKeyboardFunc/0,
+	   glutMainLoop/0,
+	   glutMotionFunc/0,
+	   glutMouseFunc/0,
+	   glutPostRedisplay/0,
+	   glutReshapeFunc/0,
+	   glutReshapeWindow/2,
+	   glutSetColor/4,
+	   glutSolidCone/4,
+	   glutSolidCube/1,
+	   glutSolidSphere/3,
+	   glutSolidTeapot/1,
+	   glutSolidTorus/4,
+	   glutSwapBuffers/0,
+	   glutWireCone/4,
+	   glutWireCube/1,
+	   glutWireSphere/3,
+	   glutWireTeapot/1,
+	   glutWireTorus/4
+	  ]).
+
 /** <module> GLUT Interface
 
-This module is the glut extension of the Prolog OpenGL Interface
-(plOpengL) written by Jan Tatham.
+ This module is the glut extension of the Prolog OpenGL Interface
+ (plOpengL)
 
   @author Jan Tatham
   @license LGPL 2.1
@@ -112,7 +146,7 @@ glutSetColor(Index, Red, Green, Blue) :-
     float(Blue),
     c_glutSetColor(Index, Red, Green, Blue).
 
-%%	glutSolidCone(+Radius, +Height, +Slices, +Stacks
+%%	glutSolidCone(+Radius, +Height, +Slices, +Stacks).
 % Render a solid cone
 glutSolidCone(Radius, Height, Slices, Stacks):-
     float(Radius),
@@ -155,7 +189,7 @@ glutSolidTorus(InnerRadius, OuterRadius, NSides, Rings):-
 glutSwapBuffers:-
 	c_glutSwapBuffers.
 
-%%	glutWireCone(+Radius, +Height, +Slices, +Stacks
+%%	glutWireCone(+Radius, +Height, +Slices, +Stacks).
 % Render a wireframe cone
 glutWireCone(Radius, Height, Slices, Stacks):-
     float(Radius),

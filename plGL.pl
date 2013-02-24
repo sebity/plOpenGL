@@ -1,34 +1,337 @@
-% gl Predicates
+:- module(plGL,
+	  [
+	   glAccum/2,
+	   glActiveTextureARB/1,
+	   glAlphaFunc/2,
+	   glArrayElement/1,
+	   glBegin/1,
+	   glBindTexture/2,
+	   glBitmap/7,
+	   glBlendFunc/2,
+	   glCallList/1,
+	   glClear/1,
+	   glClearAccum/4,
+	   glClearColor/4,
+	   glClearDepth/1,
+	   glClearIndex/1,
+	   glClearStencil/1,
+	   glClipPlane/2,
+	   glColor3b/3,
+	   glColor3bv/1,
+	   glColor3d/3,
+	   glColor3d/3,
+	   glColor3dv/1,
+	   glColor3f/3,
+	   glColor3fv/1,
+	   glColor3i/3,
+	   glColor3iv/1,
+	   glColor3s/3,
+	   glColor3sv/1,
+	   glColor4dv/1,
+	   glColor4f/4,
+	   glColor4fv/1,
+	   glColor4ub/4,
+	   glColorMask/4,
+	   glColorMaterial/2,
+	   glCopyColorTable/5,
+	   glCopyPixels/5,
+	   glCopyTexImage1D/7,
+	   glCopyTexImage2D/8,
+	   glCopyTexSubImage1D/6,
+	   glCopyTexSubImage2D/8,
+	   glCullFace/1,
+	   glDepthFunc/1,
+	   glDepthMask/1,
+	   glDepthRange/2,
+	   glDisable/1,
+	   glDisableClientState/1,
+	   glDrawArrays/3,
+	   glDrawBuffer/1,
+	   glDrawElements/4,
+	   glDrawPixels/5,
+	   glEnable/1,
+	   glEnableClientState/1,
+	   glEnd/0,
+	   glEndList/0,
+	   glEvalCoord1d/1,
+	   glEvalCoord1dv/1,
+	   glEvalCoord1f/1,
+	   glEvalCoord1fv/1,
+	   glEvalCoord2d/2,
+	   glEvalCoord2dv/1,
+	   glEvalCoord2f/2,
+	   glEvalCoord2fv/1,
+	   glEvalMesh1/3,
+	   glEvalMesh2/5,
+	   glEvalPoint1/1,
+	   glEvalPoint2/2,
+	   glFinish/0,
+	   glFlush/0,
+	   glFogf/2,
+	   glFogi/2,
+	   glFrontFace/1,
+	   glFrustum/6,
+	   glGenLists/1,
+	   glGenTextures/2,
+	   glGetLightfv/3,
+	   glGetLightiv/3,
+	   glGetMaterialfv/3,
+	   glGetMaterialiv/3,
+	   glHint/2,
+	   glIndexi/1,
+	   glIndexf/1,
+	   glIndexMask/1,
+	   glLightfv/3,
+	   glLightModelfv/2,
+	   glLineStipple/2,
+	   glLineWidth/1,
+	   glLoadIdentity/0,
+	   glLogicOp/1,
+	   glLoadName/1,
+	   glMaterialfv/3,
+	   glMatrixMode/1,
+	   glMinmax/3,
+	   glNewList/2,
+	   glNormal3f/3,
+	   glOrtho/6,
+	   glPixelStorei/2,
+	   glPointSize/1,
+	   glPolygonMode/2,
+	   glPolygonOffset/2,
+	   glPopAttrib/0,
+	   glPopClientAttrib/0,
+	   glPopMatrix/0,
+	   glPopName/0,
+	   glPushAttrib/1,
+	   glPushClientAttrib/1,
+	   glPushMatrix/0,
+	   glPushName/1,
+	   glRasterPos2d/2,
+	   glRasterPos2dv/1,
+	   glRasterPos2f/2,
+	   glRasterPos2fv/1,
+	   glRasterPos2i/2,
+	   glRasterPos2iv/1,
+	   glRasterPos2s/2,
+	   glRasterPos2sv/1,
+	   glRasterPos3d/3,
+	   glRasterPos3dv/1,
+	   glRasterPos3f/3,
+	   glRasterPos3fv/1,
+	   glRasterPos3i/3,
+	   glRasterPos3iv/1,
+	   glRasterPos3s/3,
+	   glRasterPos3sv/1,
+	   glRasterPos4d/4,
+	   glRasterPos4dv/1,
+	   glRasterPos4f/4,
+	   glRasterPos4fv/1,
+	   glRasterPos4i/4,
+	   glRasterPos4iv/1,
+	   glRasterPos4s/4,
+	   glRasterPos4sv/1,
+	   glReadBuffer/1,
+	   glRectf/4,
+	   glRenderMode/1,
+	   glResetMinmax/1,
+	   glRotated/4,
+	   glRotatef/4,
+	   glScaled/3,
+	   glScalef/3,
+	   glScissor/4,
+	   glShadeModel/1,
+	   glStencilFunc/3,
+	   glStencilMask/1,
+	   glStencilOp/3,
+	   glTexCoord1d/1,
+	   glTexCoord1dv/1,
+	   glTexCoord1f/1,
+	   glTexCoord1fv/1,
+	   glTexCoord1i/1,
+	   glTexCoord1iv/1,
+	   glTexCoord1s/1,
+	   glTexCoord1sv/1,
+	   glTexCoord2d/2,
+	   glTexCoord2dv/1,
+	   glTexCoord2f/2,
+	   glTexCoord2fv/1,
+	   glTexCoord2i/2,
+	   glTexCoord2iv/1,
+	   glTexCoord2s/2,
+	   glTexCoord2sv/1,
+	   glTexCoord3d/3,
+	   glTexCoord3dv/1,
+	   glTexCoord3f/3,
+	   glTexCoord3fv/1,
+	   glTexCoord3i/3,
+	   glTexCoord3iv/1,
+	   glTexCoord3s/3,
+	   glTexCoord3sv/1,
+	   glTexCoord4d/4,
+	   glTexCoord4dv/1,
+	   glTexCoord4f/4,
+	   glTexCoord4fv/1,
+	   glTexCoord4i/4,
+	   glTexCoord4iv/1,
+	   glTexCoord4s/4,
+	   glTexCoord4sv/1,
+	   glTexImage1D/8,
+	   glTexImage2D/9,
+	   glTexParameteri/3,
+	   glTexSubImage1D/7,
+	   glTexSubImage2D/9,
+	   glTexSubImage3D/11,
+	   glTranslated/3,
+	   glTranslatef/3,
+	   glVertex2d/2,
+	   glVertex2dv/1,
+	   glVertex2f/2,
+	   glVertex2fv/1,
+	   glVertex2i/2,
+	   glVertex2iv/1,
+	   glVertex2s/2,
+	   glVertex2sv/1,
+	   glVertex3d/3,
+	   glVertex3dv/1,
+	   glVertex3f/3,
+	   glVertex3fv/1,
+	   glVertex3i/3,
+	   glVertex3iv/1,
+	   glVertex3s/3,
+	   glVertex3sv/1,
+	   glVertex4d/4,
+	   glVertex4dv/1,
+	   glVertex4f/4,
+	   glVertex4fv/1,
+	   glVertex4i/4,
+	   glVertex4iv/1,
+	   glVertex4s/4,
+	   glVertex4sv/1,
+	   glVertexPointer/4,
+	   glViewport/4
+	  ]).
 
-eq(X,X).
+/** <module> OpenGL Interface
 
-% Operates on the accumulation buffer.
+This module is the opengl extension of the Prolog OpenGL Interface
+(plOpengL)
+
+ @author   Jan Tatham
+ @version  0.5.0
+ @license  LGPL
+*/
+
+%%	glAccum(+Operation, +Value).
+%Operates on the accumulation buffer.
+%
+% * Operation
+%   Specifies the accumulation buffer operation. Symbolic
+%   constants *|kGL_LOAD, kGL_ACCUM, kGL_MULT, kGL_ADD,|* and
+%   *kGL_RETURN* are accepted.
+%
+% * Value
+%   Specifies a floating-point value used in the accumulation
+%   buffer operation. The Operation parameter determines how Value is
+%   used.
+%
 glAccum(Operation,Value):-
 	float(Value),
 	c_glAccum(Operation,Value).
 
+%%	glActiveTextureARB(+Texture).
 % Specify which texture unit is active.
+%
+% * Texture
+%   Specifies which texture unit to make active.
+%
 glActiveTextureARB(Texture):-
 	c_glActiveTextureARB(Texture).
 
+%%	glAlphaFunc(+Func, +Ref).
 % Specify the alpha test function.
+%
+% * Func
+%   Specifies the alpha comparison function. Symbolic constants
+%   *|kGL_NEVER, kGL_LESS, kGL_EQUAL, kGL_LEQUAL, kGL_GREATER,
+%   kGL_NOTEQUAL, kGL_GEQUAL,|* and *kGL_ALWAYS* are accepted. The
+%   default function is *kGL_ALWAYS*.
+%
+% * Ref
+%   Specifies the reference value to which incoming alpha values are
+%   compared. This value is clamped to the range 0 (zero) through 1
+%   (one), where 0 represents the lowest possible alpha value, and 1 the
+%   highest possible value. The default reference is 0.
+%
 glAlphaFunc(Func, Ref):-
 	float(Ref),
 	c_glAlphaFunc(Func, Ref).
 
+%%	glArrayElement(+Index).
 % Render a vertex using the specified vertex array element.
+%
+%  * Index
+%    Specifies an index into the enabled vertex data arrays.
+%
 glArrayElement(Index):-
 	c_glArrayElement(Index).
 
+%%	glBegin(+Mode).
 % Delimits the vertices of a primitive or group of like primitives.
+%
+% * Mode
+%   Specifies the primitive or primitives that will be created from
+%   vertices presented between glBegin and the subsequent glEnd. Ten
+%   symbolic constants are accepted: *|kGL_POINTS, kGL_LINES,
+%   kGL_LINE_STRIP, kGL_LINE_LOOP, kGL_TRIANGLES, kGL_TRIANGLE_STRIP,
+%   kGL_TRIANGLE_FAN, kGL_QUADS, kGL_QUAD_STRIP,|* and *kGL_POLYGON*.
+%
 glBegin(Mode):-
 	c_glBegin(Mode).
 
+%%	glBindTexture(+Target, +Texture).
 % Binds a named texture to a texturing target.
+%
+%  * Target
+%    Specifies the target to which the texture is bound.
+%    Must be either *|kGL_TEXTURE_1D, kGL_TEXTURE_2D, kGL_TEXTURE_3D,|*
+%    or *kGL_TEXTURE_3D_EXT*.
+%
+% * Texture
+%   Specifies the name of a texture.
+%
 glBindTexture(Target,Texture):-
 	c_glBindTexture(Target,Texture).
 
+%%	glBitmap(+W, +H, +X1, +Y1, +X2, +Y2, +Bitmap).
 % Draws a Bitmap
+%
+% * W
+%   Specifies the pixel width of the bitmap image.
+%
+% * H
+%   Specifies the pixel height of the bitmap image.
+%
+% * X1
+%   Specifies the location of the x origin in the bitmap image. The x
+%   origin is measured from the lower left corner of the bitmap, with
+%   right and up being the positive axes.
+%
+% * Y1
+%   Specifies the location of the y origin in the bitmap image. The y
+%   origin is measured from the lower left corner of the bitmap, with
+%   right and up being the positive axes.
+%
+% * X2
+%   Specifies the x offset to be added to the current raster position
+%   after the bitmap is drawn.
+%
+% * Y2
+%   Specifies the y offset to be added to the current raster position
+%   after the bitmap is drawn.
+%
+% * Bitmap
+%   Specifies the address of the bitmap image.
+%
 glBitmap(W,H,X1,Y1,X2,Y2,Bitmap):-
 	size(Bitmap,N),
 	float(X1),
@@ -37,20 +340,76 @@ glBitmap(W,H,X1,Y1,X2,Y2,Bitmap):-
 	float(Y2),
 	c_glBitmap(W,H,X1,Y1,X2,Y2,Bitmap,N).
 
+%%	glBlendFunc(+SFactor, +DFactor).
 % Specifies pixel arithmetic.
+%
+% * SFactor
+%   Specifies how the RGBA source-blending factors are computed.
+%   *|kGL_ONE, kGL_DST_COLOR, kGL_ONE_MINUS_DST_COLOR, kGL_SRC_ALPHA,
+%   kGL_ONE_MINUS_SRC_ALPHA, kGL_DST_ALPHA, kGL_ONE_MINUS_DST_ALPHA,
+%   kGL_CONSTANT_COLOR, kGL_CONSTANT_COLOR_EXT,
+%   kGL_ONE_MINUS_CONSTANT_COLOR, kGL_ONE_MINUS_CONSTANT_COLOR_EXT,
+%   kGL_CONSTANT_ALPHA, kGL_CONSTANT_ALPHA_EXT,
+%   kGL_ONE_MINUS_CONSTANT_ALPHA, kGL_ONE_MINUS_CONSTANT_ALPHA_EXT, and
+%   kGL_SRC_ALPHA_SATURATE|*.
+%   These symbolic constants are defined in the Description section. The
+%   initial value is *kGL_ONE*.
+%
+% * DFactor
+%   Specifies how the RGBA destination-blending factors are computed.
+%   Twelve symbolic constants are accepted: *|kGL_ZERO, kGL_ONE,
+%   kGL_SRC_COLOR, kGL_ONE_MINUS_SRC_COLOR, kGL_SRC_ALPHA,
+%   kGL_ONE_MINUS_SRC_ALPHA, kGL_DST_ALPHA , kGL_ONE_MINUS_DST_ALPHA,
+%   kGL_CONSTANT_COLOR, kGL_CONSTANT_COLOR_EXT,
+%   kGL_ONE_MINUS_CONSTANT_COLOR, kGL_ONE_MINUS_CONSTANT_COLOR_EXT,
+%   kGL_CONSTANT_ALPHA, kGL_CONSTANT_ALPHA_EXT,
+%   kGL_ONE_MINUS_CONSTANT_ALPHA, and
+%   kGL_ONE_MINUS_CONSTANT_ALPHA_EXT|*.
+%   These symbolic constants are defined in the Description section. The
+%   initial value is *kGL_ZERO*.
+%
 glBlendFunc(SFactor,DFactor):-
 	c_glBlendFunc(SFactor,DFactor).
 
+%%	glCallList(+OptionList).
 % Execute a display list
+%
+% * OptionList
+%   Specifies the integer name of the display list to be executed.
+%
 glCallList(OptionList) :-
 	c_glCallList(OptionList).
 
+%%      glClear(+OptionList).
 % Clear buffers to preset values
+% * OptionList
+% Bitwise OR of masks that indicate the buffers to be cleared. The four
+% masks are *|kGL_COLOR_BUFFER_BIT, kGL_DEPTH_BUFFER_BIT,
+% kGL_ACCUM_BUFFER_BIT,|* and *kGL_STENCIL_BUFFER_BIT*.
+%
 glClear(OptionList):-
 	Applied_options is OptionList,
 	c_glClear(Applied_options).
 
+%%	glClearAccum(+R, +G, +B, +A).
 % Specify clear values for the accumulation buffer
+%
+% * R
+%   Specifies the red value used when the accumulation buffer is
+%   cleared. The default value is 0 (zero).
+%
+% * G
+%   Specifies the green value used when the accumulation buffer is
+%   cleared. The default value is 0.
+%
+% * B
+%   Specifies the blue value used when the accumulation buffer is
+%   cleared. The default value is 0.
+%
+% * A
+%   Specifies the alpha value used when the accumulation buffer is
+%   cleared. The default value is 0.
+%
 glClearAccum(R,G,B,A) :-
 	float(R),
 	float(G),
@@ -58,7 +417,25 @@ glClearAccum(R,G,B,A) :-
 	float(A),
 	c_glClearAccum(R,G,B,A).
 
+%%	glClearColor(+R, +G, +B, +A)
 % Specify clear values for the color buffers
+%
+% * R
+%   Specifies the red value used when the accumulation buffer is
+%   cleared. The default value is 0 (zero).
+%
+% * G
+%   Specifies the green value used when the accumulation buffer is
+%   cleared. The default value is 0.
+%
+% * B
+%   Specifies the blue value used when the accumulation buffer is
+%   cleared. The default value is 0.
+%
+% * A
+%   Specifies the alpha value used when the accumulation buffer is
+%   cleared. The default value is 0.
+%
 glClearColor(R,G,B,A) :-
 	float(R),
 	float(G),
@@ -66,33 +443,40 @@ glClearColor(R,G,B,A) :-
 	float(A),
 	c_glClearColor(R,G,B,A).
 
+%%	glClearDepth(+Depth)
 % Specify the clear value for the depth buffer
 glClearDepth(Depth) :-
 	float(Depth),
 	c_glClearDepth(Depth).
 
+%%	glClearIndex(+Index)
 % Specify the clear value for the color index buffers
 glClearIndex(Index) :-
 	float(Index),
 	c_glClearIndex(Index).
 
+%%	glClearStencil(+S)
 % Specify the clear value for the stencil buffer
 glClearStencil(S):-
 	c_glClearStencil(S).
 
+%%	glClipPlane(+Plane, +Equation).
 % Specify a plane against which all geometry is clipped
 glClipPlane(Plane,Equation) :-
 	size(Equation,N),
 	c_glClipPlane(Plane,Equation,N).
 
+%%	glColor3b(+Red, +Green, +Blue).
 % Sets the current color.
 glColor3b(Red,Green,Blue):-
 	c_glColor3b(Red,Green,Blue).
 
+%%	glColor3bv(+X).
 % Sets the current color.
 glColor3bv(X):-
 	c_glColor3bv(X).
 
+%%	glColor3d(+Red, +Green, +Blue).
 % Sets the current color.
 glColor3d(Red,Green,Blue):-
 	float(Red),
@@ -100,6 +484,7 @@ glColor3d(Red,Green,Blue):-
 	float(Blue),
 	c_glColor3d(Red,Green,Blue).
 
+%%	glColor3dv(+X).
 % Sets the current color.
 glColor3dv(X):-
 	c_glColor3dv(X).
@@ -883,7 +1268,7 @@ glViewport(X,Y,W,H):-
 	c_glViewport(X,Y,W,H).
 
 
-
+eq(X,X).
 
 
 
