@@ -460,19 +460,23 @@ glClearIndex(Index) :-
 glClearStencil(S):-
 	c_glClearStencil(S).
 
+%%	glClipPlane(+Plane, +Equation).
 % Specify a plane against which all geometry is clipped
 glClipPlane(Plane,Equation) :-
 	size(Equation,N),
 	c_glClipPlane(Plane,Equation,N).
 
+%%	glColor3b(+Red, +Green, +Blue).
 % Sets the current color.
 glColor3b(Red,Green,Blue):-
 	c_glColor3b(Red,Green,Blue).
 
+%%	glColor3bv(+X).
 % Sets the current color.
 glColor3bv(X):-
 	c_glColor3bv(X).
 
+%%	glColor3d(+Red, +Green, +Blue).
 % Sets the current color.
 glColor3d(Red,Green,Blue):-
 	float(Red),
@@ -480,6 +484,7 @@ glColor3d(Red,Green,Blue):-
 	float(Blue),
 	c_glColor3d(Red,Green,Blue).
 
+%%	glColor3dv(+X).
 % Sets the current color.
 glColor3dv(X):-
 	c_glColor3dv(X).
