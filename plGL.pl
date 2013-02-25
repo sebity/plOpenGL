@@ -471,8 +471,12 @@ glClipPlane(Plane,Equation) :-
 glColor3b(Red,Green,Blue):-
 	c_glColor3b(Red,Green,Blue).
 
-%%	glColor3bv(+X).
+%%	glColor3bv(+X:list(number)).
 % Sets the current color.
+%
+%  * X
+%    Specifies a pointer to an array that contains red, green, blue values.
+%
 glColor3bv(X):-
 	c_glColor3bv(X).
 
@@ -484,11 +488,16 @@ glColor3d(Red,Green,Blue):-
 	float(Blue),
 	c_glColor3d(Red,Green,Blue).
 
-%%	glColor3dv(+X).
+%%	glColor3dv(+X:list(float)).
 % Sets the current color.
+%
+%  * X
+%    Specifies a pointer to an array that contains red, green, blue values.
+%
 glColor3dv(X):-
 	c_glColor3dv(X).
 
+%%	glColor3f(+Red, +Green, +Blue).
 % Sets the current color.
 glColor3f(Red,Green,Blue):-
 	float(Red),
@@ -496,30 +505,57 @@ glColor3f(Red,Green,Blue):-
 	float(Blue),
 	c_glColor3f(Red,Green,Blue).
 
+%%	glColor3fv(+X:list(float)).
 % Sets the current color.
+%
+%  * X
+%    Specifies a pointer to an array that contains red, green, blue
+%    values.
+%
 glColor3fv(X):-
 	c_glColor3fv(X).
 
+%%	glColor3i(+Red, +Green, +Blue).
 % Sets the current color.
 glColor3i(Red,Green,Blue):-
 	c_glColor3i(Red,Green,Blue).
 
+%%	glColor3iv(+X:list(number)).
 % Sets the current color.
+%
+%  * X
+%    Specifies a pointer to an array that contains red, green, blue
+%    values.
+%
 glColor3iv(X):-
 	c_glColor3iv(X).
 
+%%	glColor3s(+Red, +Green, +Blue).
 % Sets the current color.
 glColor3s(Red,Green,Blue):-
 	c_glColor3s(Red,Green,Blue).
 
+%%	glcolor3sv(+X).
 % Sets the current color.
+%
+%  * X
+%    Specifies a pointer to an array that contains red, green, blue
+%    values.
+%
 glColor3sv(X):-
 	c_glColor3sv(X).
 
+%%	glColor4dv(+X:list(float)).
 % Sets the current color.
+%
+%  * X
+%    Specifies a pointer to an array that contains red, green, blue, and
+%    alpha values.
+%
 glColor4dv(X):-
 	c_glColor4dv(X).
 
+%%	glColor4f(+Red, +Green, +Blue, +Alpha).
 % Sets the current color.
 glColor4f(Red,Green,Blue,Alpha):-
 	float(Red),
@@ -528,131 +564,181 @@ glColor4f(Red,Green,Blue,Alpha):-
 	float(Alpha),
 	c_glColor4f(Red,Green,Blue,Alpha).
 
+%%	glColor4fv(+X:list(float)).
 % Sets the current color.
+%
+%  * X
+%    Specifies a pointer to an array that contains red, green, blue, and
+%    alpha values.
+%
 glColor4fv(X):-
 	c_glColor4fv(X).
 
+%%	glColor4ub(+Red, +Green, +Blue, +Alpha).
 % Sets the current color.
 glColor4ub(Red,Green,Blue,Alpha):-
 	c_glColor4ub(Red,Green,Blue,Alpha).
 
+%%	glColorMask(+Red, +Green, +Blue, +Alpha).
 % Enable and disable writing of frame buffer color components
 glColorMask(Red,Green,Blue,Alpha):-
 	c_glColorMask(Red,Green,Blue,Alpha).
 
+%%	glColorMaterial(+Face, +Mode).
 % Cause a material color to track the current color
 glColorMaterial(Face, Mode):-
 	c_glColorMaterial(Face,Mode).
 
+%%	glCopyColorTable(+Target, +Format, +X, +Y, +Width).
 % Copy pixels into a color table
 glCopyColorTable(Target, Format, X, Y, Width):-
     c_glCopyColorTable(Target, Format, X, Y, Width).
 
+%%	glCopyPixels(+X, +Y, +Width, +Height, +Type).
 % Copy pixels in the frame buffer
 glCopyPixels(X, Y, Width, Height, Type):-
     c_glCopyPixels(X, Y, Width, Height, Type).
 
+%%	glCopyTexImage1D(+Target, +Level, +Internal, +X, +Y, +Width, +Border).
 % Copy pixels into a 1D texture image
+%
 glCopyTexImage1D(Target, Level, Internal, X, Y, Width, Border):-
     c_glCopyTexImage1D(Target, Level, Internal, X, Y, Width, Border).
 
+%%      glCopyTexImage2D(+Target, +Level, +Internal, +X, +Y, +Width, +Height, +Border).
 % Copy pixels into a 2D texture image
 glCopyTexImage2D(Target, Level, Internal, X, Y, Width, Height, Border):-
     c_glCopyTexImage2D(Target, Level, Internal, X, Y, Width, Height, Border).
 
+%%	glCopyTexSubImage1D(+Target, +Level, +XOffset, +X, +Y, +Width).
 % Copy a one-dimensional texture subimage
 glCopyTexSubImage1D(Target, Level, XOffset, X, Y, Width):-
     c_glCopyTexSubImage1D(Target, Level, XOffset, X, Y, Width).
 
+%%      glCopyTexSubImage2D(+Target, +Level, +XOffset, +YOffset, +X, +Y, +Width, +Height).
 % Copy a two-dimensional texture subimage
 glCopyTexSubImage2D(Target, Level, XOffset, YOffset, X, Y, Width, Height):-
     c_glCopyTexSubImage2D(Target, Level, XOffset, YOffset, X, Y, Width, Height).
 
+%%	glCullFace(+Mode).
 % Specify whether front- or back-facing facets can be culled
 glCullFace(Mode):-
 	Mode_Eval is Mode,
 	c_glCullFace(Mode_Eval).
 
+%%	glDepthFunc(+Mode).
 % Specify the value used for depth buffer comparisons
 glDepthFunc(Mode):-
 	Mode_Eval is Mode,
 	c_glDepthFunc(Mode_Eval).
 
+%%	glDepthMask(+Flag).
 % Enable or disable writing into the depth buffer
 glDepthMask(Flag):-
     c_glDepthMask(Flag).
 
+%%	glDepthRange(+NEar, +Far).
 % Specify mapping of depth values from normalized device coordinates to window coordinates
 glDepthRange(Near, Far) :-
     float(Near),
     float(Far),
     c_glDepthRange(Near, Far).
 
+%%	glDisable(+Mode).
+% Enable or disable server-side GL capabilities
 glDisable(Mode):-
 	Mode_Eval is Mode,
 	c_glDisable(Mode_Eval).
 
+%%	glDisableClientState(+Cap).
+% Enables or disables an array.
 glDisableClientState(Cap):-
     c_glDisableClientState(Cap).
 
+%%	glDrawArrays(+Mode, +First, +Count).
 % Render primitives from array data
 glDrawArrays(Mode, First, Count):-
     c_glDrawArrays(Mode, First, Count).
 
+%%	glDrawBuffer(+Mode).
 % Specify which color buffers are to be drawn into
 glDrawBuffer(Mode):-
     c_glDrawBuffer(Mode).
 
+%%	glDrawElements(+Mode, +Count, +Type, +Indices).
 % Render primitives from array data
 glDrawElements(Mode, Count, Type, Indices):-
     c_glDrawElements(Mode, Count, Type, Indices).
 
+%%	glDrawPixels(+Width, +Height, +Format, +Type, +Data).
 % Write a block of pixels to the frame buffer
 glDrawPixels(Width, Height, Format, Type, Data):-
     c_glDrawPixels(Width, Height, Format, Type, Data).
 
+%%	glEnable(+Mode).
+% Enables GL capability.
 glEnable(Mode):-
 	Mode_Eval is Mode,
 	c_glEnable(Mode_Eval).
 
+%%	glEnableClientState(+Cap).
+% Enables an array.
 glEnableClientState(Cap):-
     c_glEnableClientState(Cap).
 
+%%	glEnd.
 % Delimits the vertices of a primitive or group of like primitives.
 glEnd:-
 	c_glEnd.
 
+%%	glEndList.
 % Create or replace a display list
 glEndList :-
 	c_glEndList.
 
+%%	glEvalCoord1d(+U).
+% Evaluates enabled one-dimensional (1D) and two-dimensional (2D) maps.
 glEvalCoord1d(U) :-
     float(U),
     c_glEvalCoord1d(U).
 
+%%	glEvalCoord1dv(+U).
+% Evaluates enabled one-dimensional (1D) and two-dimensional (2D) maps.
 glEvalCoord1dv(U) :-
     c_glEvalCoord1dv(U).
 
+%%	glEvalCoord1f(+U).
+% Evaluates enabled one-dimensional (1D) and two-dimensional (2D) maps.
 glEvalCoord1f(U) :-
     float(U),
     c_glEvalCoord1f(U).
 
+%%	glEvalCoord1fv(+U).
+% Evaluates enabled one-dimensional (1D) and two-dimensional (2D) maps.
 glEvalCoord1fv(U) :-
     c_glEvalCoord1fv(U).
 
+%%	glEvalCoord2d(+U, +V).
+% Evaluates enabled one-dimensional (1D) and two-dimensional (2D) maps.
 glEvalCoord2d(U,V) :-
     float(U),
     float(V),
     c_glEvalCoord2d(U,V).
 
+%%	glEvalCoord2dv(+U, +V).
+% Evaluates enabled one-dimensional (1D) and two-dimensional (2D) maps.
 glEvalCoord2dv(U) :-
     c_glEvalCoord2dv(U).
 
+%%	glEvalCoord2f(+U, +V).
+% Evaluates enabled one-dimensional (1D) and two-dimensional (2D) maps.
 glEvalCoord2f(U,V) :-
     float(U),
     float(V),
     c_glEvalCoord2f(U,V).
 
+%%	glEvalCoord2fv(+U, +V).
+% Evaluates enabled one-dimensional (1D) and two-dimensional (2D) maps.
 glEvalCoord2fv(U) :-
     c_glEvalCoord2fv(U).
 
@@ -672,11 +758,12 @@ glEvalPoint1(I) :-
 glEvalPoint2(I,J) :-
     c_glEvalPoint2(I,J).
 
-
+%%	glFinish.
 % block until all GL execution is complete
 glFinish:-
 	c_glFinish.
 
+%%	glFlush.
 % Force execution of GL commands in finite time
 glFlush:-
 	c_glFlush.
@@ -818,6 +905,8 @@ glPopAttrib:-
 glPopClientAttrib:-
 	c_glPopClientAttrib.
 
+%%	glPopMatrix.
+% Pop the current matrix stack.
 glPopMatrix:-
 	c_glPopMatrix.
 
@@ -830,6 +919,8 @@ glPushAttrib(Mask):-
 glPushClientAttrib(Mask):-
     c_glPushClientAttrib(Mask).
 
+%%	glPushMatrix.
+% Push the current matrix stack.
 glPushMatrix:-
 	c_glPushMatrix.
 
@@ -1258,11 +1349,11 @@ glVertex4s(X,Y,Z,W):-
 glVertex4sv(X):-
 	c_glVertex4sv(X).
 
-
 % Define an array of vertex data
 glVertexPointer(Size, Type, Stride, Pointer):-
     c_glVertexPointer(Size, Type, Stride, Pointer).
 
+%%	glViewPort(+X, +Y, +W, +H).
 % Set the viewport
 glViewport(X,Y,W,H):-
 	c_glViewport(X,Y,W,H).
