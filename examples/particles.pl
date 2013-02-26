@@ -34,8 +34,8 @@ colors(9, 0.75, 0.5, 1.0).
 colors(10, 1.0, 0.5, 1.0).
 colors(11, 1.0, 0.5, 0.75).
 
-bmp(1, 'Data\/particle.bmp').
-bmp(2, 'Data\/plane.bmp').
+bmp(1, 'Data/particle.bmp').
+bmp(2, 'Data/plane.bmp').
 
 /* Template of a particle struct
 PARTICLE {
