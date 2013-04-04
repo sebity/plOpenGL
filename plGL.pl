@@ -29,6 +29,10 @@
 	   glColor3sv/1,
 	   glColor3ub/3,
 	   glColor3ubv/1,
+	   glColor3ui/3,
+	   glColor3uiv/1,
+	   glColor3us/3,
+	   glColor3usv/1,
 	   glColor4dv/1,
 	   glColor4f/4,
 	   glColor4fv/1,
@@ -562,6 +566,36 @@ glColor3ub(Red,Green,Blue):-
 %
 glColor3ubv(X):-
 	c_glColor3ubv(X).
+
+%%	glColor3ui(+Red, +Green, +Blue).
+% Sets the current color.
+glColor3ui(Red,Green,Blue):-
+	c_glColor3ui(Red,Green,Blue).
+
+%%	glcolor3uiv(+X).
+% Sets the current color.
+%
+%  * X
+%    Specifies a pointer to an array that contains red, green, blue
+%    values.
+%
+glColor3uiv(X):-
+	c_glColor3uiv(X).
+
+%%	glColor3us(+Red, +Green, +Blue).
+% Sets the current color.
+glColor3us(Red,Green,Blue):-
+	c_glColor3us(Red,Green,Blue).
+
+%%	glcolor3usv(+X).
+% Sets the current color.
+%
+%  * X
+%    Specifies a pointer to an array that contains red, green, blue
+%    values.
+%
+glColor3usv(X):-
+	c_glColor3usv(X).
 
 %%	glColor4dv(+X:list(float)).
 % Sets the current color.

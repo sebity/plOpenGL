@@ -113,6 +113,10 @@ foreign_t c_glColor3s(term_t Red, term_t Green, term_t Blue);
 foreign_t c_glColor3sv(term_t V);
 foreign_t c_glColor3ub(term_t Red, term_t Green, term_t Blue);
 foreign_t c_glColor3ubv(term_t V);
+foreign_t c_glColor3ui(term_t Red, term_t Green, term_t Blue);
+foreign_t c_glColor3uiv(term_t V);
+foreign_t c_glColor3us(term_t Red, term_t Green, term_t Blue);
+foreign_t c_glColor3usv(term_t V);
 foreign_t c_glColor4dv(term_t V);
 foreign_t c_glColor4f(term_t Red, term_t Green, term_t Blue, term_t Alpha);
 foreign_t c_glColor4fv(term_t V);
@@ -391,6 +395,10 @@ install_t install() {
   PL_register_foreign("c_glColor3sv",1,c_glColor3sv,PL_FA_NOTRACE);
   PL_register_foreign("c_glColor3ub",3,c_glColor3ub,PL_FA_NOTRACE);
   PL_register_foreign("c_glColor3ubv",1,c_glColor3ubv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glColor3ui",3,c_glColor3ui,PL_FA_NOTRACE);
+  PL_register_foreign("c_glColor3uiv",1,c_glColor3uiv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glColor3us",3,c_glColor3us,PL_FA_NOTRACE);
+  PL_register_foreign("c_glColor3usv",1,c_glColor3usv,PL_FA_NOTRACE);
   PL_register_foreign("c_glColor4dv",1,c_glColor4dv,PL_FA_NOTRACE);
   PL_register_foreign("c_glColor4f",4,c_glColor4f,PL_FA_NOTRACE);
   PL_register_foreign("c_glColor4fv",1,c_glColor4fv,PL_FA_NOTRACE);
@@ -1638,7 +1646,7 @@ foreign_t c_glColor3ub(term_t PL_Red, term_t PL_Green, term_t PL_Blue) {
      !PL_get_integer(PL_Green,&green) ||
      !PL_get_integer(PL_Blue,&blue) )
     return FALSE;
-  glColor3s((GLubyte)red,(GLubyte)green,(GLubyte)blue);
+  glColor3ub((GLubyte)red,(GLubyte)green,(GLubyte)blue);
 
   PL_succeed;
 }
@@ -1672,6 +1680,114 @@ foreign_t c_glColor3ubv(term_t PL_V) {
   }
 
   glColor3ubv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glColor3ui
+ * Desc:    Set the current color
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glColor3ui(term_t PL_Red, term_t PL_Green, term_t PL_Blue) {
+  int red, green, blue;
+
+  if(!PL_get_integer(PL_Red,&red) ||
+     !PL_get_integer(PL_Green,&green) ||
+     !PL_get_integer(PL_Blue,&blue) )
+    return FALSE;
+  glColor3ui((GLuint)red,(GLuint)green,(GLuint)blue);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glColor3uiv
+ * Desc:    Set the current color
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glColor3uiv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+
+  int num, count;
+  GLuint *v;
+
+  num = 3;
+  count = 0;
+  v = malloc(num * sizeof(GLuint));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_INTEGER) )
+      v[count] = (atoi(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glColor3uiv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glColor3us
+ * Desc:    Set the current color
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glColor3us(term_t PL_Red, term_t PL_Green, term_t PL_Blue) {
+  int red, green, blue;
+
+  if(!PL_get_integer(PL_Red,&red) ||
+     !PL_get_integer(PL_Green,&green) ||
+     !PL_get_integer(PL_Blue,&blue) )
+    return FALSE;
+  glColor3us((GLushort)red,(GLushort)green,(GLushort)blue);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glColor3usv
+ * Desc:    Set the current color
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glColor3usv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+
+  int num, count;
+  GLushort *v;
+
+  num = 3;
+  count = 0;
+  v = malloc(num * sizeof(GLushort));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_INTEGER) )
+      v[count] = (atoi(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glColor3usv(v);
 
   free(v);
   return PL_get_nil(list);
