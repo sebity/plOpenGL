@@ -117,6 +117,8 @@ foreign_t c_glColor3ui(term_t Red, term_t Green, term_t Blue);
 foreign_t c_glColor3uiv(term_t V);
 foreign_t c_glColor3us(term_t Red, term_t Green, term_t Blue);
 foreign_t c_glColor3usv(term_t V);
+foreign_t c_glColor4b(term_t Red, term_t Green, term_t Blue, term_t Alpha);
+foreign_t c_glColor4bv(term_t V);
 foreign_t c_glColor4dv(term_t V);
 foreign_t c_glColor4f(term_t Red, term_t Green, term_t Blue, term_t Alpha);
 foreign_t c_glColor4fv(term_t V);
@@ -399,6 +401,8 @@ install_t install() {
   PL_register_foreign("c_glColor3uiv",1,c_glColor3uiv,PL_FA_NOTRACE);
   PL_register_foreign("c_glColor3us",3,c_glColor3us,PL_FA_NOTRACE);
   PL_register_foreign("c_glColor3usv",1,c_glColor3usv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glColor4b",4,c_glColor4b,PL_FA_NOTRACE);
+  PL_register_foreign("c_glColor4bv",1,c_glColor4bv,PL_FA_NOTRACE);
   PL_register_foreign("c_glColor4dv",1,c_glColor4dv,PL_FA_NOTRACE);
   PL_register_foreign("c_glColor4f",4,c_glColor4f,PL_FA_NOTRACE);
   PL_register_foreign("c_glColor4fv",1,c_glColor4fv,PL_FA_NOTRACE);
@@ -1788,6 +1792,61 @@ foreign_t c_glColor3usv(term_t PL_V) {
   }
 
   glColor3usv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glColor4b
+ * Desc:    Set the current color
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glColor4b(term_t PL_Red, term_t PL_Green, term_t PL_Blue, term_t PL_Alpha) {
+  int red, green, blue, alpha;
+
+  if(!PL_get_integer(PL_Red,&red) ||
+     !PL_get_integer(PL_Green,&green) ||
+     !PL_get_integer(PL_Blue,&blue) ||
+     !PL_get_integer(PL_Alpha,&alpha))
+    return FALSE;
+  glColor4b((GLbyte)red,(GLbyte)green,(GLbyte)blue,(GLbyte)alpha);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glColor4bv
+ * Desc:    Set the current color
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glColor4bv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+
+  int num, count;
+  GLbyte *v;
+
+  num = 4;
+  count = 0;
+  v = malloc(num * sizeof(GLbyte));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_INTEGER) )
+      v[count] = (atoi(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glColor4bv(v);
 
   free(v);
   return PL_get_nil(list);
