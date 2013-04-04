@@ -177,6 +177,7 @@ foreign_t c_glLoadIdentity(void);
 foreign_t c_glLoadName(term_t Name);
 foreign_t c_glLogicOp(term_t Opcode);
 foreign_t c_glMaterialfv(term_t Face, term_t PName, term_t Params, term_t Num);
+foreign_t c_glMaterialiv(term_t Face, term_t PName, term_t Params, term_t Num);
 foreign_t c_glMatrixMode(term_t Mode);
 foreign_t c_glMinmax(term_t Target, term_t InternalFormat, term_t Sink);
 foreign_t c_glNewList(term_t List, term_t Mode);
@@ -447,6 +448,7 @@ install_t install() {
   PL_register_foreign("c_glLoadName",1,c_glLoadName,PL_FA_NOTRACE);
   PL_register_foreign("c_glLogicOp",1,c_glLogicOp,PL_FA_NOTRACE);
   PL_register_foreign("c_glMaterialfv",4,c_glMaterialfv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glMaterialiv",4,c_glMaterialiv,PL_FA_NOTRACE);
   PL_register_foreign("c_glMatrixMode",1,c_glMatrixMode,PL_FA_NOTRACE);
   PL_register_foreign("c_glMinmax",3,c_glMinmax,PL_FA_NOTRACE);
   PL_register_foreign("c_glNewList",2,c_glNewList,PL_FA_NOTRACE);
@@ -2957,6 +2959,50 @@ foreign_t c_glMaterialfv(term_t PL_Face, term_t PL_PName, term_t PL_Params, term
 
   PL_succeed;
 }
+/***************************************
+ * Name: c_glMaterialiv
+ * Params:
+ * Returns:
+ */
+foreign_t c_glMaterialiv(term_t PL_Face, term_t PL_PName, term_t PL_Params, term_t PL_Num) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_Params);
+
+  int face, pname;
+  int num;
+  int count;
+  int *parameters;
+  if(!PL_get_integer(PL_Num,&num))
+	  return FALSE;
+
+  parameters = malloc(num * sizeof(int));
+
+  if(!PL_get_integer(PL_Face,&face) ||
+     !PL_get_integer(PL_PName,&pname))
+    return FALSE;
+
+  count = 0;
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_INTEGER) ) {
+      parameters[count] = (atoi(s));
+      /* printf("parameters[%d]: %f\n",count,atof(s)); */
+    }
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glMaterialiv((GLenum)face, (GLenum)pname, parameters);
+
+  free(parameters);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
 
 /***************************************
  * Name: c_glMatrixMode

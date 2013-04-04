@@ -768,19 +768,24 @@ glFinish:-
 glFlush:-
 	c_glFlush.
 
+%%	glFogf(+PName, +Param:list(float)).
 % Specify fog parameters
 glFogf(PName, Param):-
 	float(Param),
 	c_glFogf(PName, Param).
 
+%%	glFogi(+PName, +Param:list(number)).
 % Specify fog parameters
 glFogi(PName, Param):-
 	c_glFogi(PName, Param).
 
-% define front- and back-facing polygons
+%%	glFrontFace(+Mode).
+% Define front- and back-facing polygons
 glFrontFace(Mode):-
 	c_glFrontFace(Mode).
 
+%%	glFrustum(+Left, +Right, +Top, +Bottom, +Near, +Far).
+% Multiply the current matrix by a perspective matrix
 glFrustum(Left,Right,Top,Bottom,Near,Far):-
 	float(Left),
 	float(Right),
@@ -790,74 +795,119 @@ glFrustum(Left,Right,Top,Bottom,Near,Far):-
 	float(Far),
 	c_glFrustum(Left,Right,Top,Bottom,Near,Far).
 
+%%	glGenLists(+Range).
+% Generate a contiguous set of empty display lists.
 glGenLists(Range):-
     c_glGenLists(Range).
 
+%%	glGenTextures(+N, +TextureNames:list(number)).
+% Generate texture names
+%
+% * N
+% Specifies the number of texture names to be generated.
+%
+% * TextureNames
+% Specifies an array in which the generated texture names are stored.
 glGenTextures(N,TextureNames):-
     c_glGenTextures(N,TextureNames).
 
+%%	glGetLightfv(+Light, +PName, -Params:list(float)).
 % Return light source parameter values
 glGetLightfv(Light, PName, Params) :-
     c_glGetLightfv(Light, PName, Params).
 
+%%	glGetLightiv(+Light, +PName, -Params:list(number)).
 % Return light source parameter values
 glGetLightiv(Light, PName, Params) :-
     c_glGetLightiv(Light, PName, Params).
 
+%%	glGetMaterialfv(+Light, +PName, -Params:list(float)).
 % Return material parameters
 glGetMaterialfv(Light, PName, Params) :-
     c_glGetMaterialfv(Light, PName, Params).
 
+%%	glGetMaterialiv(+Light, +PName, -Params:list(number)).
 % Return material parameters
 glGetMaterialiv(Light, PName, Params) :-
     c_glGetMaterialiv(Light, PName, Params).
 
+%%	glHint(+Target, +Hint).
+% Specify implementation-specific hints
 glHint(Target,Hint):-
 	T is Target,
 	H is Hint,
 	c_glHint(T,H).
 
+%%	glIndexi(+Index).
+% set the current color index.
 glIndexi(Index):-
     c_glIndexi(Index).
 
+%%	glIndexf(+Index).
+% set the current color index.
 glIndexf(Index):-
     float(Index),
     c_glIndexf(Index).
 
+%%	glIndexMask(+Mask).
+% Control the writing of individual bits in the color index buffers.
 glIndexMask(Mask):-
     c_glIndexMask(Mask).
 
+%%	glLightfv(+Light, +PName, +Param:list(float)).
+% Set light source parameters.
 glLightfv(Light, PName, Params):-
 	size(Params,N),
 	c_glLightfv(Light, PName, Params, N).
 
-glLightModelfv(PName, Params):-
+%%	glLightModelfv(+PName, +Params).
+% Sets lighting model parameters.
+glLightModelfv(PName, Params:list(float)):-
 	size(Params,N),
 	c_glLightModelfv(PName, Params, N).
 
+%%	glLineStipple(+Factor, +Pattern).
+% Specify the line stipple pattern.
 glLineStipple(Factor,Pattern):-
 	F is Factor,
 	P is Pattern,
 	c_glLineStipple(F,P).
 
+%%	glLineWidth(+Width).
+% Specify the width of rasterized lines.
 glLineWidth(Width) :-
 	float(Width),
 	c_glLineWidth(Width).
 
+%%	glLoadIdentity.
+% Replaces the current matrix with the identity matrix.
 glLoadIdentity:-
 	c_glLoadIdentity.
 
+%%	glLogicOp(+Opcode).
+% Specify a logical pixel operation for rendering.
 glLogicOp(Opcode) :-
         c_glLogicOp(Opcode).
 
+%%	glLoadName(+Name).
 % Load a name onto the name stack
 glLoadName(Name):-
     c_glLoadName(Name).
 
+%%	glMaterialfv(+Face, +PName, +Params:list(float)).
+% Specifies material parameters for the lighting model.
 glMaterialfv(Face, PName, Params):-
 	size(Params,N),
 	c_glMaterialfv(Face, PName, Params, N).
 
+%%	glMaterialiv(+Face, +PName, +Params:list(number)).
+% Specifies material parameters for the lighting model.
+glMaterialiv(Face, PName, Params):-
+	size(Params,N),
+	c_glMaterialiv(Face, PName, Params, N).
+
+%%	glMatrixMode(+Mode).
+% Specify which matrix is the current matrix.
 glMatrixMode(Mode):-
 	c_glMatrixMode(Mode).
 
