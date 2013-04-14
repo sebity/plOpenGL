@@ -120,6 +120,10 @@
 	   glNormal3dv/1,
 	   glNormal3f/3,
 	   glNormal3fv/1,
+	   glNormal3i/3,
+	   glNormal3iv/1,
+	   glNormal3s/3,
+	   glNormal3sv/1,
 	   glOrtho/6,
 	   glPixelStorei/2,
 	   glPointSize/1,
@@ -1139,6 +1143,26 @@ glNormal3f(X,Y,Z):-
 % Set the current normal vector
 glNormal3fv(V) :-
 	c_glNormal3fv(V).
+
+%%	glNormal3i(+X, +Y, +Z).
+% Set the current normal vector.
+glNormal3i(X,Y,Z):-
+	c_glNormal3i(X,Y,Z).
+
+%%	glNormal3iv(+V:list(number)).
+% Set the current normal vector
+glNormal3iv(V) :-
+	c_glNormal3iv(V).
+
+%%	glNormal3s(+X, +Y, +Z).
+% Set the current normal vector.
+glNormal3s(X,Y,Z):-
+	c_glNormal3s(X,Y,Z).
+
+%%	glNormal3sv(+V:list(number)).
+% Set the current normal vector
+glNormal3sv(V) :-
+	c_glNormal3sv(V).
 
 glOrtho(Left,Right,Top,Bottom,Near,Far):-
 	float(Left),

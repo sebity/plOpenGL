@@ -209,6 +209,10 @@ foreign_t c_glNormal3d(term_t X, term_t Y, term_t Z);
 foreign_t c_glNormal3dv(term_t V);
 foreign_t c_glNormal3f(term_t X, term_t Y, term_t Z);
 foreign_t c_glNormal3fv(term_t V);
+foreign_t c_glNormal3i(term_t X, term_t Y, term_t Z);
+foreign_t c_glNormal3iv(term_t V);
+foreign_t c_glNormal3s(term_t X, term_t Y, term_t Z);
+foreign_t c_glNormal3sv(term_t V);
 foreign_t c_glOrtho(term_t Left, term_t Right, term_t Bottom, term_t Top, term_t Near, term_t Far);
 foreign_t c_glPixelStorei(term_t Mode, term_t Param);
 foreign_t c_glPointSize(term_t Size);
@@ -507,6 +511,10 @@ install_t install() {
   PL_register_foreign("c_glNormal3dv",1,c_glNormal3dv,PL_FA_NOTRACE);
   PL_register_foreign("c_glNormal3f",3,c_glNormal3f,PL_FA_NOTRACE);
   PL_register_foreign("c_glNormal3fv",1,c_glNormal3fv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glNormal3i",3,c_glNormal3i,PL_FA_NOTRACE);
+  PL_register_foreign("c_glNormal3iv",1,c_glNormal3iv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glNormal3s",3,c_glNormal3s,PL_FA_NOTRACE);
+  PL_register_foreign("c_glNormal3sv",1,c_glNormal3sv,PL_FA_NOTRACE);
   PL_register_foreign("c_glOrtho",6,c_glOrtho,PL_FA_NOTRACE);
   PL_register_foreign("c_glPixelStorei",2,c_glPixelStorei,PL_FA_NOTRACE);
   PL_register_foreign("c_glPointSize",1,c_glPointSize,PL_FA_NOTRACE);
@@ -3891,6 +3899,113 @@ foreign_t c_glNormal3fv(term_t PL_V) {
 
   PL_succeed;
 }
+
+/***************************************
+ * Name: c_glNormal3i
+ * Params:
+ * Returns:
+ */
+foreign_t c_glNormal3i(term_t PL_X, term_t PL_Y, term_t PL_Z) {
+  GLint x,y,z;
+
+  if(!PL_get_integer(PL_X,&x) ||
+     !PL_get_integer(PL_Y,&y) ||
+     !PL_get_integer(PL_Z,&z))
+    return FALSE;
+
+  glNormal3i((GLint)x,(GLint)y,(GLint)z);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glNormal3iv
+ * Params:
+ * Returns:
+ */
+foreign_t c_glNormal3iv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+    
+  int num, count;
+  GLint *v;
+
+  num = 3;
+  count = 0;
+  v = malloc(num * sizeof(GLint));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_INTEGER) )
+      v[count] = (atoi(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glNormal3iv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glNormal3s
+ * Params:
+ * Returns:
+ */
+foreign_t c_glNormal3s(term_t PL_X, term_t PL_Y, term_t PL_Z) {
+  GLint x,y,z;
+
+  if(!PL_get_integer(PL_X,&x) ||
+     !PL_get_integer(PL_Y,&y) ||
+     !PL_get_integer(PL_Z,&z))
+    return FALSE;
+
+  glNormal3s((GLshort)x,(GLshort)y,(GLshort)z);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glNormal3sv
+ * Params:
+ * Returns:
+ */
+foreign_t c_glNormal3sv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+    
+  int num, count;
+  GLshort *v;
+
+  num = 3;
+  count = 0;
+  v = malloc(num * sizeof(GLshort));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_INTEGER) )
+      v[count] = (atoi(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glNormal3sv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
 
 /***************************************
  * Name: c_glOrtho
