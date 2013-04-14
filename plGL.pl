@@ -114,6 +114,8 @@
 	   glMatrixMode/1,
 	   glMinmax/3,
 	   glNewList/2,
+	   glNormal3d/3,
+	   glNormal3dv/1,
 	   glNormal3f/3,
 	   glNormal3fv/1,
 	   glOrtho/6,
@@ -1014,7 +1016,7 @@ glIndexf(Index):-
 glIndexMask(Mask):-
     c_glIndexMask(Mask).
 
-%%	glLightf(+Light, +PName, +Param(float)).
+%%	glLightf(+Light, +PName, +Param).
 % Set light source parameters.
 glLightf(Light, PName, Params):-
 	float(Light),
@@ -1022,7 +1024,7 @@ glLightf(Light, PName, Params):-
 	float(Params),
 	c_glLightf(Light, PName, Params).
 
-%%	glLighti(+Light, +PName, +Param(number)).
+%%	glLighti(+Light, +PName, +Param).
 % Set light source parameters.
 glLighti(Light, PName, Params):-
 	c_glLighti(Light, PName, Params).
@@ -1095,18 +1097,34 @@ glMatrixMode(Mode):-
 glMinmax(Target, InternalFormat, Sink):-
 	c_glMinmax(Target, InternalFormat, Sink).
 
+%%	glNewList(+List, +Mode).
+% Create a display list.
 glNewList(List,Mode) :-
 	c_glNewList(List,Mode).
 
-%%	glNormal3f(+V(float))
+%%	glNormal3d(+X, +Y, +Z).
+% Set the current normal vector.
+glNormal3d(X,Y,Z):-
+	float(X),
+	float(Y),
+	float(Z),
+	c_glNormal3d(X,Y,Z).
+
+%%	glNormal3dv(+V:list(float)).
 % Set the current normal vector
+glNormal3dv(V) :-
+	c_glNormal3dv(V).
+
+
+%%	glNormal3f(+X, +Y, +Z).
+% Set the current normal vector.
 glNormal3f(X,Y,Z):-
 	float(X),
 	float(Y),
 	float(Z),
 	c_glNormal3f(X,Y,Z).
 
-%%	glNormal3fv(+V:list(float))
+%%	glNormal3fv(+V:list(float)).
 % Set the current normal vector
 glNormal3fv(V) :-
 	c_glNormal3fv(V).

@@ -203,6 +203,8 @@ foreign_t c_glMaterialiv(term_t Face, term_t PName, term_t Params, term_t Num);
 foreign_t c_glMatrixMode(term_t Mode);
 foreign_t c_glMinmax(term_t Target, term_t InternalFormat, term_t Sink);
 foreign_t c_glNewList(term_t List, term_t Mode);
+foreign_t c_glNormal3d(term_t X, term_t Y, term_t Z);
+foreign_t c_glNormal3dv(term_t V);
 foreign_t c_glNormal3f(term_t X, term_t Y, term_t Z);
 foreign_t c_glNormal3fv(term_t V);
 foreign_t c_glOrtho(term_t Left, term_t Right, term_t Bottom, term_t Top, term_t Near, term_t Far);
@@ -497,6 +499,8 @@ install_t install() {
   PL_register_foreign("c_glMatrixMode",1,c_glMatrixMode,PL_FA_NOTRACE);
   PL_register_foreign("c_glMinmax",3,c_glMinmax,PL_FA_NOTRACE);
   PL_register_foreign("c_glNewList",2,c_glNewList,PL_FA_NOTRACE);
+  PL_register_foreign("c_glNormal3d",3,c_glNormal3d,PL_FA_NOTRACE);
+  PL_register_foreign("c_glNormal3dv",1,c_glNormal3dv,PL_FA_NOTRACE);
   PL_register_foreign("c_glNormal3f",3,c_glNormal3f,PL_FA_NOTRACE);
   PL_register_foreign("c_glNormal3fv",1,c_glNormal3fv,PL_FA_NOTRACE);
   PL_register_foreign("c_glOrtho",6,c_glOrtho,PL_FA_NOTRACE);
@@ -3722,6 +3726,59 @@ foreign_t c_glNewList(term_t PL_List, term_t PL_Mode) {
 
   glNewList(list, mode);
 
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glNormal3d
+ * Params:
+ * Returns:
+ */
+foreign_t c_glNormal3d(term_t PL_X, term_t PL_Y, term_t PL_Z) {
+  GLdouble x,y,z;
+
+  if(!PL_get_float(PL_X,&x) ||
+     !PL_get_float(PL_Y,&y) ||
+     !PL_get_float(PL_Z,&z))
+    return FALSE;
+
+  glNormal3d((GLdouble)x,(GLdouble)y,(GLdouble)z);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glNormal3dv
+ * Params:
+ * Returns:
+ */
+foreign_t c_glNormal3dv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+    
+  int num, count;
+  GLdouble *v;
+
+  num = 3;
+  count = 0;
+  v = malloc(num * sizeof(GLdouble));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_FLOAT) )
+      v[count] = (atof(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glNormal3dv(v);
+
+  free(v);
+  return PL_get_nil(list);
 
   PL_succeed;
 }
