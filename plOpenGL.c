@@ -126,6 +126,7 @@ foreign_t c_glColor4fv(term_t V);
 foreign_t c_glColor4i(term_t Red, term_t Green, term_t Blue, term_t Alpha);
 foreign_t c_glColor4iv(term_t V);
 foreign_t c_glColor4s(term_t Red, term_t Green, term_t Blue, term_t Alpha);
+foreign_t c_glColor4sv(term_t V);
 foreign_t c_glColor4ub(term_t Red, term_t Green, term_t Blue, term_t Alpha);
 foreign_t c_glColorMask(term_t Red, term_t Green, term_t Blue, term_t Alpha);
 foreign_t c_glColorMaterial(term_t Face, term_t Mode);
@@ -414,6 +415,7 @@ install_t install() {
   PL_register_foreign("c_glColor4i",4,c_glColor4i,PL_FA_NOTRACE);
   PL_register_foreign("c_glColor4iv",1,c_glColor4iv,PL_FA_NOTRACE);
   PL_register_foreign("c_glColor4s",4,c_glColor4s,PL_FA_NOTRACE);
+  PL_register_foreign("c_glColor4sv",1,c_glColor4sv,PL_FA_NOTRACE);
   PL_register_foreign("c_glColor4ub",4,c_glColor4ub,PL_FA_NOTRACE);
   PL_register_foreign("c_glColorMask",4,c_glColorMask,PL_FA_NOTRACE);
   PL_register_foreign("c_glColorMaterial",2,c_glColorMaterial,PL_FA_NOTRACE);
@@ -2030,7 +2032,7 @@ foreign_t c_glColor4iv(term_t PL_V) {
 }
 
 /***************************************
- * Name:    c_glColor4i
+ * Name:    c_glColor4s
  * Desc:    Set the current color
  * Params:  -
  * Returns: -
@@ -2045,6 +2047,42 @@ foreign_t c_glColor4s(term_t PL_Red, term_t PL_Green, term_t PL_Blue, term_t PL_
     return FALSE;
   
   glColor4s((GLshort)red,(GLshort)green,(GLshort)blue,(GLshort)alpha);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glColor4sv
+ * Desc:    Set the current color
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glColor4sv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+
+  int num, count;
+  GLshort *v;
+
+  num = 4;
+  count = 0;
+  v = malloc(num * sizeof(GLshort));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_INTEGER) )
+      v[count] = (atoi(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glColor4sv(v);
+
+  free(v);
+  return PL_get_nil(list);
 
   PL_succeed;
 }
