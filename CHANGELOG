@@ -13,6 +13,7 @@ plOpenGL CHANGELOG
     * Add: glLightiv, glMaterialiv
     * Add: glNormal3d, glNormal3i, glNormal3s
     * Add: glNormal3dv, glNormal3fv, glNormal3iv, glNormal3sv
+    * Add: glPixelStoref
     * Add: Source Documentation to plGL.pl, plGLU.pl and plGLUT.pl
     * Update: plGL.pl, plGLU.pl and plGLUT.pl to become a module
 
