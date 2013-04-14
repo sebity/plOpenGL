@@ -1099,6 +1099,7 @@ glMaterialiv(Face, PName, Params):-
 glMatrixMode(Mode):-
 	c_glMatrixMode(Mode).
 
+%%	glMinmax(+Target, +InternalFormat, +Sink).
 % Define minmax table
 glMinmax(Target, InternalFormat, Sink):-
 	c_glMinmax(Target, InternalFormat, Sink).
@@ -1164,6 +1165,8 @@ glNormal3s(X,Y,Z):-
 glNormal3sv(V) :-
 	c_glNormal3sv(V).
 
+%%	glOrtho(+Left, +Right, +Top, +Bottom, +Near, +Far).
+% Multiply the current matrix with an orthographic matrix.
 glOrtho(Left,Right,Top,Bottom,Near,Far):-
 	float(Left),
 	float(Right),
@@ -1183,6 +1186,7 @@ glPointSize(Size):-
 glPolygonMode(Face, Mode):-
         c_glPolygonMode(Face, Mode).
 
+%%	glPolygonOffset(+Factor, +Units).
 % Set the scale and units used to calculate depth values
 glPolygonOffset(Factor, Units):-
 	float(Factor),
@@ -1217,64 +1221,97 @@ glPushMatrix:-
 glPushName(Name):-
     c_glPushName(Name).
 
+%%	glRasterPos2d(+X, +Y).
+% Specify the raster position for pixel operations.
 glRasterPos2d(X,Y):-
     float(X),
     float(Y),
     c_glRasterPos2d(X,Y).
 
+%%	glRasterPos2dv(+V:list(float)).
+% Specify the raster position for pixel operations.
 glRasterPos2dv(V):-
     c_glRasterPos2dv(V).
 
+%%	glRasterPos2f(+X, +Y).
+% Specify the raster position for pixel operations.
 glRasterPos2f(X,Y):-
     float(X),
     float(Y),
     c_glRasterPos2f(X,Y).
 
+%%	glRasterPos2fv(+V:list(float)).
+% Specify the raster position for pixel operations.
 glRasterPos2fv(V):-
     c_glRasterPos2fv(V).
 
+%%	glRasterPos2i(+X, +Y).
+% Specify the raster position for pixel operations.
 glRasterPos2i(X,Y):-
     c_glRasterPos2i(X,Y).
 
+%%	glRasterPos2iv(+V:list(number)).
+% Specify the raster position for pixel operations.
 glRasterPos2iv(V):-
     c_glRasterPos2iv(V).
 
+%%	glRasterPos2s(+X, +Y).
+% Specify the raster position for pixel operations.
 glRasterPos2s(X,Y):-
     c_glRasterPos2s(X,Y).
 
+%%	glRasterPos2sv(+V:list(number)).
+% Specify the raster position for pixel operations.
 glRasterPos2sv(V):-
     c_glRasterPos2sv(V).
 
+%%	glRasterPos3d(+X, +Y, +Z).
+% Specify the raster position for pixel operations.
 glRasterPos3d(X,Y,Z):-
     float(X),
     float(Y),
     float(Z),
     c_glRasterPos3d(X,Y,Z).
 
+%%	glRasterPos3dv(+V:list(float)).
+% Specify the raster position for pixel operations.
 glRasterPos3dv(V):-
     c_glRasterPos3dv(V).
 
+%%	glRasterPos3f(+X, +Y, +Z).
+% Specify the raster position for pixel operations.
 glRasterPos3f(X,Y,Z):-
     float(X),
     float(Y),
     float(Z),
     c_glRasterPos3f(X,Y,Z).
 
+%%	glRasterPos3fv(+V:list(float)).
+% Specify the raster position for pixel operations.
 glRasterPos3fv(V):-
     c_glRasterPos3fv(V).
 
+%%	glRasterPos3i(+X, +Y, +Z).
+% Specify the raster position for pixel operations.
 glRasterPos3i(X,Y,Z):-
     c_glRasterPos3i(X,Y,Z).
 
+%%	glRasterPos3iv(+V:list(number)).
+% Specify the raster position for pixel operations.
 glRasterPos3iv(V):-
     c_glRasterPos3iv(V).
 
+%%	glRasterPos3s(+X, +Y, +Z).
+% Specify the raster position for pixel operations.
 glRasterPos3s(X,Y,Z):-
     c_glRasterPos3s(X,Y,Z).
 
+%%	glRasterPos3sv(+V:list(number)).
+% Specify the raster position for pixel operations.
 glRasterPos3sv(V):-
     c_glRasterPos3sv(V).
 
+% Specify the raster position for pixel operations.
 glRasterPos4d(X,Y,Z,W):-
     float(X),
     float(Y),
@@ -1282,9 +1319,11 @@ glRasterPos4d(X,Y,Z,W):-
     float(W),
     c_glRasterPos4d(X,Y,Z,W).
 
+% Specify the raster position for pixel operations.
 glRasterPos4dv(V):-
     c_glRasterPos4dv(V).
 
+% Specify the raster position for pixel operations.
 glRasterPos4f(X,Y,Z,W):-
     float(X),
     float(Y),
@@ -1292,18 +1331,23 @@ glRasterPos4f(X,Y,Z,W):-
     float(W),
     c_glRasterPos4f(X,Y,Z,W).
 
+% Specify the raster position for pixel operations.
 glRasterPos4fv(V):-
     c_glRasterPos4fv(V).
 
+% Specify the raster position for pixel operations.
 glRasterPos4i(X,Y,Z,W):-
     c_glRasterPos4i(X,Y,Z,W).
 
+% Specify the raster position for pixel operations.
 glRasterPos4iv(V):-
     c_glRasterPos4iv(V).
 
+% Specify the raster position for pixel operations.
 glRasterPos4s(X,Y,Z,W):-
     c_glRasterPos4s(X,Y,Z,W).
 
+% Specify the raster position for pixel operations.
 glRasterPos4sv(V):-
     c_glRasterPos4sv(V).
 
@@ -1311,6 +1355,7 @@ glRasterPos4sv(V):-
 glReadBuffer(Mode):-
     c_glReadBuffer(Mode).
 
+%%	glRectf(+X1, +Y1, +X2, +Y2).
 % Draw a rectangle
 glRectf(X1,Y1,X2,Y2) :-
 	float(X1),
@@ -1319,14 +1364,17 @@ glRectf(X1,Y1,X2,Y2) :-
 	float(Y2),
 	c_glRectf(X1,Y1,X2,Y2).
 
+%%	glRenderMode(+Mode).
 % Set rasterization mode
 glRenderMode(Mode):-
     c_glRenderMode(Mode).
 
+%%	glResetMinmax(+Target).
 % Reset minmax table entries to initial values
 glResetMinmax(Target):-
     c_glResetMinmax(Target).
 
+%%	glRotated(+Angle, +X, +Y, +Z).
 % Multiply the current matrix by a rotation matrix
 glRotated(Angle,X,Y,Z) :-
 	float(Angle),
@@ -1335,6 +1383,7 @@ glRotated(Angle,X,Y,Z) :-
 	float(Z),
 	c_glRotated(Angle,X,Y,Z).
 
+%%	glRotatef(+Angle, +X, +Y, +Z).
 % Multiply the current matrix by a rotation matrix
 glRotatef(Angle,X,Y,Z) :-
 	float(Angle),
@@ -1343,6 +1392,7 @@ glRotatef(Angle,X,Y,Z) :-
 	float(Z),
 	c_glRotatef(Angle,X,Y,Z).
 
+%%	glScaled(+X, +Y, +Z).
 % Multiply the current matrix by a general scaling matrix
 glScaled(X,Y,Z):-
 	float(X),
@@ -1350,6 +1400,7 @@ glScaled(X,Y,Z):-
 	float(Z),
 	c_glScaled(X,Y,Z).
 
+%%	glScalef(+X, +Y, +Z).
 % Multiply the current matrix by a general scaling matrix
 glScalef(X,Y,Z):-
 	float(X),
@@ -1372,90 +1423,140 @@ glStencilMask(Mask):-
 glStencilOp(Fail, ZFail, ZPass):-
 	c_glStencilOp(Fail, ZFail, ZPass).
 
+%%	glTexCoord1d(+S).
+% Set the current texture coordinates.
 glTexCoord1d(S):-
 	float(S),
 	c_glTexCoord1d(S).
 
+%%	glTexCoord1dv(+V:list(float)).
+% Set the current texture coordinates.
 glTexCoord1dv(V):-
 	c_glTexCoord1dv(V).
 
+%%	glTexCoord1f(+S).
+% Set the current texture coordinates.
 glTexCoord1f(S):-
 	float(S),
 	c_glTexCoord1f(S).
 
+%%	glTexCoord1fv(+V:list(float)).
+% Set the current texture coordinates.
 glTexCoord1fv(V):-
 	c_glTexCoord1fv(V).
 
+%%	glTexCoord1i(+S).
+% Set the current texture coordinates.
 glTexCoord1i(S):-
 	c_glTexCoord1i(S).
 
+%%	glTexCoord1iv(+V:list(number)).
+% Set the current texture coordinates.
 glTexCoord1iv(V):-
 	c_glTexCoord1iv(V).
 
+%%	glTexCoord1s(+S).
+% Set the current texture coordinates.
 glTexCoord1s(S):-
 	c_glTexCoord1s(S).
 
+%%	glTexCoord1sv(+V:list(number)).
+% Set the current texture coordinates.
 glTexCoord1sv(V):-
 	c_glTexCoord1sv(V).
 
+%%	glTexCoord2d(+S, +T).
+% Set the current texture coordinates.
 glTexCoord2d(S,T):-
 	float(S),
 	float(T),
 	c_glTexCoord2d(S,T).
 
+%%	glTexCoord2dv(+V:list(float)).
+% Set the current texture coordinates.
 glTexCoord2dv(V):-
 	c_glTexCoord2dv(V).
 
+%%	glTexCoord2f(+S, +T).
+% Set the current texture coordinates.
 glTexCoord2f(S,T):-
 	float(S),
 	float(T),
 	c_glTexCoord2f(S,T).
 
+%%	glTexCoord2fv(+V:list(float)).
+% Set the current texture coordinates.
 glTexCoord2fv(V):-
 	c_glTexCoord2fv(V).
 
+%%	glTexCoord2i(+S, +T).
+% Set the current texture coordinates.
 glTexCoord2i(S,T):-
 	c_glTexCoord2i(S,T).
 
+%%	glTexCoord2iv(+V:list(number)).
+% Set the current texture coordinates.
 glTexCoord2iv(V):-
 	c_glTexCoord2iv(V).
 
+%%	glTexCoord2s(+S, +T).
+% Set the current texture coordinates.
 glTexCoord2s(S,T):-
 	c_glTexCoord2s(S,T).
 
+%%	glTexCoord2sv(+V:list(number)).
+% Set the current texture coordinates.
 glTexCoord2sv(V):-
 	c_glTexCoord2sv(V).
 
+%%	glTexCoord3d(+S, +T, +R).
+% Set the current texture coordinates.
 glTexCoord3d(S,T,R):-
 	float(S),
 	float(T),
         float(R),
 	c_glTexCoord3d(S,T,R).
 
+%%	glTexCoord3dv(+V:list(float)).
+% Set the current texture coordinates.
 glTexCoord3dv(V):-
 	c_glTexCoord3dv(V).
 
+%%	glTexCoord3f(+S, +T, +R).
+% Set the current texture coordinates.
 glTexCoord3f(S,T,R):-
 	float(S),
 	float(T),
         float(R),
 	c_glTexCoord3f(S,T,R).
 
+%%	glTexCoord3fv(+V:list(float)).
+% Set the current texture coordinates.
 glTexCoord3fv(V):-
 	c_glTexCoord3fv(V).
 
+%%	glTexCoord3i(+S, +T, +R).
+% Set the current texture coordinates.
 glTexCoord3i(S,T,R):-
 	c_glTexCoord3i(S,T,R).
 
+%%	glTexCoord3iv(+V:list(number)).
+% Set the current texture coordinates.
 glTexCoord3iv(V):-
 	c_glTexCoord3iv(V).
 
+%%	glTexCoord3s(+S, +T, +R).
+% Set the current texture coordinates.
 glTexCoord3s(S,T,R):-
 	c_glTexCoord3s(S,T,R).
 
+%%	glTexCoord3sv(+V:list(number)).
+% Set the current texture coordinates.
 glTexCoord3sv(V):-
 	c_glTexCoord3sv(V).
 
+%%	glTexCoord4d(+S, +T, +R, +Q).
+% Set the current texture coordinates.
 glTexCoord4d(S,T,R,Q):-
 	float(S),
 	float(T),
@@ -1463,9 +1564,13 @@ glTexCoord4d(S,T,R,Q):-
         float(Q),
 	c_glTexCoord4d(S,T,R,Q).
 
+%%	 glTexCoord4dv(+V:list(float)).
+% Set the current texture coordinates.
 glTexCoord4dv(V):-
 	c_glTexCoord4dv(V).
 
+%%	glTexCoord4f(+S, +T, +R, +Q).
+% Set the current texture coordinates.
 glTexCoord4f(S,T,R,Q):-
 	float(S),
 	float(T),
@@ -1473,18 +1578,28 @@ glTexCoord4f(S,T,R,Q):-
         float(Q),
 	c_glTexCoord4f(S,T,R,Q).
 
+%%	glTexCoord4fv(+V:list(float)).
+% Set the current texture coordinates.
 glTexCoord4fv(V):-
 	c_glTexCoord4fv(V).
 
+%%	glTexCoord4i(+S, +T, +R, +Q).
+% Set the current texture coordinates.
 glTexCoord4i(S,T,R,Q):-
 	c_glTexCoord4i(S,T,R,Q).
 
+%%	glTexCoord4iv(+V:list(number)).
+% Set the current texture coordinates.
 glTexCoord4iv(V):-
 	c_glTexCoord4iv(V).
 
+%%	glTexCoord4s(+S, +T, +R, +Q).
+% Set the current texture coordinates.
 glTexCoord4s(S,T,R,Q):-
 	c_glTexCoord4s(S,T,R,Q).
 
+%%	glTexCoord4sv(+V:list(number)).
+% Set the current texture coordinates.
 glTexCoord4sv(V):-
 	c_glTexCoord4sv(V).
 
@@ -1523,44 +1638,53 @@ glTranslatef(X,Y,Z):-
 	float(Z),
 	c_glTranslatef(X,Y,Z).
 
+%%	glVertex2d(+X, +Y).
 % Specify a vertex
 glVertex2d(X,Y):-
 	float(X),
 	float(Y),
 	c_glVertex2d(X,Y).
 
+%%	glVertex2dv(+X:list(float)).
 % Specify a vertex
 glVertex2dv(X):-
 	c_glVertex2dv(X).
 
+%%	glVertex2f(+X, +Y).
 % Specify a vertex
 glVertex2f(X,Y):-
 	float(X),
 	float(Y),
 	c_glVertex2f(X,Y).
 
+%%	glVertex2fv(+X:list(float)).
 % Specify a vertex
 glVertex2fv(X):-
 	c_glVertex2fv(X).
 
+%%	glVertex2i(+X, +Y).
 % Specify a vertex
 glVertex2i(X,Y):-
 	c_glVertex2i(X,Y).
 
+%%	glVertex2iv(+X:list(number)).
 % Specify a vertex
 glVertex2iv(X):-
 	c_glVertex2iv(X).
 
+%%	glVertex2s(+X, +Y).
 % Specify a vertex
 glVertex2s(X,Y):-
 	float(X),
 	float(Y),
 	c_glVertex2s(X,Y).
 
+%%	glVertex2sv(+X:list(number)).
 % Specify a vertex
 glVertex2sv(X):-
 	c_glVertex2sv(X).
 
+%%	glVertex3d(+X, +Y, +Z).
 % Specify a vertex
 glVertex3d(X,Y,Z):-
 	float(X),
@@ -1568,10 +1692,12 @@ glVertex3d(X,Y,Z):-
 	float(Z),
 	c_glVertex3d(X,Y,Z).
 
+%%	glVertex3dv(+X:list(float)).
 % Specify a vertex
 glVertex3dv(X):-
 	c_glVertex3dv(X).
 
+%%	glVertex3f(+X, +Y, +Z).
 % Specify a vertex
 glVertex3f(X,Y,Z):-
 	float(X),
@@ -1579,26 +1705,32 @@ glVertex3f(X,Y,Z):-
 	float(Z),
 	c_glVertex3f(X,Y,Z).
 
+%%	glVertex3fv(+X:list(float)).
 % Specify a vertex
 glVertex3fv(X):-
 	c_glVertex3fv(X).
 
+%%	glVertex3i(+X, +Y, +Z).
 % Specify a vertex
 glVertex3i(X,Y,Z):-
 	c_glVertex3i(X,Y,Z).
 
+%%	glVertex3iv(+X:list(number)).
 % Specify a vertex
 glVertex3iv(X):-
 	c_glVertex3iv(X).
 
+%%	glVertex3s(+X, +Y, +Z).
 % Specify a vertex
 glVertex3s(X,Y,Z):-
 	c_glVertex3s(X,Y,Z).
 
+%%	glVertex3sv(+X:list(number)).
 % Specify a vertex
 glVertex3sv(X):-
 	c_glVertex3sv(X).
 
+%%	glVertex4d(+X, +Y, +Z, +W).
 % Specify a vertex
 glVertex4d(X,Y,Z,W):-
 	float(X),
@@ -1607,10 +1739,12 @@ glVertex4d(X,Y,Z,W):-
 	float(W),
 	c_glVertex4d(X,Y,Z,W).
 
+%%	glVertex4dv(+X:list(float)).
 % Specify a vertex
 glVertex4dv(X):-
 	c_glVertex4dv(X).
 
+%%	glVertex4f(+X, +Y, +Z, +W).
 % Specify a vertex
 glVertex4f(X,Y,Z,W):-
 	float(X),
@@ -1619,26 +1753,32 @@ glVertex4f(X,Y,Z,W):-
 	float(W),
 	c_glVertex4f(X,Y,Z,W).
 
+%%	glVertex4fv(+X:list(float)).
 % Specify a vertex
 glVertex4fv(X):-
 	c_glVertex4fv(X).
 
+%%	glVertex4i(+X, +Y, +Z, +W).
 % Specify a vertex
 glVertex4i(X,Y,Z,W):-
 	c_glVertex4i(X,Y,Z,W).
 
+%%	glVertex4iv(+X:list(number)).
 % Specify a vertex
 glVertex4iv(X):-
 	c_glVertex4iv(X).
 
+%%	glVertex4s(+X, +Y, +Z, +W).
 % Specify a vertex
 glVertex4s(X,Y,Z,W):-
 	c_glVertex4s(X,Y,Z,W).
 
+%%	glVertex4sv(+X:list(number)).
 % Specify a vertex
 glVertex4sv(X):-
 	c_glVertex4sv(X).
 
+%%	glVertexPointer(+Size, +Type, +Stride, +Pointer).
 % Define an array of vertex data
 glVertexPointer(Size, Type, Stride, Pointer):-
     c_glVertexPointer(Size, Type, Stride, Pointer).
