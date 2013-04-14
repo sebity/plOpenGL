@@ -114,6 +114,8 @@
 	   glMatrixMode/1,
 	   glMinmax/3,
 	   glNewList/2,
+	   glNormal3b/3,
+	   glNormal3bv/1,
 	   glNormal3d/3,
 	   glNormal3dv/1,
 	   glNormal3f/3,
@@ -1102,6 +1104,16 @@ glMinmax(Target, InternalFormat, Sink):-
 glNewList(List,Mode) :-
 	c_glNewList(List,Mode).
 
+%%	glNormal3b(+X, +Y, +Z).
+% Set the current normal vector.
+glNormal3b(X,Y,Z):-
+	c_glNormal3b(X,Y,Z).
+
+%%	glNormal3bv(+V:list(number)).
+% Set the current normal vector
+glNormal3bv(V) :-
+	c_glNormal3bv(V).
+
 %%	glNormal3d(+X, +Y, +Z).
 % Set the current normal vector.
 glNormal3d(X,Y,Z):-
@@ -1114,7 +1126,6 @@ glNormal3d(X,Y,Z):-
 % Set the current normal vector
 glNormal3dv(V) :-
 	c_glNormal3dv(V).
-
 
 %%	glNormal3f(+X, +Y, +Z).
 % Set the current normal vector.
