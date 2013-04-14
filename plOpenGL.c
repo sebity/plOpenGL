@@ -125,6 +125,7 @@ foreign_t c_glColor4f(term_t Red, term_t Green, term_t Blue, term_t Alpha);
 foreign_t c_glColor4fv(term_t V);
 foreign_t c_glColor4i(term_t Red, term_t Green, term_t Blue, term_t Alpha);
 foreign_t c_glColor4iv(term_t V);
+foreign_t c_glColor4s(term_t Red, term_t Green, term_t Blue, term_t Alpha);
 foreign_t c_glColor4ub(term_t Red, term_t Green, term_t Blue, term_t Alpha);
 foreign_t c_glColorMask(term_t Red, term_t Green, term_t Blue, term_t Alpha);
 foreign_t c_glColorMaterial(term_t Face, term_t Mode);
@@ -412,6 +413,7 @@ install_t install() {
   PL_register_foreign("c_glColor4fv",1,c_glColor4fv,PL_FA_NOTRACE);
   PL_register_foreign("c_glColor4i",4,c_glColor4i,PL_FA_NOTRACE);
   PL_register_foreign("c_glColor4iv",1,c_glColor4iv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glColor4s",4,c_glColor4s,PL_FA_NOTRACE);
   PL_register_foreign("c_glColor4ub",4,c_glColor4ub,PL_FA_NOTRACE);
   PL_register_foreign("c_glColorMask",4,c_glColorMask,PL_FA_NOTRACE);
   PL_register_foreign("c_glColorMaterial",2,c_glColorMaterial,PL_FA_NOTRACE);
@@ -2023,6 +2025,26 @@ foreign_t c_glColor4iv(term_t PL_V) {
 
   free(v);
   return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glColor4i
+ * Desc:    Set the current color
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glColor4s(term_t PL_Red, term_t PL_Green, term_t PL_Blue, term_t PL_Alpha) {
+  int red, green, blue, alpha;
+
+  if(!PL_get_integer(PL_Red,&red) ||
+     !PL_get_integer(PL_Green,&green) ||
+     !PL_get_integer(PL_Blue,&blue) ||
+     !PL_get_integer(PL_Alpha,&alpha))
+    return FALSE;
+  
+  glColor4s((GLshort)red,(GLshort)green,(GLshort)blue,(GLshort)alpha);
 
   PL_succeed;
 }

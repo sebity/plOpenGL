@@ -41,6 +41,7 @@
 	   glColor4fv/1,
 	   glColor4i/4,
 	   glColor4iv/1,
+	   glColor4s/4,
 	   glColor4ub/4,
 	   glColorMask/4,
 	   glColorMaterial/2,
@@ -667,6 +668,12 @@ glColor4i(Red,Green,Blue, Alpha):-
 %
 glColor4iv(X):-
 	c_glColor4iv(X).
+
+%%	glColor4s(+Red, +Green, +Blue, +Alpha).
+% Sets the current color.
+glColor4s(Red,Green,Blue, Alpha):-
+	c_glColor4s(Red,Green,Blue,Alpha).
+
 
 %%	glColor4ub(+Red, +Green, +Blue, +Alpha).
 % Sets the current color.
