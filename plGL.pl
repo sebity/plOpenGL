@@ -44,6 +44,9 @@
 	   glColor4s/4,
 	   glColor4sv/1,
 	   glColor4ub/4,
+	   glColor4ubv/1,
+	   glColor4ui/4,
+	   glColor4uiv/1,
 	   glColorMask/4,
 	   glColorMaterial/2,
 	   glCopyColorTable/5,
@@ -689,6 +692,31 @@ glColor4sv(X):-
 % Sets the current color.
 glColor4ub(Red,Green,Blue,Alpha):-
 	c_glColor4ub(Red,Green,Blue,Alpha).
+
+%%	glColor4ubv(+X:list(number)).
+% Sets the current color.
+%
+%  * X
+%    Specifies a pointer to an array that contains red, green, blue, and
+%    alpha values.
+%
+glColor4ubv(X):-
+	c_glColor4ubv(X).
+
+%%	glColor4ui(+Red, +Green, +Blue, +Alpha).
+% Sets the current color.
+glColor4ui(Red,Green,Blue, Alpha):-
+	c_glColor4ui(Red,Green,Blue,Alpha).
+
+%%	glColor4uiv(+X:list(number)).
+% Sets the current color.
+%
+%  * X
+%    Specifies a pointer to an array that contains red, green, blue, and
+%    alpha values.
+%
+glColor4uiv(X):-
+	c_glColor4uiv(X).
 
 %%	glColorMask(+Red, +Green, +Blue, +Alpha).
 % Enable and disable writing of frame buffer color components
