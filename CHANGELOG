@@ -1,12 +1,27 @@
 plOpenGL CHANGELOG
 =================================================
 
+0.5.0
+=====
+    * Add: glColor3ub, glColor3ui, glColor3us
+    * Add: glColor3ubv, glColor3uiv, glColor3usv
+    * Add: glColor4b, glColor4d, glColor4i, glColor4s
+    * Add: glColor4ui, glColor4us
+    * Add: glColor4bv, glColor4iv, glColor4sv
+    * Add: glColor4ubv, glColor4uiv, glColor4usv
+    * Add: glLightf, glLighti
+    * Add: glLightiv, glMaterialiv
+    * Add: glNormal3d, glNormal3i, glNormal3s
+    * Add: glNormal3dv, glNormal3fv, glNormal3iv, glNormal3sv
+    * Add: Source Documentation to plGL.pl, plGLU.pl and plGLUT.pl
+    * Update: plGL.pl, plGLU.pl and plGLUT.pl to become a module
+
 0.4.2
 =====
     * Add: glEvalCoord1d, glEvalCoord1f
     * Add: glEvalCoord2d, glEvalCoord2f
     * Add: glEvalCoord1dv, glEvalCoord1fv
-    * Add: glEvalCoord2dv, glEvalCoord2fv 
+    * Add: glEvalCoord2dv, glEvalCoord2fv
     * Add: Particles Example
 
 0.4.1
