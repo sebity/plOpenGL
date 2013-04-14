@@ -100,6 +100,7 @@
 	   glIndexf/1,
 	   glIndexMask/1,
 	   glLightfv/3,
+	   glLightiv/3,
 	   glLightModelfv/2,
 	   glLineStipple/2,
 	   glLineWidth/1,
@@ -1015,6 +1016,13 @@ glIndexMask(Mask):-
 glLightfv(Light, PName, Params):-
 	size(Params,N),
 	c_glLightfv(Light, PName, Params, N).
+
+%%	glLightiv(+Light, +PName, +Param:list(number)).
+% Set light source parameters.
+glLightiv(Light, PName, Params):-
+	size(Params,N),
+	c_glLightiv(Light, PName, Params, N).
+
 
 %%	glLightModelfv(+PName, +Params).
 % Sets lighting model parameters.

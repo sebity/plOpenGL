@@ -189,6 +189,7 @@ foreign_t c_glIndexi(term_t Index);
 foreign_t c_glIndexf(term_t Index);
 foreign_t c_glIndexMask(term_t Mask);
 foreign_t c_glLightfv(term_t Face, term_t PName, term_t Params, term_t Num);
+foreign_t c_glLightiv(term_t Face, term_t PName, term_t Params, term_t Num);
 foreign_t c_glLightModelfv(term_t PName, term_t Params, term_t Num);
 foreign_t c_glLineStipple(term_t Factor, term_t Pattern);
 foreign_t c_glLineWidth(term_t Width);
@@ -479,6 +480,7 @@ install_t install() {
   PL_register_foreign("c_glIndexf",1,c_glIndexf,PL_FA_NOTRACE);
   PL_register_foreign("c_glIndexMask",1,c_glIndexMask,PL_FA_NOTRACE);
   PL_register_foreign("c_glLightfv",4,c_glLightfv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glLightiv",4,c_glLightiv,PL_FA_NOTRACE);
   PL_register_foreign("c_glLightModelfv",3,c_glLightModelfv,PL_FA_NOTRACE);
   PL_register_foreign("c_glLineStipple",2,c_glLineStipple,PL_FA_NOTRACE);
   PL_register_foreign("c_glLineWidth",1,c_glLineWidth,PL_FA_NOTRACE);
@@ -3362,6 +3364,49 @@ foreign_t c_glLightfv(term_t PL_Light, term_t PL_PName, term_t PL_Params, term_t
   }
 
   glLightfv((GLenum)light, (GLenum)pname, parameters);
+
+  free(parameters);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glLightiv
+ * Params:
+ * Returns:
+ */
+foreign_t c_glLightiv(term_t PL_Light, term_t PL_PName, term_t PL_Params, term_t PL_Num) {
+  term_t head = PL_new_term_ref();      /* variable for the elements */
+  term_t list = PL_copy_term_ref(PL_Params);    /* copy as we need to write */
+
+  int light, pname;
+  int num;
+  int count;
+  GLint *parameters;
+  if(!PL_get_integer(PL_Num,&num))
+	  return FALSE;
+
+  parameters = malloc(num * sizeof(GLint));
+
+  if(!PL_get_integer(PL_Light,&light) ||
+     !PL_get_integer(PL_PName,&pname))
+    return FALSE;
+
+  count = 0;
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_INTEGER) ){
+      parameters[count] = (atoi(s));
+    }
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glLightiv((GLenum)light, (GLenum)pname, parameters);
 
   free(parameters);
   return PL_get_nil(list);
