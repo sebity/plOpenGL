@@ -567,7 +567,7 @@ glColor3iv(X):-
 glColor3s(Red,Green,Blue):-
 	c_glColor3s(Red,Green,Blue).
 
-%%	glcolor3sv(+X).
+%%	glColor3sv(+X).
 % Sets the current color.
 %
 %  * X
@@ -582,7 +582,7 @@ glColor3sv(X):-
 glColor3ub(Red,Green,Blue):-
 	c_glColor3ub(Red,Green,Blue).
 
-%%	glcolor3ubv(+X).
+%%	glColor3ubv(+X).
 % Sets the current color.
 %
 %  * X
@@ -597,7 +597,7 @@ glColor3ubv(X):-
 glColor3ui(Red,Green,Blue):-
 	c_glColor3ui(Red,Green,Blue).
 
-%%	glcolor3uiv(+X).
+%%	glColor3uiv(+X).
 % Sets the current color.
 %
 %  * X
@@ -612,7 +612,7 @@ glColor3uiv(X):-
 glColor3us(Red,Green,Blue):-
 	c_glColor3us(Red,Green,Blue).
 
-%%	glcolor3usv(+X).
+%%	glColor3usv(+X).
 % Sets the current color.
 %
 %  * X
@@ -894,7 +894,7 @@ glEvalCoord2d(U,V) :-
     float(V),
     c_glEvalCoord2d(U,V).
 
-%%	glEvalCoord2dv(+U, +V).
+%%	glEvalCoord2dv(+U:list(float)).
 % Evaluates enabled one-dimensional (1D) and two-dimensional (2D) maps.
 glEvalCoord2dv(U) :-
     c_glEvalCoord2dv(U).
@@ -906,23 +906,27 @@ glEvalCoord2f(U,V) :-
     float(V),
     c_glEvalCoord2f(U,V).
 
-%%	glEvalCoord2fv(+U, +V).
+%%	glEvalCoord2fv(+U:list(float)).
 % Evaluates enabled one-dimensional (1D) and two-dimensional (2D) maps.
 glEvalCoord2fv(U) :-
     c_glEvalCoord2fv(U).
 
+%%	glEvalMesh1(+Mode, +I1, +I2).
 % Compute a one- or two-dimensional grid of points or lines
 glEvalMesh1(Mode,I1,I2) :-
     c_glEvalMesh1(Mode,I1,I2).
 
+%%	glEvalMesh2(+Mode, +I1, +I2, +J1, +J2).
 % Compute a one- or two-dimensional grid of points or lines
 glEvalMesh2(Mode,I1,I2,J1,J2) :-
     c_glEvalMesh2(Mode,I1,I2,J1,J2).
 
+%%	glEvalPoint1(+I).
 % Generate and evaluate a single point in a mesh
 glEvalPoint1(I) :-
     c_glEvalPoint1(I).
 
+%%	glEvalPoint2(+I, +J).
 % Generate and evaluate a single point in a mesh
 glEvalPoint2(I,J) :-
     c_glEvalPoint2(I,J).
@@ -1188,10 +1192,14 @@ glPixelStoref(Mode,Param) :-
 glPixelStorei(Mode,Param) :-
         c_glPixelStorei(Mode,Param).
 
+%%	glPointSize(+Size).
+% Specify the diameter of rasterized points.
 glPointSize(Size):-
 	float(Size),
 	c_glPointSize(Size).
 
+%%	glPolygonMode(+Face, +Mode).
+% Select a polygon rasterization mode.
 glPolygonMode(Face, Mode):-
         c_glPolygonMode(Face, Mode).
 
@@ -1202,9 +1210,13 @@ glPolygonOffset(Factor, Units):-
 	float(Units),
 	c_glPolygonOffset(Factor, Units).
 
+%%	glPopAttrib.
+% Pop the server attribute stack
 glPopAttrib:-
 	c_glPopAttrib.
 
+%%	glPopClientAttrib.
+% Pop the client attribute stack.
 glPopClientAttrib:-
 	c_glPopClientAttrib.
 
@@ -1213,12 +1225,18 @@ glPopClientAttrib:-
 glPopMatrix:-
 	c_glPopMatrix.
 
+%%	glPopName.
+% Pop the name stack.
 glPopName:-
 	c_glPopName.
 
+%%	glPushAttrib(+Mask).
+% Push the server attribute stack.
 glPushAttrib(Mask):-
     c_glPushAttrib(Mask).
 
+%%	glPushClientAttrib(+Mask).
+% Push the client attribute stack.
 glPushClientAttrib(Mask):-
     c_glPushClientAttrib(Mask).
 
@@ -1227,6 +1245,8 @@ glPushClientAttrib(Mask):-
 glPushMatrix:-
 	c_glPushMatrix.
 
+%%	glPushName(+Name).
+% Push the name stack.
 glPushName(Name):-
     c_glPushName(Name).
 
@@ -1426,18 +1446,28 @@ glScalef(X,Y,Z):-
 	float(Z),
 	c_glScalef(X,Y,Z).
 
+%%	glScissor(+X, +Y, Width, +Height).
+% Define the scissor box.
 glScissor(X,Y,Width,Height) :-
     c_glScissor(X,Y,Width,Height).
 
+%%	glShadeModel(+Mode).
+% Select flat or smooth shading.
 glShadeModel(Mode):-
 	c_glShadeModel(Mode).
 
+%%	glStencilFunc(+Func, +Ref, +Mask).
+% Set front and back function and reference value for stencil testing/
 glStencilFunc(Func, Ref, Mask):-
 	c_glStencilFunc(Func, Ref, Mask).
 
+%%	glStencilMask(+Mask).
+% Control the front and back writing of individual bits in the stencil planes
 glStencilMask(Mask):-
 	c_glStencilMask(Mask).
 
+%%	glStencilOp(+Fail, +ZFail, +ZPass).
+% Set front and back stencil test actions.
 glStencilOp(Fail, ZFail, ZPass):-
 	c_glStencilOp(Fail, ZFail, ZPass).
 
@@ -1621,9 +1651,13 @@ glTexCoord4s(S,T,R,Q):-
 glTexCoord4sv(V):-
 	c_glTexCoord4sv(V).
 
+%%	glTexImage1D(+Target, +Level, +Internal, +Width, +Border, +Format, +Type, +Texels).
+% Specify a one-dimensional texture image.
 glTexImage1D(Target,Level,Internal,Width,Border,Format,Type,Texels):-
 	c_glTexImage1D(Target,Level,Internal,Width,Border,Format,Type,Texels).
 
+%%	glTexImage2D(+Target, +Level, +Internal, +Width, +Height, Border, +Format, +Type, +Texels).
+% Specify a two-dimensional texture image.
 glTexImage2D(Target,Level,Internal,Width,Height,Border,Format,Type,Texels):-
 	c_glTexImage2D(Target,Level,Internal,Width,Height,Border,Format,Type,Texels).
 
@@ -1632,24 +1666,35 @@ glTexImage2D(Target,Level,Internal,Width,Height,Border,Format,Type,Texels):-
 %	c_glTexImage3D(Target,Level,Internal,Width,Height,Depth,Border,Format,Type,Texels).
 %
 
+%%	glTexParameteri(+Target, +PName, +Param).
+% Set the texture parameters.
 glTexParameteri(Target,PName,Param):-
 	c_glTexParameteri(Target,PName,Param).
 
+%%	glTexSubImage1D(+Target, +Level, +XOffset, +Width, +Format, +Type, +Texels).
+% Specify a one-dimensional texture subimage.
 glTexSubImage1D(Target,Level,XOffset,Width,Format,Type,Texels):-
 	c_glTexSubImage1D(Target,Level,XOffset,Width,Format,Type,Texels).
 
+%%	glTexSubImage2D(+Target, +Level, +XOffset, +YOffset, +Width, +Height, +Format, +Type, +Texels).
+% Specify a two-dimensional texture subimage.
 glTexSubImage2D(Target,Level,XOffset,YOffset,Width,Height,Format,Type,Texels):-
 	c_glTexSubImage2D(Target,Level,XOffset,YOffset,Width,Height,Format,Type,Texels).
 
+% TODO
 glTexSubImage3D(Target,Level,XOffset,YOffset,ZOffset,Width,Height,Depth,Format,Type,Texels):-
 	c_glTexSubImage3D(Target,Level,XOffset,YOffset,ZOffset,Width,Height,Depth,Format,Type,Texels).
 
+%%	glTranslated(+X, +Y, +Z).
+% Multiplies the current matrix by a translation matrix.
 glTranslated(X,Y,Z):-
 	float(X),
 	float(Y),
 	float(Z),
 	c_glTranslated(X,Y,Z).
 
+%%	glTranslatef(+X, +Y, +Z).
+% Multiplies the current matrix by a translation matrix.
 glTranslatef(X,Y,Z):-
 	float(X),
 	float(Y),
@@ -1797,12 +1842,12 @@ glVertex4sv(X):-
 	c_glVertex4sv(X).
 
 %%	glVertexPointer(+Size, +Type, +Stride, +Pointer).
-% Define an array of vertex data
+% Define an array of vertex data.
 glVertexPointer(Size, Type, Stride, Pointer):-
     c_glVertexPointer(Size, Type, Stride, Pointer).
 
-%%	glViewPort(+X, +Y, +W, +H).
-% Set the viewport
+%%	glViewport(+X, +Y, +W, +H).
+% Set the viewport.
 glViewport(X,Y,W,H):-
 	c_glViewport(X,Y,W,H).
 
