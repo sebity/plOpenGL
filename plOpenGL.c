@@ -188,6 +188,8 @@ foreign_t c_glIndexd(term_t Index);
 foreign_t c_glIndexi(term_t Index);
 foreign_t c_glIndexf(term_t Index);
 foreign_t c_glIndexMask(term_t Mask);
+foreign_t c_glLightf(term_t Light, term_t PName, term_t Params);
+foreign_t c_glLighti(term_t Light, term_t PName, term_t Params);
 foreign_t c_glLightfv(term_t Face, term_t PName, term_t Params, term_t Num);
 foreign_t c_glLightiv(term_t Face, term_t PName, term_t Params, term_t Num);
 foreign_t c_glLightModelfv(term_t PName, term_t Params, term_t Num);
@@ -202,6 +204,7 @@ foreign_t c_glMatrixMode(term_t Mode);
 foreign_t c_glMinmax(term_t Target, term_t InternalFormat, term_t Sink);
 foreign_t c_glNewList(term_t List, term_t Mode);
 foreign_t c_glNormal3f(term_t X, term_t Y, term_t Z);
+foreign_t c_glNormal3fv(term_t V);
 foreign_t c_glOrtho(term_t Left, term_t Right, term_t Bottom, term_t Top, term_t Near, term_t Far);
 foreign_t c_glPixelStorei(term_t Mode, term_t Param);
 foreign_t c_glPointSize(term_t Size);
@@ -479,6 +482,8 @@ install_t install() {
   PL_register_foreign("c_glIndexi",1,c_glIndexi,PL_FA_NOTRACE);
   PL_register_foreign("c_glIndexf",1,c_glIndexf,PL_FA_NOTRACE);
   PL_register_foreign("c_glIndexMask",1,c_glIndexMask,PL_FA_NOTRACE);
+  PL_register_foreign("c_glLightf",3,c_glLightf,PL_FA_NOTRACE);
+  PL_register_foreign("c_glLighti",3,c_glLighti,PL_FA_NOTRACE);
   PL_register_foreign("c_glLightfv",4,c_glLightfv,PL_FA_NOTRACE);
   PL_register_foreign("c_glLightiv",4,c_glLightiv,PL_FA_NOTRACE);
   PL_register_foreign("c_glLightModelfv",3,c_glLightModelfv,PL_FA_NOTRACE);
@@ -493,6 +498,7 @@ install_t install() {
   PL_register_foreign("c_glMinmax",3,c_glMinmax,PL_FA_NOTRACE);
   PL_register_foreign("c_glNewList",2,c_glNewList,PL_FA_NOTRACE);
   PL_register_foreign("c_glNormal3f",3,c_glNormal3f,PL_FA_NOTRACE);
+  PL_register_foreign("c_glNormal3fv",1,c_glNormal3fv,PL_FA_NOTRACE);
   PL_register_foreign("c_glOrtho",6,c_glOrtho,PL_FA_NOTRACE);
   PL_register_foreign("c_glPixelStorei",2,c_glPixelStorei,PL_FA_NOTRACE);
   PL_register_foreign("c_glPointSize",1,c_glPointSize,PL_FA_NOTRACE);
@@ -3329,6 +3335,40 @@ foreign_t c_glIndexMask(term_t PL_Mask) {
 
 
 /***************************************
+ * Name: c_glLightf
+ * Params:
+ * Returns:
+ */
+foreign_t c_glLightf(term_t PL_Light, term_t PL_PName, term_t PL_Params) {
+  double light, pname, params;
+
+  if(!PL_get_float(PL_Light,&light) ||
+     !PL_get_float(PL_PName,&pname) ||
+     !PL_get_float(PL_Params,&params))
+    return FALSE;
+
+  glLightf((GLfloat)light, (GLfloat)pname, (GLfloat)params);
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glLighti
+ * Params:
+ * Returns:
+ */
+foreign_t c_glLighti(term_t PL_Light, term_t PL_PName, term_t PL_Params) {
+  GLint light, pname, params;
+
+  if(!PL_get_integer(PL_Light,&light) ||
+     !PL_get_integer(PL_PName,&pname) ||
+     !PL_get_integer(PL_Params,&params))
+    return FALSE;
+
+  glLightf((GLint)light, (GLint)pname, (GLint)params);
+  PL_succeed;
+}
+
+/***************************************
  * Name: c_glLightfv
  * Params:
  * Returns:
@@ -3699,6 +3739,41 @@ foreign_t c_glNormal3f(term_t PL_X, term_t PL_Y, term_t PL_Z) {
      !PL_get_float(PL_Z,&z))
     return FALSE;
   glNormal3f((float)x,(float)y,(float)z);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glNormal3fv
+ * Params:
+ * Returns:
+ */
+foreign_t c_glNormal3fv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+    
+  int num, count;
+  GLfloat *v;
+
+  num = 3;
+  count = 0;
+  v = malloc(num * sizeof(GLfloat));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_FLOAT) )
+      v[count] = (atof(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glNormal3fv(v);
+
+  free(v);
+  return PL_get_nil(list);
 
   PL_succeed;
 }

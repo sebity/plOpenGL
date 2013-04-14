@@ -99,6 +99,8 @@
 	   glIndexi/1,
 	   glIndexf/1,
 	   glIndexMask/1,
+	   glLightf/3,
+	   glLighti/3,
 	   glLightfv/3,
 	   glLightiv/3,
 	   glLightModelfv/2,
@@ -113,6 +115,7 @@
 	   glMinmax/3,
 	   glNewList/2,
 	   glNormal3f/3,
+	   glNormal3fv/1,
 	   glOrtho/6,
 	   glPixelStorei/2,
 	   glPointSize/1,
@@ -1011,6 +1014,19 @@ glIndexf(Index):-
 glIndexMask(Mask):-
     c_glIndexMask(Mask).
 
+%%	glLightf(+Light, +PName, +Param(float)).
+% Set light source parameters.
+glLightf(Light, PName, Params):-
+	float(Light),
+	float(PName),
+	float(Params),
+	c_glLightf(Light, PName, Params).
+
+%%	glLighti(+Light, +PName, +Param(number)).
+% Set light source parameters.
+glLighti(Light, PName, Params):-
+	c_glLighti(Light, PName, Params).
+
 %%	glLightfv(+Light, +PName, +Param:list(float)).
 % Set light source parameters.
 glLightfv(Light, PName, Params):-
@@ -1082,11 +1098,18 @@ glMinmax(Target, InternalFormat, Sink):-
 glNewList(List,Mode) :-
 	c_glNewList(List,Mode).
 
+%%	glNormal3f(+V(float))
+% Set the current normal vector
 glNormal3f(X,Y,Z):-
 	float(X),
 	float(Y),
 	float(Z),
 	c_glNormal3f(X,Y,Z).
+
+%%	glNormal3fv(+V:list(float))
+% Set the current normal vector
+glNormal3fv(V) :-
+	c_glNormal3fv(V).
 
 glOrtho(Left,Right,Top,Bottom,Near,Far):-
 	float(Left),
