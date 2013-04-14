@@ -131,6 +131,8 @@ foreign_t c_glColor4ub(term_t Red, term_t Green, term_t Blue, term_t Alpha);
 foreign_t c_glColor4ubv(term_t V);
 foreign_t c_glColor4ui(term_t Red, term_t Green, term_t Blue, term_t Alpha);
 foreign_t c_glColor4uiv(term_t V);
+foreign_t c_glColor4us(term_t Red, term_t Green, term_t Blue, term_t Alpha);
+foreign_t c_glColor4usv(term_t V);
 foreign_t c_glColorMask(term_t Red, term_t Green, term_t Blue, term_t Alpha);
 foreign_t c_glColorMaterial(term_t Face, term_t Mode);
 foreign_t c_glCopyColorTable(term_t Target, term_t Format, term_t X, term_t Y, term_t Width);
@@ -423,6 +425,8 @@ install_t install() {
   PL_register_foreign("c_glColor4ubv",1,c_glColor4ubv,PL_FA_NOTRACE);
   PL_register_foreign("c_glColor4ui",4,c_glColor4ui,PL_FA_NOTRACE);
   PL_register_foreign("c_glColor4uiv",1,c_glColor4uiv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glColor4us",4,c_glColor4us,PL_FA_NOTRACE);
+  PL_register_foreign("c_glColor4usv",1,c_glColor4usv,PL_FA_NOTRACE);
   PL_register_foreign("c_glColorMask",4,c_glColorMask,PL_FA_NOTRACE);
   PL_register_foreign("c_glColorMaterial",2,c_glColorMaterial,PL_FA_NOTRACE);
   PL_register_foreign("c_glCopyColorTable",5,c_glCopyColorTable,PL_FA_NOTRACE);
@@ -2196,6 +2200,61 @@ foreign_t c_glColor4uiv(term_t PL_V) {
   }
 
   glColor4uiv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glColor4us
+ * Desc:    Set the current color
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glColor4us(term_t PL_Red, term_t PL_Green, term_t PL_Blue, term_t PL_Alpha) {
+  int red, green, blue, alpha;
+
+  if(!PL_get_integer(PL_Red,&red) ||
+     !PL_get_integer(PL_Green,&green) ||
+     !PL_get_integer(PL_Blue,&blue) ||
+     !PL_get_integer(PL_Alpha,&alpha))
+    return FALSE;
+  glColor4us((GLushort)red,(GLushort)green,(GLushort)blue,(GLushort)alpha);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glColor4usv
+ * Desc:    Set the current color
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glColor4usv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+
+  int num, count;
+  GLushort *v;
+
+  num = 4;
+  count = 0;
+  v = malloc(num * sizeof(GLushort));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_INTEGER) )
+      v[count] = (atoi(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glColor4usv(v);
 
   free(v);
   return PL_get_nil(list);
