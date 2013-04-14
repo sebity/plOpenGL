@@ -93,6 +93,7 @@ foreign_t c_glBitmap(term_t Width, term_t Height, term_t X1, term_t Y1, term_t X
                      term_t Bitmap, term_t Num);
 foreign_t c_glBlendFunc(term_t sFactor, term_t dFactor);
 foreign_t c_glCallList(term_t List);
+foreign_t c_glCallLists(term_t N, term_t Type, term_t Lists);
 foreign_t c_glClear(term_t Mask);
 foreign_t c_glClearAccum(term_t Red, term_t Green, term_t Blue, term_t Alpha);
 foreign_t c_glClearColor(term_t Red, term_t Green, term_t Blue, term_t Alpha);
@@ -110,10 +111,28 @@ foreign_t c_glColor3i(term_t Red, term_t Green, term_t Blue);
 foreign_t c_glColor3iv(term_t V);
 foreign_t c_glColor3s(term_t Red, term_t Green, term_t Blue);
 foreign_t c_glColor3sv(term_t V);
+foreign_t c_glColor3ub(term_t Red, term_t Green, term_t Blue);
+foreign_t c_glColor3ubv(term_t V);
+foreign_t c_glColor3ui(term_t Red, term_t Green, term_t Blue);
+foreign_t c_glColor3uiv(term_t V);
+foreign_t c_glColor3us(term_t Red, term_t Green, term_t Blue);
+foreign_t c_glColor3usv(term_t V);
+foreign_t c_glColor4b(term_t Red, term_t Green, term_t Blue, term_t Alpha);
+foreign_t c_glColor4bv(term_t V);
+foreign_t c_glColor4d(term_t Red, term_t Green, term_t Blue, term_t Alpha);
 foreign_t c_glColor4dv(term_t V);
 foreign_t c_glColor4f(term_t Red, term_t Green, term_t Blue, term_t Alpha);
 foreign_t c_glColor4fv(term_t V);
+foreign_t c_glColor4i(term_t Red, term_t Green, term_t Blue, term_t Alpha);
+foreign_t c_glColor4iv(term_t V);
+foreign_t c_glColor4s(term_t Red, term_t Green, term_t Blue, term_t Alpha);
+foreign_t c_glColor4sv(term_t V);
 foreign_t c_glColor4ub(term_t Red, term_t Green, term_t Blue, term_t Alpha);
+foreign_t c_glColor4ubv(term_t V);
+foreign_t c_glColor4ui(term_t Red, term_t Green, term_t Blue, term_t Alpha);
+foreign_t c_glColor4uiv(term_t V);
+foreign_t c_glColor4us(term_t Red, term_t Green, term_t Blue, term_t Alpha);
+foreign_t c_glColor4usv(term_t V);
 foreign_t c_glColorMask(term_t Red, term_t Green, term_t Blue, term_t Alpha);
 foreign_t c_glColorMaterial(term_t Face, term_t Mode);
 foreign_t c_glCopyColorTable(term_t Target, term_t Format, term_t X, term_t Y, term_t Width);
@@ -169,7 +188,10 @@ foreign_t c_glIndexd(term_t Index);
 foreign_t c_glIndexi(term_t Index);
 foreign_t c_glIndexf(term_t Index);
 foreign_t c_glIndexMask(term_t Mask);
+foreign_t c_glLightf(term_t Light, term_t PName, term_t Params);
+foreign_t c_glLighti(term_t Light, term_t PName, term_t Params);
 foreign_t c_glLightfv(term_t Face, term_t PName, term_t Params, term_t Num);
+foreign_t c_glLightiv(term_t Face, term_t PName, term_t Params, term_t Num);
 foreign_t c_glLightModelfv(term_t PName, term_t Params, term_t Num);
 foreign_t c_glLineStipple(term_t Factor, term_t Pattern);
 foreign_t c_glLineWidth(term_t Width);
@@ -177,11 +199,22 @@ foreign_t c_glLoadIdentity(void);
 foreign_t c_glLoadName(term_t Name);
 foreign_t c_glLogicOp(term_t Opcode);
 foreign_t c_glMaterialfv(term_t Face, term_t PName, term_t Params, term_t Num);
+foreign_t c_glMaterialiv(term_t Face, term_t PName, term_t Params, term_t Num);
 foreign_t c_glMatrixMode(term_t Mode);
 foreign_t c_glMinmax(term_t Target, term_t InternalFormat, term_t Sink);
 foreign_t c_glNewList(term_t List, term_t Mode);
+foreign_t c_glNormal3b(term_t X, term_t Y, term_t Z);
+foreign_t c_glNormal3bv(term_t V);
+foreign_t c_glNormal3d(term_t X, term_t Y, term_t Z);
+foreign_t c_glNormal3dv(term_t V);
 foreign_t c_glNormal3f(term_t X, term_t Y, term_t Z);
+foreign_t c_glNormal3fv(term_t V);
+foreign_t c_glNormal3i(term_t X, term_t Y, term_t Z);
+foreign_t c_glNormal3iv(term_t V);
+foreign_t c_glNormal3s(term_t X, term_t Y, term_t Z);
+foreign_t c_glNormal3sv(term_t V);
 foreign_t c_glOrtho(term_t Left, term_t Right, term_t Bottom, term_t Top, term_t Near, term_t Far);
+foreign_t c_glPixelStoref(term_t Mode, term_t Param);
 foreign_t c_glPixelStorei(term_t Mode, term_t Param);
 foreign_t c_glPointSize(term_t Size);
 foreign_t c_glPolygonMode(term_t Face, term_t Mode);
@@ -367,6 +400,7 @@ install_t install() {
   PL_register_foreign("c_glBitmap",8,c_glBitmap,PL_FA_NOTRACE);
   PL_register_foreign("c_glBlendFunc",2,c_glBlendFunc,PL_FA_NOTRACE);
   PL_register_foreign("c_glCallList",1,c_glCallList,PL_FA_NOTRACE);
+  PL_register_foreign("c_glCallLists",3,c_glCallLists,PL_FA_NOTRACE);
   PL_register_foreign("c_glClear",1,c_glClear,PL_FA_NOTRACE);
   PL_register_foreign("c_glClearAccum",4,c_glClearAccum,PL_FA_NOTRACE);
   PL_register_foreign("c_glClearColor",4,c_glClearColor,PL_FA_NOTRACE);
@@ -384,10 +418,28 @@ install_t install() {
   PL_register_foreign("c_glColor3iv",1,c_glColor3iv,PL_FA_NOTRACE);
   PL_register_foreign("c_glColor3s",3,c_glColor3s,PL_FA_NOTRACE);
   PL_register_foreign("c_glColor3sv",1,c_glColor3sv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glColor3ub",3,c_glColor3ub,PL_FA_NOTRACE);
+  PL_register_foreign("c_glColor3ubv",1,c_glColor3ubv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glColor3ui",3,c_glColor3ui,PL_FA_NOTRACE);
+  PL_register_foreign("c_glColor3uiv",1,c_glColor3uiv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glColor3us",3,c_glColor3us,PL_FA_NOTRACE);
+  PL_register_foreign("c_glColor3usv",1,c_glColor3usv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glColor4b",4,c_glColor4b,PL_FA_NOTRACE);
+  PL_register_foreign("c_glColor4bv",1,c_glColor4bv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glColor4d",4,c_glColor4d,PL_FA_NOTRACE);
   PL_register_foreign("c_glColor4dv",1,c_glColor4dv,PL_FA_NOTRACE);
   PL_register_foreign("c_glColor4f",4,c_glColor4f,PL_FA_NOTRACE);
   PL_register_foreign("c_glColor4fv",1,c_glColor4fv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glColor4i",4,c_glColor4i,PL_FA_NOTRACE);
+  PL_register_foreign("c_glColor4iv",1,c_glColor4iv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glColor4s",4,c_glColor4s,PL_FA_NOTRACE);
+  PL_register_foreign("c_glColor4sv",1,c_glColor4sv,PL_FA_NOTRACE);
   PL_register_foreign("c_glColor4ub",4,c_glColor4ub,PL_FA_NOTRACE);
+  PL_register_foreign("c_glColor4ubv",1,c_glColor4ubv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glColor4ui",4,c_glColor4ui,PL_FA_NOTRACE);
+  PL_register_foreign("c_glColor4uiv",1,c_glColor4uiv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glColor4us",4,c_glColor4us,PL_FA_NOTRACE);
+  PL_register_foreign("c_glColor4usv",1,c_glColor4usv,PL_FA_NOTRACE);
   PL_register_foreign("c_glColorMask",4,c_glColorMask,PL_FA_NOTRACE);
   PL_register_foreign("c_glColorMaterial",2,c_glColorMaterial,PL_FA_NOTRACE);
   PL_register_foreign("c_glCopyColorTable",5,c_glCopyColorTable,PL_FA_NOTRACE);
@@ -439,7 +491,10 @@ install_t install() {
   PL_register_foreign("c_glIndexi",1,c_glIndexi,PL_FA_NOTRACE);
   PL_register_foreign("c_glIndexf",1,c_glIndexf,PL_FA_NOTRACE);
   PL_register_foreign("c_glIndexMask",1,c_glIndexMask,PL_FA_NOTRACE);
+  PL_register_foreign("c_glLightf",3,c_glLightf,PL_FA_NOTRACE);
+  PL_register_foreign("c_glLighti",3,c_glLighti,PL_FA_NOTRACE);
   PL_register_foreign("c_glLightfv",4,c_glLightfv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glLightiv",4,c_glLightiv,PL_FA_NOTRACE);
   PL_register_foreign("c_glLightModelfv",3,c_glLightModelfv,PL_FA_NOTRACE);
   PL_register_foreign("c_glLineStipple",2,c_glLineStipple,PL_FA_NOTRACE);
   PL_register_foreign("c_glLineWidth",1,c_glLineWidth,PL_FA_NOTRACE);
@@ -447,11 +502,22 @@ install_t install() {
   PL_register_foreign("c_glLoadName",1,c_glLoadName,PL_FA_NOTRACE);
   PL_register_foreign("c_glLogicOp",1,c_glLogicOp,PL_FA_NOTRACE);
   PL_register_foreign("c_glMaterialfv",4,c_glMaterialfv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glMaterialiv",4,c_glMaterialiv,PL_FA_NOTRACE);
   PL_register_foreign("c_glMatrixMode",1,c_glMatrixMode,PL_FA_NOTRACE);
   PL_register_foreign("c_glMinmax",3,c_glMinmax,PL_FA_NOTRACE);
   PL_register_foreign("c_glNewList",2,c_glNewList,PL_FA_NOTRACE);
+  PL_register_foreign("c_glNormal3b",3,c_glNormal3b,PL_FA_NOTRACE);
+  PL_register_foreign("c_glNormal3bv",1,c_glNormal3bv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glNormal3d",3,c_glNormal3d,PL_FA_NOTRACE);
+  PL_register_foreign("c_glNormal3dv",1,c_glNormal3dv,PL_FA_NOTRACE);
   PL_register_foreign("c_glNormal3f",3,c_glNormal3f,PL_FA_NOTRACE);
+  PL_register_foreign("c_glNormal3fv",1,c_glNormal3fv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glNormal3i",3,c_glNormal3i,PL_FA_NOTRACE);
+  PL_register_foreign("c_glNormal3iv",1,c_glNormal3iv,PL_FA_NOTRACE);
+  PL_register_foreign("c_glNormal3s",3,c_glNormal3s,PL_FA_NOTRACE);
+  PL_register_foreign("c_glNormal3sv",1,c_glNormal3sv,PL_FA_NOTRACE);
   PL_register_foreign("c_glOrtho",6,c_glOrtho,PL_FA_NOTRACE);
+  PL_register_foreign("c_glPixelStoref",2,c_glPixelStoref,PL_FA_NOTRACE);
   PL_register_foreign("c_glPixelStorei",2,c_glPixelStorei,PL_FA_NOTRACE);
   PL_register_foreign("c_glPointSize",1,c_glPointSize,PL_FA_NOTRACE);
   PL_register_foreign("c_glPolygonMode",2,c_glPolygonMode,PL_FA_NOTRACE);
@@ -1155,6 +1221,46 @@ foreign_t c_glCallList(term_t PL_List) {
 }
 
 /***************************************
+ * Name:    c_glCallLists
+ * Desc:    Set the current color
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glCallLists(term_t PL_N, term_t PL_Type, term_t PL_Lists) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_Lists);
+
+  int num, count, type;
+  count = 0;
+
+  if(!PL_get_integer(PL_N,&num) ||
+     !PL_get_integer(PL_Type,&type))
+    return FALSE;
+
+  GLvoid *lists;
+  lists = malloc(num * sizeof(GLvoid));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_ALL) ) {
+      //lists[count] = s;
+    }
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glCallLists((GLsizei)num, (GLenum)type, lists);
+
+  free(lists);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
  * Name: c_glClear
  * Params:
  * Returns:
@@ -1556,7 +1662,7 @@ foreign_t c_glColor3sv(term_t PL_V) {
 
   num = 3;
   count = 0;
-  v = malloc(num * sizeof(GLint));
+  v = malloc(num * sizeof(GLshort));
 
   while( PL_get_list(list, head, list) ) {
     char *s;
@@ -1573,6 +1679,242 @@ foreign_t c_glColor3sv(term_t PL_V) {
 
   free(v);
   return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glColor3ub
+ * Desc:    Set the current color
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glColor3ub(term_t PL_Red, term_t PL_Green, term_t PL_Blue) {
+  int red, green, blue;
+
+  if(!PL_get_integer(PL_Red,&red) ||
+     !PL_get_integer(PL_Green,&green) ||
+     !PL_get_integer(PL_Blue,&blue) )
+    return FALSE;
+  glColor3ub((GLubyte)red,(GLubyte)green,(GLubyte)blue);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glColor3ubv
+ * Desc:    Set the current color
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glColor3ubv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+
+  int num, count;
+  GLubyte *v;
+
+  num = 3;
+  count = 0;
+  v = malloc(num * sizeof(GLubyte));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_INTEGER) )
+      v[count] = (atoi(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glColor3ubv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glColor3ui
+ * Desc:    Set the current color
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glColor3ui(term_t PL_Red, term_t PL_Green, term_t PL_Blue) {
+  int red, green, blue;
+
+  if(!PL_get_integer(PL_Red,&red) ||
+     !PL_get_integer(PL_Green,&green) ||
+     !PL_get_integer(PL_Blue,&blue) )
+    return FALSE;
+  glColor3ui((GLuint)red,(GLuint)green,(GLuint)blue);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glColor3uiv
+ * Desc:    Set the current color
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glColor3uiv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+
+  int num, count;
+  GLuint *v;
+
+  num = 3;
+  count = 0;
+  v = malloc(num * sizeof(GLuint));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_INTEGER) )
+      v[count] = (atoi(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glColor3uiv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glColor3us
+ * Desc:    Set the current color
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glColor3us(term_t PL_Red, term_t PL_Green, term_t PL_Blue) {
+  int red, green, blue;
+
+  if(!PL_get_integer(PL_Red,&red) ||
+     !PL_get_integer(PL_Green,&green) ||
+     !PL_get_integer(PL_Blue,&blue) )
+    return FALSE;
+  glColor3us((GLushort)red,(GLushort)green,(GLushort)blue);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glColor3usv
+ * Desc:    Set the current color
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glColor3usv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+
+  int num, count;
+  GLushort *v;
+
+  num = 3;
+  count = 0;
+  v = malloc(num * sizeof(GLushort));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_INTEGER) )
+      v[count] = (atoi(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glColor3usv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glColor4b
+ * Desc:    Set the current color
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glColor4b(term_t PL_Red, term_t PL_Green, term_t PL_Blue, term_t PL_Alpha) {
+  int red, green, blue, alpha;
+
+  if(!PL_get_integer(PL_Red,&red) ||
+     !PL_get_integer(PL_Green,&green) ||
+     !PL_get_integer(PL_Blue,&blue) ||
+     !PL_get_integer(PL_Alpha,&alpha))
+    return FALSE;
+  glColor4b((GLbyte)red,(GLbyte)green,(GLbyte)blue,(GLbyte)alpha);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glColor4bv
+ * Desc:    Set the current color
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glColor4bv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+
+  int num, count;
+  GLbyte *v;
+
+  num = 4;
+  count = 0;
+  v = malloc(num * sizeof(GLbyte));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_INTEGER) )
+      v[count] = (atoi(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glColor4bv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glColor4d
+ * Desc:    Set the current color
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glColor4d(term_t PL_Red, term_t PL_Green, term_t PL_Blue, term_t PL_Alpha) {
+  GLdouble red, green, blue, alpha;
+
+  if(!PL_get_float(PL_Red,&red) ||
+     !PL_get_float(PL_Green,&green) ||
+     !PL_get_float(PL_Blue,&blue) ||
+     !PL_get_float(PL_Alpha,&alpha))
+    return FALSE;
+  glColor4d((GLdouble)red,(GLdouble)green,(GLdouble)blue,(GLdouble)alpha);
 
   PL_succeed;
 }
@@ -1671,6 +2013,117 @@ foreign_t c_glColor4fv(term_t PL_V) {
 }
 
 /***************************************
+ * Name:    c_glColor4i
+ * Desc:    Set the current color
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glColor4i(term_t PL_Red, term_t PL_Green, term_t PL_Blue, term_t PL_Alpha) {
+  int red, green, blue, alpha;
+
+  if(!PL_get_integer(PL_Red,&red) ||
+     !PL_get_integer(PL_Green,&green) ||
+     !PL_get_integer(PL_Blue,&blue) ||
+     !PL_get_integer(PL_Alpha,&alpha))
+    return FALSE;
+  glColor4i((GLint)red,(GLint)green,(GLint)blue,(GLint)alpha);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glColor4iv
+ * Desc:    Set the current color
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glColor4iv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+
+  int num, count;
+  GLint *v;
+
+  num = 4;
+  count = 0;
+  v = malloc(num * sizeof(GLint));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_INTEGER) )
+      v[count] = (atoi(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glColor4iv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glColor4s
+ * Desc:    Set the current color
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glColor4s(term_t PL_Red, term_t PL_Green, term_t PL_Blue, term_t PL_Alpha) {
+  int red, green, blue, alpha;
+
+  if(!PL_get_integer(PL_Red,&red) ||
+     !PL_get_integer(PL_Green,&green) ||
+     !PL_get_integer(PL_Blue,&blue) ||
+     !PL_get_integer(PL_Alpha,&alpha))
+    return FALSE;
+  
+  glColor4s((GLshort)red,(GLshort)green,(GLshort)blue,(GLshort)alpha);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glColor4sv
+ * Desc:    Set the current color
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glColor4sv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+
+  int num, count;
+  GLshort *v;
+
+  num = 4;
+  count = 0;
+  v = malloc(num * sizeof(GLshort));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_INTEGER) )
+      v[count] = (atoi(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glColor4sv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
  * Name:    c_glColor4ub
  * Desc:    Set the current color
  * Params:  -
@@ -1685,6 +2138,152 @@ foreign_t c_glColor4ub(term_t PL_Red, term_t PL_Green, term_t PL_Blue, term_t PL
      !PL_get_integer(PL_Alpha,&alpha))
     return FALSE;
   glColor4ub((GLubyte)red,(GLubyte)green,(GLubyte)blue,(GLubyte)alpha);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glColor4ubv
+ * Desc:    Set the current color
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glColor4ubv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+
+  int num, count;
+  GLubyte *v;
+
+  num = 4;
+  count = 0;
+  v = malloc(num * sizeof(GLubyte));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_INTEGER) )
+      v[count] = (atoi(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glColor4ubv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glColor4ui
+ * Desc:    Set the current color
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glColor4ui(term_t PL_Red, term_t PL_Green, term_t PL_Blue, term_t PL_Alpha) {
+  int red, green, blue, alpha;
+
+  if(!PL_get_integer(PL_Red,&red) ||
+     !PL_get_integer(PL_Green,&green) ||
+     !PL_get_integer(PL_Blue,&blue) ||
+     !PL_get_integer(PL_Alpha,&alpha))
+    return FALSE;
+  glColor4ui((GLuint)red,(GLuint)green,(GLuint)blue,(GLuint)alpha);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glColor4uiv
+ * Desc:    Set the current color
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glColor4uiv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+
+  int num, count;
+  GLuint *v;
+
+  num = 4;
+  count = 0;
+  v = malloc(num * sizeof(GLuint));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_INTEGER) )
+      v[count] = (atoi(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glColor4uiv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glColor4us
+ * Desc:    Set the current color
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glColor4us(term_t PL_Red, term_t PL_Green, term_t PL_Blue, term_t PL_Alpha) {
+  int red, green, blue, alpha;
+
+  if(!PL_get_integer(PL_Red,&red) ||
+     !PL_get_integer(PL_Green,&green) ||
+     !PL_get_integer(PL_Blue,&blue) ||
+     !PL_get_integer(PL_Alpha,&alpha))
+    return FALSE;
+  glColor4us((GLushort)red,(GLushort)green,(GLushort)blue,(GLushort)alpha);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name:    c_glColor4usv
+ * Desc:    Set the current color
+ * Params:  -
+ * Returns: -
+ */
+foreign_t c_glColor4usv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+
+  int num, count;
+  GLushort *v;
+
+  num = 4;
+  count = 0;
+  v = malloc(num * sizeof(GLushort));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_INTEGER) )
+      v[count] = (atoi(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glColor4usv(v);
+
+  free(v);
+  return PL_get_nil(list);
 
   PL_succeed;
 }
@@ -2754,6 +3353,40 @@ foreign_t c_glIndexMask(term_t PL_Mask) {
 
 
 /***************************************
+ * Name: c_glLightf
+ * Params:
+ * Returns:
+ */
+foreign_t c_glLightf(term_t PL_Light, term_t PL_PName, term_t PL_Params) {
+  double light, pname, params;
+
+  if(!PL_get_float(PL_Light,&light) ||
+     !PL_get_float(PL_PName,&pname) ||
+     !PL_get_float(PL_Params,&params))
+    return FALSE;
+
+  glLightf((GLfloat)light, (GLfloat)pname, (GLfloat)params);
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glLighti
+ * Params:
+ * Returns:
+ */
+foreign_t c_glLighti(term_t PL_Light, term_t PL_PName, term_t PL_Params) {
+  GLint light, pname, params;
+
+  if(!PL_get_integer(PL_Light,&light) ||
+     !PL_get_integer(PL_PName,&pname) ||
+     !PL_get_integer(PL_Params,&params))
+    return FALSE;
+
+  glLightf((GLint)light, (GLint)pname, (GLint)params);
+  PL_succeed;
+}
+
+/***************************************
  * Name: c_glLightfv
  * Params:
  * Returns:
@@ -2789,6 +3422,49 @@ foreign_t c_glLightfv(term_t PL_Light, term_t PL_PName, term_t PL_Params, term_t
   }
 
   glLightfv((GLenum)light, (GLenum)pname, parameters);
+
+  free(parameters);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glLightiv
+ * Params:
+ * Returns:
+ */
+foreign_t c_glLightiv(term_t PL_Light, term_t PL_PName, term_t PL_Params, term_t PL_Num) {
+  term_t head = PL_new_term_ref();      /* variable for the elements */
+  term_t list = PL_copy_term_ref(PL_Params);    /* copy as we need to write */
+
+  int light, pname;
+  int num;
+  int count;
+  GLint *parameters;
+  if(!PL_get_integer(PL_Num,&num))
+	  return FALSE;
+
+  parameters = malloc(num * sizeof(GLint));
+
+  if(!PL_get_integer(PL_Light,&light) ||
+     !PL_get_integer(PL_PName,&pname))
+    return FALSE;
+
+  count = 0;
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_INTEGER) ){
+      parameters[count] = (atoi(s));
+    }
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glLightiv((GLenum)light, (GLenum)pname, parameters);
 
   free(parameters);
   return PL_get_nil(list);
@@ -2957,6 +3633,50 @@ foreign_t c_glMaterialfv(term_t PL_Face, term_t PL_PName, term_t PL_Params, term
 
   PL_succeed;
 }
+/***************************************
+ * Name: c_glMaterialiv
+ * Params:
+ * Returns:
+ */
+foreign_t c_glMaterialiv(term_t PL_Face, term_t PL_PName, term_t PL_Params, term_t PL_Num) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_Params);
+
+  int face, pname;
+  int num;
+  int count;
+  int *parameters;
+  if(!PL_get_integer(PL_Num,&num))
+	  return FALSE;
+
+  parameters = malloc(num * sizeof(int));
+
+  if(!PL_get_integer(PL_Face,&face) ||
+     !PL_get_integer(PL_PName,&pname))
+    return FALSE;
+
+  count = 0;
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_INTEGER) ) {
+      parameters[count] = (atoi(s));
+      /* printf("parameters[%d]: %f\n",count,atof(s)); */
+    }
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glMaterialiv((GLenum)face, (GLenum)pname, parameters);
+
+  free(parameters);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
 
 /***************************************
  * Name: c_glMatrixMode
@@ -3025,6 +3745,112 @@ foreign_t c_glNewList(term_t PL_List, term_t PL_Mode) {
 }
 
 /***************************************
+ * Name: c_glNormal3b
+ * Params:
+ * Returns:
+ */
+foreign_t c_glNormal3b(term_t PL_X, term_t PL_Y, term_t PL_Z) {
+  GLint x,y,z;
+
+  if(!PL_get_integer(PL_X,&x) ||
+     !PL_get_integer(PL_Y,&y) ||
+     !PL_get_integer(PL_Z,&z))
+    return FALSE;
+
+  glNormal3b((GLbyte)x,(GLbyte)y,(GLbyte)z);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glNormal3bv
+ * Params:
+ * Returns:
+ */
+foreign_t c_glNormal3bv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+    
+  int num, count;
+  GLbyte *v;
+
+  num = 3;
+  count = 0;
+  v = malloc(num * sizeof(GLbyte));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_INTEGER) )
+      v[count] = (atoi(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glNormal3bv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glNormal3d
+ * Params:
+ * Returns:
+ */
+foreign_t c_glNormal3d(term_t PL_X, term_t PL_Y, term_t PL_Z) {
+  GLdouble x,y,z;
+
+  if(!PL_get_float(PL_X,&x) ||
+     !PL_get_float(PL_Y,&y) ||
+     !PL_get_float(PL_Z,&z))
+    return FALSE;
+
+  glNormal3d((GLdouble)x,(GLdouble)y,(GLdouble)z);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glNormal3dv
+ * Params:
+ * Returns:
+ */
+foreign_t c_glNormal3dv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+    
+  int num, count;
+  GLdouble *v;
+
+  num = 3;
+  count = 0;
+  v = malloc(num * sizeof(GLdouble));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_FLOAT) )
+      v[count] = (atof(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glNormal3dv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
  * Name: c_glNormal3f
  * Params:
  * Returns:
@@ -3040,6 +3866,148 @@ foreign_t c_glNormal3f(term_t PL_X, term_t PL_Y, term_t PL_Z) {
 
   PL_succeed;
 }
+
+/***************************************
+ * Name: c_glNormal3fv
+ * Params:
+ * Returns:
+ */
+foreign_t c_glNormal3fv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+    
+  int num, count;
+  GLfloat *v;
+
+  num = 3;
+  count = 0;
+  v = malloc(num * sizeof(GLfloat));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_FLOAT) )
+      v[count] = (atof(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glNormal3fv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glNormal3i
+ * Params:
+ * Returns:
+ */
+foreign_t c_glNormal3i(term_t PL_X, term_t PL_Y, term_t PL_Z) {
+  GLint x,y,z;
+
+  if(!PL_get_integer(PL_X,&x) ||
+     !PL_get_integer(PL_Y,&y) ||
+     !PL_get_integer(PL_Z,&z))
+    return FALSE;
+
+  glNormal3i((GLint)x,(GLint)y,(GLint)z);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glNormal3iv
+ * Params:
+ * Returns:
+ */
+foreign_t c_glNormal3iv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+    
+  int num, count;
+  GLint *v;
+
+  num = 3;
+  count = 0;
+  v = malloc(num * sizeof(GLint));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_INTEGER) )
+      v[count] = (atoi(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glNormal3iv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glNormal3s
+ * Params:
+ * Returns:
+ */
+foreign_t c_glNormal3s(term_t PL_X, term_t PL_Y, term_t PL_Z) {
+  GLint x,y,z;
+
+  if(!PL_get_integer(PL_X,&x) ||
+     !PL_get_integer(PL_Y,&y) ||
+     !PL_get_integer(PL_Z,&z))
+    return FALSE;
+
+  glNormal3s((GLshort)x,(GLshort)y,(GLshort)z);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glNormal3sv
+ * Params:
+ * Returns:
+ */
+foreign_t c_glNormal3sv(term_t PL_V) {
+  term_t head = PL_new_term_ref();
+  term_t list = PL_copy_term_ref(PL_V);
+    
+  int num, count;
+  GLshort *v;
+
+  num = 3;
+  count = 0;
+  v = malloc(num * sizeof(GLshort));
+
+  while( PL_get_list(list, head, list) ) {
+    char *s;
+
+    if ( PL_get_chars(head, &s, CVT_INTEGER) )
+      v[count] = (atoi(s));
+    else
+      PL_fail;
+
+    count++;
+  }
+
+  glNormal3sv(v);
+
+  free(v);
+  return PL_get_nil(list);
+
+  PL_succeed;
+}
+
 
 /***************************************
  * Name: c_glOrtho
@@ -3058,6 +4026,24 @@ foreign_t c_glOrtho(term_t PL_L, term_t PL_R, term_t PL_T, term_t PL_B, term_t P
     return FALSE;
 
   glOrtho((GLdouble)left,(GLdouble)right,(GLdouble)top,(GLdouble)bottom,(GLdouble)nearVal,(GLdouble)farVal);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glPixelStoref
+ * Params:
+ * Returns:
+ */
+foreign_t c_glPixelStoref(term_t PL_Mode, term_t PL_Param) {
+  GLint mode;
+  GLdouble param;
+
+  if(!PL_get_integer(PL_Mode,&mode) ||
+     !PL_get_float(PL_Param,&param))
+    return FALSE;
+
+  glPixelStoref((GLenum)mode,(GLfloat)param);
 
   PL_succeed;
 }
