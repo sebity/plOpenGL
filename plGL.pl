@@ -125,6 +125,7 @@
 	   glNormal3s/3,
 	   glNormal3sv/1,
 	   glOrtho/6,
+	   glPixelStoref/2,
 	   glPixelStorei/2,
 	   glPointSize/1,
 	   glPolygonMode/2,
@@ -1176,6 +1177,14 @@ glOrtho(Left,Right,Top,Bottom,Near,Far):-
 	float(Far),
 	c_glOrtho(Left,Right,Top,Bottom,Near,Far).
 
+%%	glPixelStoref(+Mode, +Param).
+% Set pixel storage modes.
+glPixelStoref(Mode,Param) :-
+	float(Param),
+        c_glPixelStoref(Mode,Param).
+
+%%	glPixelStorei(+Mode, +Param).
+% Set pixel storage modes.
 glPixelStorei(Mode,Param) :-
         c_glPixelStorei(Mode,Param).
 
@@ -1311,6 +1320,7 @@ glRasterPos3s(X,Y,Z):-
 glRasterPos3sv(V):-
     c_glRasterPos3sv(V).
 
+%%	glRasterPos4d(+X, +Y, +Z, +W).
 % Specify the raster position for pixel operations.
 glRasterPos4d(X,Y,Z,W):-
     float(X),
@@ -1319,10 +1329,12 @@ glRasterPos4d(X,Y,Z,W):-
     float(W),
     c_glRasterPos4d(X,Y,Z,W).
 
+%%	glRasterPos4dv(+V:list(float)).
 % Specify the raster position for pixel operations.
 glRasterPos4dv(V):-
     c_glRasterPos4dv(V).
 
+%%	glRasterPos4f(+X, +Y, +Z, +W).
 % Specify the raster position for pixel operations.
 glRasterPos4f(X,Y,Z,W):-
     float(X),
@@ -1331,26 +1343,32 @@ glRasterPos4f(X,Y,Z,W):-
     float(W),
     c_glRasterPos4f(X,Y,Z,W).
 
+%%	glRasterPos4fv(+V:list(float)).
 % Specify the raster position for pixel operations.
 glRasterPos4fv(V):-
     c_glRasterPos4fv(V).
 
+%%	glRasterPos4i(+X, +Y, +Z, +W).
 % Specify the raster position for pixel operations.
 glRasterPos4i(X,Y,Z,W):-
     c_glRasterPos4i(X,Y,Z,W).
 
+%%	glRasterPos4iv(+V:list(number)).
 % Specify the raster position for pixel operations.
 glRasterPos4iv(V):-
     c_glRasterPos4iv(V).
 
+%%	glRasterPos4s(+X, +Y, +Z, W).
 % Specify the raster position for pixel operations.
 glRasterPos4s(X,Y,Z,W):-
     c_glRasterPos4s(X,Y,Z,W).
 
+%%	glRasterPos4sv(+V:list(number)).
 % Specify the raster position for pixel operations.
 glRasterPos4sv(V):-
     c_glRasterPos4sv(V).
 
+%%	glReadBuffer(+Mode).
 % Select a color buffer source for pixels
 glReadBuffer(Mode):-
     c_glReadBuffer(Mode).

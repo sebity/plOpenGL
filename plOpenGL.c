@@ -214,6 +214,7 @@ foreign_t c_glNormal3iv(term_t V);
 foreign_t c_glNormal3s(term_t X, term_t Y, term_t Z);
 foreign_t c_glNormal3sv(term_t V);
 foreign_t c_glOrtho(term_t Left, term_t Right, term_t Bottom, term_t Top, term_t Near, term_t Far);
+foreign_t c_glPixelStoref(term_t Mode, term_t Param);
 foreign_t c_glPixelStorei(term_t Mode, term_t Param);
 foreign_t c_glPointSize(term_t Size);
 foreign_t c_glPolygonMode(term_t Face, term_t Mode);
@@ -516,6 +517,7 @@ install_t install() {
   PL_register_foreign("c_glNormal3s",3,c_glNormal3s,PL_FA_NOTRACE);
   PL_register_foreign("c_glNormal3sv",1,c_glNormal3sv,PL_FA_NOTRACE);
   PL_register_foreign("c_glOrtho",6,c_glOrtho,PL_FA_NOTRACE);
+  PL_register_foreign("c_glPixelStoref",2,c_glPixelStoref,PL_FA_NOTRACE);
   PL_register_foreign("c_glPixelStorei",2,c_glPixelStorei,PL_FA_NOTRACE);
   PL_register_foreign("c_glPointSize",1,c_glPointSize,PL_FA_NOTRACE);
   PL_register_foreign("c_glPolygonMode",2,c_glPolygonMode,PL_FA_NOTRACE);
@@ -4024,6 +4026,24 @@ foreign_t c_glOrtho(term_t PL_L, term_t PL_R, term_t PL_T, term_t PL_B, term_t P
     return FALSE;
 
   glOrtho((GLdouble)left,(GLdouble)right,(GLdouble)top,(GLdouble)bottom,(GLdouble)nearVal,(GLdouble)farVal);
+
+  PL_succeed;
+}
+
+/***************************************
+ * Name: c_glPixelStoref
+ * Params:
+ * Returns:
+ */
+foreign_t c_glPixelStoref(term_t PL_Mode, term_t PL_Param) {
+  GLint mode;
+  GLdouble param;
+
+  if(!PL_get_integer(PL_Mode,&mode) ||
+     !PL_get_float(PL_Param,&param))
+    return FALSE;
+
+  glPixelStoref((GLenum)mode,(GLfloat)param);
 
   PL_succeed;
 }
