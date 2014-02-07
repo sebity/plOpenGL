@@ -1,4 +1,12 @@
-:- ['../plOpenGL.pl'].
+:- use_foreign_library(foreign(plOpenGL)).
+:- use_module(library(plOpenGL)).
+:- use_module(library(plGL_defs)).
+:- use_module(library(plGLU_defs)).
+:- use_module(library(plGLUT_defs)).
+:- use_module(library(plGL)).
+:- use_module(library(plGLU)).
+:- use_module(library(plGLUT)).
+
 
 :- dynamic texture/2,particle/17,xstrength/1,ystrength/1,zstrength/1,show_particles/1,zoom/1,rainbow/1,fullscreen/1.
 

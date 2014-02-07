@@ -1,4 +1,12 @@
-:- ['../plOpenGL.pl'].
+:- use_foreign_library(foreign(plOpenGL)).
+:- use_module(library(plOpenGL)).
+:- use_module(library(plGL_defs)).
+:- use_module(library(plGLU_defs)).
+:- use_module(library(plGLUT_defs)).
+:- use_module(library(plGL)).
+:- use_module(library(plGLU)).
+:- use_module(library(plGLUT)).
+
 
 :- dynamic xrot/1,yrot/1,xspeed/1,yspeed/1,zdepth/1,filter/1,light/1,blend/1,fullscreen/1.
 
