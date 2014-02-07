@@ -13,35 +13,25 @@ Platforms
 Windows, Mac OSX and Linux
 
 
-Setup
+Usage
 -----
-plOpenGL does require setting up, but luckily it is easy.  All that is required is to open the <code>plOpenGL.pl</code> file and comment/uncomment the libraries that is associated with the OS that plOpenGL is running on.
+To use plOpenGL, add the following import modules and libraries to your script:
 
-For example, is you are using a Windows System, update the <code>load_foreign_library</code> line to look like:
+:- use_foreign_library(foreign(plOpenGL)).
 
-<pre>
-% Windows Library
-:-load_foreign_library('plOpenGL.dll').
+:- use_module(library(plOpenGL)).
 
-% Mac/Linux Library
-%:-load_foreign_library('plOpenGL.so').
-</pre>
+:- use_module(library(plGL_defs)).
 
-If you are using plOpenGL on Mac OSX, then reverse the comments on the <code>load_foreign_library</code> line.
+:- use_module(library(plGLU_defs)).
 
+:- use_module(library(plGLUT_defs)).
 
-Command Line Usage
-------------------
-plOpenGL can be run from the command line, e.g.
+:- use_module(library(plGL)).
 
-<pre>
-> cd examples
-> swipl -g main -s helloworld.pl
-</pre>
+:- use_module(library(plGLU)).
 
-Example Applications
---------------------
-See the <code>examples/</code> folder
+:- use_module(library(plGLUT)).
 
 
 Author
