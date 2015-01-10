@@ -249,7 +249,7 @@ This module is the opengl extension of the Prolog OpenGL Interface
 (plOpengL)
 
  @author   Jan Tatham
- @version  0.5.0
+ @version  0.6.2
  @license  LGPL
 */
 
@@ -477,34 +477,70 @@ glClearColor(R,G,B,A) :-
 
 %%	glClearDepth(+Depth)
 % Specify the clear value for the depth buffer
+%
+% * Depth
+%   Specifies the depth value used when the depth buffer is cleared. 
+%   The initial value is 1.
+%        
 glClearDepth(Depth) :-
 	float(Depth),
 	c_glClearDepth(Depth).
 
 %%	glClearIndex(+Index)
 % Specify the clear value for the color index buffers
+%
+% * Index
+%   Specifies the index used when the color index buffers are cleared.
+%   The initial value is 0.
+%
 glClearIndex(Index) :-
 	float(Index),
 	c_glClearIndex(Index).
 
 %%	glClearStencil(+S)
 % Specify the clear value for the stencil buffer
+%
+% * S
+%   Specifies the index used when the stencil buffer is cleared.
+%   The initial value is 0.
+%
 glClearStencil(S):-
 	c_glClearStencil(S).
 
 %%	glClipPlane(+Plane, +Equation).
 % Specify a plane against which all geometry is clipped
+%
+% * Plane
+%   Specifies which clipping plane is being positioned.
+%   Symbolic names of the form GL_CLIP_PLANEi, where i is an
+%   integer between 0 and GL_MAX_CLIP_PLANES-1,are accepted.
+%
+% * Equation
+%   Specifies the address of an array of four double-precision
+%   floating-point values.These values are interpreted as a plane 
+%   equation.
+%
 glClipPlane(Plane,Equation) :-
 	size(Equation,N),
 	c_glClipPlane(Plane,Equation,N).
 
 %%	glColor3b(+Red, +Green, +Blue).
-% Sets the current color.
+% Sets the current color from a three signed byte argument.
+%
+% * Red
+%   The new red value for the current color.
+%
+% * Green
+%   The new green value for the current color.
+%
+% * Blue
+%   The new blue value for the current color.
+%
 glColor3b(Red,Green,Blue):-
 	c_glColor3b(Red,Green,Blue).
 
 %%	glColor3bv(+X:list(number)).
-% Sets the current color.
+% Sets the current color from a pointer to a three signed byte type array.
 %
 %  * X
 %    Specifies a pointer to an array that contains red, green, blue values.
@@ -513,7 +549,17 @@ glColor3bv(X):-
 	c_glColor3bv(X).
 
 %%	glColor3d(+Red, +Green, +Blue).
-% Sets the current color.
+% Sets the current color from a three double argument.
+%
+% * Red
+%   The new red value for the current color.
+%
+% * Green
+%   The new green value for the current color.
+%
+% * Blue
+%   The new blue value for the current color.
+%
 glColor3d(Red,Green,Blue):-
 	float(Red),
 	float(Green),
@@ -521,7 +567,7 @@ glColor3d(Red,Green,Blue):-
 	c_glColor3d(Red,Green,Blue).
 
 %%	glColor3dv(+X:list(float)).
-% Sets the current color.
+% Sets the current color from a pointer to a three double type array.
 %
 %  * X
 %    Specifies a pointer to an array that contains red, green, blue values.
@@ -531,6 +577,16 @@ glColor3dv(X):-
 
 %%	glColor3f(+Red, +Green, +Blue).
 % Sets the current color.
+%
+% * Red
+%   The new red value for the current color.
+%
+% * Green
+%   The new green value for the current color.
+%
+% * Blue
+%   The new blue value for the current color.
+%
 glColor3f(Red,Green,Blue):-
 	float(Red),
 	float(Green),
@@ -549,6 +605,16 @@ glColor3fv(X):-
 
 %%	glColor3i(+Red, +Green, +Blue).
 % Sets the current color.
+%
+% * Red
+%   The new red value for the current color.
+%
+% * Green
+%   The new green value for the current color.
+%
+% * Blue
+%   The new blue value for the current color.
+%
 glColor3i(Red,Green,Blue):-
 	c_glColor3i(Red,Green,Blue).
 
@@ -564,6 +630,16 @@ glColor3iv(X):-
 
 %%	glColor3s(+Red, +Green, +Blue).
 % Sets the current color.
+%
+% * Red
+%   The new red value for the current color.
+%
+% * Green
+%   The new green value for the current color.
+%
+% * Blue
+%   The new blue value for the current color.
+%
 glColor3s(Red,Green,Blue):-
 	c_glColor3s(Red,Green,Blue).
 
@@ -579,6 +655,16 @@ glColor3sv(X):-
 
 %%	glColor3ub(+Red, +Green, +Blue).
 % Sets the current color.
+%
+% * Red
+%   The new red value for the current color.
+%
+% * Green
+%   The new green value for the current color.
+%
+% * Blue
+%   The new blue value for the current color.
+%
 glColor3ub(Red,Green,Blue):-
 	c_glColor3ub(Red,Green,Blue).
 
@@ -594,6 +680,16 @@ glColor3ubv(X):-
 
 %%	glColor3ui(+Red, +Green, +Blue).
 % Sets the current color.
+%
+% * Red
+%   The new red value for the current color.
+%
+% * Green
+%   The new green value for the current color.
+%
+% * Blue
+%   The new blue value for the current color.
+%
 glColor3ui(Red,Green,Blue):-
 	c_glColor3ui(Red,Green,Blue).
 
@@ -609,6 +705,16 @@ glColor3uiv(X):-
 
 %%	glColor3us(+Red, +Green, +Blue).
 % Sets the current color.
+%
+% * Red
+%   The new red value for the current color.
+%
+% * Green
+%   The new green value for the current color.
+%
+% * Blue
+%   The new blue value for the current color.
+%
 glColor3us(Red,Green,Blue):-
 	c_glColor3us(Red,Green,Blue).
 
