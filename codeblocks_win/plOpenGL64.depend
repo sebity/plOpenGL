@@ -1,0 +1,36 @@
+# depslib dependency file v1.0
+1420746414 source:c:\home\devel\prolog\libraries\plopengl\plopengl.c
+	<SWI-Stream.h>
+	<SWI-Prolog.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<windows.h>
+	<GL/gl.h>
+	<GL/glu.h>
+	<GL/glut.h>
+	<GL/glext.h>
+	<GL/gl.h>
+	<GL/glu.h>
+	<GL/freeglut.h>
+	<unistd.h>
+	<OpenGL/gl.h>
+	<OpenGL/glu.h>
+	<GLUT/glut.h>
+	<unistd.h>
+
+1418982654 c:\program files\swipl\include\swi-stream.h
+	<sys/_mbstate_t.h>
+	<stdarg.h>
+	<wchar.h>
+	<stddef.h>
+	<unistd.h>
+	<inttypes.h>
+	"pl-mutex.h"
+
+1418982654 c:\program files\swipl\include\swi-prolog.h
+	<stdarg.h>
+	<stdlib.h>
+	<stddef.h>
+	<inttypes.h>
+
