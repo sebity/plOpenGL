@@ -22,26 +22,48 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
+:- module(plOpenGL,
+	  [
+	   loadGLTextures/4,
+	   size/2
+]).
+
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Select the Library that you need by commenting out the library %
 % that you do not need, and uncommenting the one you do.         %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+:- use_module(library(plGL_defs)).
+:- use_module(library(plGLU_defs)).
+:- use_module(library(plGLUT_defs)).
+:- use_module(library(plGL)).
+:- use_module(library(plGLU)).
+:- use_module(library(plGLUT)).
+:- use_module(library(plMisc)).
+:- use_module(library(general_defs)).
+:- use_module(library(libplOpenGL)).
+
+
+
+%%%%%%%%%%%%%%
+% OLD LOADER %
+%%%%%%%%%%%%%%
 % Windows Library
 %:-load_foreign_library('plOpenGL.dll').
 
 % Mac/Linux Library
-:-load_foreign_library('plOpenGL.so').
+%:-load_foreign_library('plOpenGL.so').
 
-% Do not alter below this line
-:-['plGL_defs.pl'],['plGLU_defs.pl'],['plGLUT_defs.pl'].
-:-['plGL.pl'],['plGLU.pl'],['plGLUT.pl'].
-:-['plMisc.pl'].
-:-['general_defs.pl'].
-
+%:-['plGL_defs.pl'],['plGLU_defs.pl'],['plGLUT_defs.pl'].
+%:-['plGL.pl'],['plGLU.pl'],['plGLUT.pl'].
+%:-['plMisc.pl'].
+%:-['general_defs.pl'].
 
 
 
-%%	loadGLTexture(+Filename, -Width, -Height, -Data)
+%%	loadGLTextures(+Filename, -Width, -Height, -Data)
 % Load Texture
 loadGLTextures(Filename,Width,Height,Data):-
     c_loadGLTextures(Filename,Width,Height,Data).
