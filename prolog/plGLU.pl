@@ -5,6 +5,7 @@
 	   gluOrtho2D/4,
 	   gluPerspective/4
 	  ]).
+:- use_module(library(libplOpenGL)).
 
 /** <module> GLU Interface
 

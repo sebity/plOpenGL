@@ -1,7 +1,10 @@
 SOBJ=   $(PACKSODIR)/plOpenGL.$(SOEXT)
-CC=swipl-ld
-CFLAGS=-shared -ggdb -Wall -D__USE_FIXED_PROTOTYPES__ -ansi -v
-LDFLAGS=-lGL -lglut -lGLU -lm
+CFLAGS+=-shared -ggdb -Wall -D__USE_FIXED_PROTOTYPES__ -ansi -v
+ifeq ($(SWIARCH),x86_64-darwin)
+  LDFLAGS=-framework OpenGL -framework GLUT -lm 
+else
+  LDFLAGS=-lGL -lglut -lGLU -lm 
+endif
 
 all:    $(SOBJ)
 

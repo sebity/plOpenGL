@@ -17,8 +17,6 @@ Usage
 -----
 To use plOpenGL, add the following import modules and libraries to your script:
 
-:- use_foreign_library(foreign(plOpenGL)).
-
 :- use_module(library(plOpenGL)).
 
 :- use_module(library(plGL_defs)).

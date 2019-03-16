@@ -31,6 +31,7 @@
 	   glutWireTeapot/1,
 	   glutWireTorus/4
 	  ]).
+:- use_module(library(libplOpenGL)).
 
 /** <module> GLUT Interface
 
